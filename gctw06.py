@@ -53,7 +53,7 @@ with Chrome() as driver:
     # print('Next on Password clicked')
 
     # time.sleep(20)
-    # pickle.dump(driver.get_cookies(), open('./cookies/cookies_gctw06.pkl', 'wb'))
+    # pickle.dump(driver.get_cookies(), open('./cookies/cookies_gctw06.pkl', 'wb'), protocol=2)
 
     for notebook in notebooks:
         driver.switch_to.new_window('tab')
