@@ -29,29 +29,6 @@ with Chrome() as driver:
                 cookie['sameSite'] = 'Strict'
         driver.add_cookie(cookie)
 
-    # WebDriverWait(driver, 20).until(lambda d: d.find_element(By.TAG_NAME, 'input'))
-
-    # #time.sleep(2)
-    # email_box = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//input[@type='email']")))
-    # time.sleep(2)
-    # email_box.send_keys('gctaskworker6@gmail.com')
-    # print('Email for gctw06 entered')
-    # driver.save_screenshot('image.png')   
-    # email_box_next = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, "//*[@class='VfPpkd-Jh9lGc']")))
-    # driver.execute_script('arguments[0].click();', email_box_next)
-    # print('Next on Email page clicked')
-
-    # time.sleep(2)
-    # driver.save_screenshot('image.png')
-    # pass_box = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//input[@name='password']")))
-    # pass_box.send_keys('gc$$32145')
-    # print('Password entered')
-
-    # # driver.save_screenshot('image.png')
-    # pass_next = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, "//*[@class='VfPpkd-Jh9lGc']")))
-    # driver.execute_script('arguments[0].click();', pass_next)
-    # print('Next on Password clicked')
-
     # time.sleep(20)
     # pickle.dump(driver.get_cookies(), open('./cookies/cookies_gctw06.pkl', 'wb'), protocol=2)
 
@@ -59,17 +36,24 @@ with Chrome() as driver:
         driver.switch_to.new_window('tab')
         driver.get(notebook)
 
-        # WebDriverWait(driver, 20).until(lambda d: d.find_element(By.CLASS_NAME, 'inputarea'))
+        if i == 0:
+            print('gctw06E.ipynb loaded')
+        elif i == 1:
+            print('gctw06F.ipynb loaded')
+        elif i == 2:
+            print('gctw06G.ipynb loaded')
+        elif i == 3:
+            print('gctw06H.ipynb loaded')
+        else:
+            print('gctw06I.ipynb loaded')
 
-        time.sleep(20)
-        # driver.save_screenshot('image.png')
-        runtime_menu = driver.find_element(By.ID, 'runtime-menu-button')
+        runtime_menu = WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button'))
         time.sleep(2)
         runtime_menu.click()
 
         WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':20'))
 
-        reset_runtime = driver.find_element(By.ID, ':20')
+        reset_runtime = driver.find_element_by_xpath("//*[contains(text(), 'Factory reset runtime')]")
         time.sleep(2)
         reset_runtime.click()
 
@@ -88,15 +72,15 @@ with Chrome() as driver:
         run_all.click()
 
         if i == 0:
-            print('gctw06E running')
+            print('gctw06E.ipynb running')
         elif i == 1:
-            print('gctw06F running')
+            print('gctw06F.ipynb running')
         elif i == 2:
-            print('gctw06G running')
+            print('gctw06G.ipynb running')
         elif i == 3:
-            print('gctw06H running')
+            print('gctw06H.ipynb running')
         else:
-            print('gctw06I running')
+            print('gctw06I.ipynb running')
 
         i += 1
 

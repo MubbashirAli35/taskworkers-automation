@@ -23,61 +23,31 @@ with Chrome() as driver:
     # driver.get('https://accounts.google.com/o/oauth2/auth/identifier?client_id=717762328687-iludtf96g1hinl76e4lc1b9a82g457nn.apps.googleusercontent.com&scope=profile%20email&redirect_uri=https%3A%2F%2Fstackauth.com%2Fauth%2Foauth2%2Fgoogle&state=%7B%22sid%22%3A1%2C%22st%22%3A%2259%3A3%3Abbc%2C16%3Ac5921dac60514d45%2C10%3A1600365462%2C16%3Ac2ff366d22bf25ef%2C43ad100192963a0ab68a62cd6581a5f8f77214d8a5ac4276eba49418bd0ccf5d%22%2C%22cdl%22%3Anull%2C%22cid%22%3A%22717762328687-iludtf96g1hinl76e4lc1b9a82g457nn.apps.googleusercontent.com%22%2C%22k%22%3A%22Google%22%2C%22ses%22%3A%22bc4e24a526c546b1a401552595c8f591%22%7D&response_type=code&flowName=GeneralOAuthFlow')
     driver.get(notebooks[0])
 
-    # time.sleep(5)
-
-    for cookie in pickle.load(open('cookies.pkl', 'rb')):
+    for cookie in pickle.load(open('./cookies/cookies_gctw08.pkl', 'rb')):
         if 'sameSite' in cookie:
             if cookie['sameSite'] == 'None':
                 cookie['sameSite'] = 'Strict'
         driver.add_cookie(cookie)
 
-    # WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//*[@id='yDmH0d']/c-wiz/div/div[2]/c-wiz/c-wiz/div/div[4]/div/div/header/div[2]")))
-
-    # for cookie in pickle.load(open('cookies.pkl', 'rb')):
-    #     driver.add_cookie(cookie)
-
-    time.sleep(20)
-
-    # time.sleep(2)
-
-    # driver.get(notebooks[i])
-
-    # WebDriverWait(driver, 20).until(lambda d: d.find_element(By.TAG_NAME, 'input'))
-
-    # #time.sleep(2)
-    # email_box = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//input[@type='email']")))
-    # time.sleep(2)
-    # email_box.send_keys('gctaskworker8@gmail.com')
-    # print('Email for gctw08 entered')
-    # driver.save_screenshot('image.png')   
-    # email_box_next = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, "//*[@class='VfPpkd-Jh9lGc']")))
-    # driver.execute_script('arguments[0].click();', email_box_next)
-    # print('Next on Email page clicked')
-
-    # time.sleep(2)
-    # driver.save_screenshot('image.png')
-    # pass_box = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//input[@name='password']")))
-    # pass_box.send_keys('gc$$32145')
-    # print('Password entered')
-
-    # # driver.save_screenshot('image.png')
-    # pass_next = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, "//*[@class='VfPpkd-Jh9lGc']")))
-    # driver.execute_script('arguments[0].click();', pass_next)
-    # print('Next on Password clicked')
-    
-    # time.sleep(2)
-    # time.sleep(15)
-    # pickle.dump(driver.get_cookies(), open('cookies.pkl', 'wb'))
+    # time.sleep(20)
+    # pickle.dump(driver.get_cookies(), open('./cookies/cookies_gctw08.pkl', 'wb'), protocol=2)
 
     for notebook in notebooks:
         driver.switch_to.new_window('tab')
         driver.get(notebook)
 
-        # WebDriverWait(driver, 20).until(lambda d: d.find_element(By.CLASS_NAME, 'inputarea'))
+        if i == 0:
+            print('gctw08E.ipynb loaded')
+        elif i == 1:
+            print('gctw08F.ipynb loaded')
+        elif i == 2:
+            print('gctw08G.ipynb loaded')
+        elif i == 3:
+            print('gctw08H.ipynb loaded')
+        else:
+            print('gctw08I.ipynb loaded')
 
-        time.sleep(20)
-        # driver.save_screenshot('image.png')
-        runtime_menu = driver.find_element(By.ID, 'runtime-menu-button')
+        runtime_menu = WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button'))
         time.sleep(2)
         runtime_menu.click()
 
@@ -102,15 +72,15 @@ with Chrome() as driver:
         run_all.click()
 
         if i == 0:
-            print('gctw08E running')
+            print('gctw08E.ipynb running')
         elif i == 1:
-            print('gctw08F running')
+            print('gctw08F.ipynb running')
         elif i == 2:
-            print('gctw08G running')
+            print('gctw08G.ipynb running')
         elif i == 3:
-            print('gctw08H running')
+            print('gctw08H.ipynb running')
         else:
-            print('gctw08I running')
+            print('gctw08I.ipynb running')
 
         i += 1
 

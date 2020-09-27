@@ -60,7 +60,7 @@ if __name__=='__main__':
     worker16 = Process(target=gctw16)
     worker17 = Process(target=gctw17)
     worker18 = Process(target=gctw18)
-    worker19 = Process(target=gctw19)
+    # worker19 = Process(target=gctw19)
     worker20 = Process(target=gctw20)
 
     worker6.start()
@@ -76,5 +76,5 @@ if __name__=='__main__':
     worker16.start()
     worker17.start()
     worker18.start()
-    worker19.start()
+    # worker19.start()
     worker20.start()
