@@ -19,7 +19,7 @@ notebooks = ['https://colab.research.google.com/drive/1skehoCmiAVswmroQhu4taZqRG
 
 i = 0
 
-with Chrome() as driver:
+with Chrome(executable_path='./chromedriver', options=options) as driver:
 
     driver.get(notebooks[0])
 
@@ -84,4 +84,18 @@ with Chrome() as driver:
 
         i += 1
 
-time.sleep(43200)
+    interaction_cycles = 0
+    
+    for interaction_cycles in range(6):
+        time.sleep(7200)
+        tabs = 0
+
+        for window_handle in driver.window_handles:
+            driver.switch_to.window(window_handle)
+            
+            if tabs != 0:
+                WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
+
+            tabs += 1
+
+        interaction_cycles += 1

@@ -19,7 +19,7 @@ notebooks = ['https://colab.research.google.com/drive/1ri9aXj2huB_GaPtgp5xote_aB
 
 i = 0
 
-with Chrome() as driver:
+with Chrome(executable_path='./chromedriver', options=options) as driver:
 
     # driver.get('https://accounts.google.com/o/oauth2/auth/identifier?client_id=717762328687-iludtf96g1hinl76e4lc1b9a82g457nn.apps.googleusercontent.com&scope=profile%20email&redirect_uri=https%3A%2F%2Fstackauth.com%2Fauth%2Foauth2%2Fgoogle&state=%7B%22sid%22%3A1%2C%22st%22%3A%2259%3A3%3Abbc%2C16%3Ac5921dac60514d45%2C10%3A1600365462%2C16%3Ac2ff366d22bf25ef%2C43ad100192963a0ab68a62cd6581a5f8f77214d8a5ac4276eba49418bd0ccf5d%22%2C%22cdl%22%3Anull%2C%22cid%22%3A%22717762328687-iludtf96g1hinl76e4lc1b9a82g457nn.apps.googleusercontent.com%22%2C%22k%22%3A%22Google%22%2C%22ses%22%3A%22bc4e24a526c546b1a401552595c8f591%22%7D&response_type=code&flowName=GeneralOAuthFlow')
     driver.get(notebooks[0])
@@ -85,4 +85,18 @@ with Chrome() as driver:
 
         i += 1
 
-time.sleep(43200)
+    interaction_cycles = 0
+    
+    for interaction_cycles in range(6):
+        time.sleep(7200)
+        tabs = 0
+
+        for window_handle in driver.window_handles:
+            driver.switch_to.window(window_handle)
+            
+            if tabs != 0:
+                WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
+
+            tabs += 1
+
+        interaction_cycles += 1
