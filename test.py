@@ -1,11 +1,5 @@
-import requests
+import pandas as pd
 
-dict = {'sameSite': 'Strict', 
-        'auth': 'Mubbashir Ali',
-        'expiresIn': 123456789,
-        'secure': True}
+data_set = pd.read_csv('./config_mixed.csv')
 
-if 'sameSite' in dict:
-    print('Good hogaya')
-else:
-    print('Shughal Maila lagaye rakho')
+print(data_set.at[1, 'Notebooks'])

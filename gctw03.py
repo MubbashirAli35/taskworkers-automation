@@ -13,39 +13,35 @@ notebooks_config = pd.read_csv(sys.argv[1])
 options = Options()
 options.add_argument('headless')
 options.add_argument('--start-maximized')
-options.add_argument('user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36')
+options.add_argument(
+    'user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36')
 
-notebooks = ['',
-             '',
-             '',
-             '',
-            'https://colab.research.google.com/drive/1yfv8uhmQZBZK0oFTGqHOq_sJTuKqOxRG',
-            'https://colab.research.google.com/drive/1MZwp2upKkaEs4K0iGIf_FYmYAm9SKLvx',
-            'https://colab.research.google.com/drive/1-iqqqLsKH4g2SyqrZ847gbicJqltkgCC',
-            'https://colab.research.google.com/drive/17f0Ub2ONiKsflz8RdWhFl9FdsjlPWJwZ',
-            'https://colab.research.google.com/drive/10KzADzYYXMLvXvS_WPPGZYTsnlppXudx'] 
+notebooks = ['https://colab.research.google.com/drive/1nrpN9xOjNFfMvcZ_cmERBj_GDcT3okDg',
+             'https://colab.research.google.com/drive/1xFsHay6QyRmHyf-OifHrAmDTZkrk7EO6',
+             'https://colab.research.google.com/drive/1xfampxie_Fd6_eUKd5dndbwCBQwI-JyI',
+             'https://colab.research.google.com/drive/1DuH2WbFViR5ASykLkVZZ4odmiZVYr0dg']
 
 i = 0
 
 with Chrome(executable_path='./chromedriver', options=options) as driver:
+    # driver.get('https://accounts.google.com/o/oauth2/auth/identifier?client_id=717762328687-iludtf96g1hinl76e4lc1b9a82g457nn.apps.googleusercontent.com&scope=profile%20email&redirect_uri=https%3A%2F%2Fstackauth.com%2Fauth%2Foauth2%2Fgoogle&state=%7B%22sid%22%3A1%2C%22st%22%3A%2259%3A3%3Abbc%2C16%3A82fc73f3bc47e7ae%2C10%3A1602009822%2C16%3Afb578ecbe2ddb02b%2C123533b054a12c418686487d3dcf129ba24c76d4e8affc5d4afa4eb5efa96273%22%2C%22cdl%22%3Anull%2C%22cid%22%3A%22717762328687-iludtf96g1hinl76e4lc1b9a82g457nn.apps.googleusercontent.com%22%2C%22k%22%3A%22Google%22%2C%22ses%22%3A%22cdb698f92c9f40aeb86ce8599842d58b%22%7D&response_type=code&flowName=GeneralOAuthFlow')
+    # time.sleep(20)
+    driver.get(notebooks[0])
+    # time.sleep(5)
 
-    driver.get(notebooks[4])
-
-    for cookie in pickle.load(open('./cookies/cookies_gctw20.pkl', 'rb')):
+    for cookie in pickle.load(open('./cookies/cookies_gctw03.pkl', 'rb')):
         if 'sameSite' in cookie:
             if cookie['sameSite'] == 'None':
                 cookie['sameSite'] = 'Strict'
         driver.add_cookie(cookie)
-
-    # time.sleep(20)
-    # pickle.dump(driver.get_cookies(), open('./cookies/cookies_gctw20.pkl', 'wb'), protocol=2)
+    # pickle.dump(driver.get_cookies(), open('./cookies/cookies_gctw03.pkl', 'wb'), protocol=2)
 
     for i in range(9):
-        if notebooks_config.at[i + 171, 'Status'] == 'Yes':
+        if notebooks_config.at[i + 18, 'Status'] == 'Yes':
             driver.switch_to.new_window('tab')
             driver.get(notebooks[i])
 
-            print(notebooks_config.at[i + 171, 'Notebooks'], 'Loaded')
+            print(notebooks_config.at[i + 18, 'Notebooks'], 'Loaded')
 
             runtime_menu = WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button'))
             time.sleep(2)
@@ -71,7 +67,7 @@ with Chrome(executable_path='./chromedriver', options=options) as driver:
             time.sleep(2)
             run_all.click()
 
-            print(notebooks_config.at[i + 171, 'Notebooks'], 'Running')
+            print(notebooks_config.at[i + 18, 'Notebooks'], 'Running')
 
         i += 1
 

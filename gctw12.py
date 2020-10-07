@@ -5,13 +5,21 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 import time
 import pickle
+import pandas as pd
+import sys
+
+notebooks_config = pd.read_csv(sys.argv[1])
 
 options = Options()
 options.add_argument('headless')
 options.add_argument('--start-maximized')
 options.add_argument('user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36')
 
-notebooks = ['https://colab.research.google.com/drive/1skehoCmiAVswmroQhu4taZqRG2uDpcZF',
+notebooks = ['https://colab.research.google.com/drive/1ODOW1fTVHjLvaS5WAIaJzgzmbtsbbqg0',
+            'https://colab.research.google.com/drive/1k2OHcYcWN-AxSXB08vGDJdndFM1hsXcg',
+            'https://colab.research.google.com/drive/1zsWGbQtUAH6t8uUWBEG4EZQ0-as-7paN',
+            'https://colab.research.google.com/drive/1T9QZo7XSMEnbt2D4rqe8avil0oFq5GBN',
+            'https://colab.research.google.com/drive/1skehoCmiAVswmroQhu4taZqRG2uDpcZF',
             'https://colab.research.google.com/drive/1RFBz7FDE7olY5_xUeEZlg0cJYVEK4K5n',
             'https://colab.research.google.com/drive/1RFBz7FDE7olY5_xUeEZlg0cJYVEK4K5n',
             'https://colab.research.google.com/drive/13G8FgKHGARMSlHw8wzsrObdI6TPEyytV',
@@ -32,55 +40,38 @@ with Chrome(executable_path='./chromedriver', options=options) as driver:
     # time.sleep(20)
     # pickle.dump(driver.get_cookies(), open('./cookies/cookies_gctw12.pkl', 'wb'), protocol=2)
 
-    for notebook in notebooks:
-        driver.switch_to.new_window('tab')
-        driver.get(notebook)
+    for i in range(9):
+        if notebooks_config.at[i + 99, 'Status'] == 'Yes':
+            driver.switch_to.new_window('tab')
+            driver.get(notebooks[i])
 
-        if i == 0:
-            print('gctw12E.ipynb loaded')
-        elif i == 1:
-            print('gctw12F.ipynb loaded')
-        elif i == 2:
-            print('gctw12G.ipynb loaded')
-        elif i == 3:
-            print('gctw12H.ipynb loaded')
-        else:
-            print('gctw12I.ipynb loaded')
+            print(notebooks_config.at[i + 99, 'Notebooks'], 'Loaded')
 
-        runtime_menu = WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button'))
-        time.sleep(2)
-        runtime_menu.click()
+            runtime_menu = WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button'))
+            time.sleep(2)
+            runtime_menu.click()
 
-        WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':20'))
+            WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':20'))
 
-        reset_runtime = driver.find_element(By.ID, ':20')
-        time.sleep(2)
-        reset_runtime.click()
+            reset_runtime = driver.find_element_by_xpath("//*[contains(text(), 'Factory reset runtime')]")
+            time.sleep(2)
+            reset_runtime.click()
 
-        WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'ok'))
-        reset_confirmation = driver.find_element(By.ID, 'ok')
-        time.sleep(2)
-        reset_confirmation.click()
+            WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'ok'))
+            reset_confirmation = driver.find_element(By.ID, 'ok')
+            time.sleep(2)
+            reset_confirmation.click()
 
-        runtime_menu = driver.find_element(By.ID, 'runtime-menu-button')
-        time.sleep(2)
-        runtime_menu.click()
+            runtime_menu = driver.find_element(By.ID, 'runtime-menu-button')
+            time.sleep(2)
+            runtime_menu.click()
 
-        WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':1r'))
-        run_all = driver.find_element(By.ID, ':1r')
-        time.sleep(2)
-        run_all.click()
+            WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':1r'))
+            run_all = driver.find_element(By.ID, ':1r')
+            time.sleep(2)
+            run_all.click()
 
-        if i == 0:
-            print('gctw12E.ipynb running')
-        elif i == 1:
-            print('gctw12F.ipynb running')
-        elif i == 2:
-            print('gctw12G.ipynb running')
-        elif i == 3:
-            print('gctw12H.ipynb running')
-        else:
-            print('gctw12I.ipynb running')
+            print(notebooks_config.at[i + 99, 'Notebooks'], 'Running')
 
         i += 1
 
