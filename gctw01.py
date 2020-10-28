@@ -19,7 +19,12 @@ options.add_argument(
 notebooks = ['https://colab.research.google.com/drive/1CvwSNCrZNP-zNM6i4SnEAfZTcBbO79lR',
              'https://colab.research.google.com/drive/1_Y-JFW36AY2gMdDbwz_Os3LI1DianUaC',
              'https://colab.research.google.com/drive/1TM_qtPMmbzDsUvbUh266Gm1biip9I6SH',
-             'https://colab.research.google.com/drive/12Z_2YQoGFHJ_1p4duhGdoxmk6mCGYpQq']
+             'https://colab.research.google.com/drive/12Z_2YQoGFHJ_1p4duhGdoxmk6mCGYpQq',
+             'https://colab.research.google.com/drive/1uzBFUgUpzkZ_jm3ddq4by0EiIu-WLzmr',
+             'https://colab.research.google.com/drive/1-aLcgnKZuW2Gv_iqw8pirhuoG0jXVbdg',
+             'https://colab.research.google.com/drive/1z6K7S_ZXpLesdUJTChexmLtY00V7rO8c',
+             'https://colab.research.google.com/drive/1R4-1Vp8GouYjky2OBNHZFyLnsIvp-W9V',
+             'https://colab.research.google.com/drive/1gxnMi-ge50zl_F1PIih_lzh003ziYzi0']
 
 i = 0
 
