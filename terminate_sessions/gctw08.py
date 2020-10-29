@@ -29,7 +29,7 @@ cookies_path = '../cookies/cookies_gctw08.pkl'
 
 i = 0
 
-with Chrome() as driver:
+with Chrome(executable_path='../chromedriver', options=options) as driver:
     driver.get(notebooks[0])
 
     for cookie in pickle.load(open(cookies_path, 'rb')):
