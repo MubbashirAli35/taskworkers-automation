@@ -15,10 +15,10 @@ options.add_argument('--start-maximized')
 options.add_argument(
     'user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36')
 
-notebooks = ['',
-             '',
-             '',
-             '',
+notebooks = ['https://colab.research.google.com/drive/1sty0rZcF4mZKVBrkelFK8BcD-k7eRA7l',
+             'https://colab.research.google.com/drive/1ZcgP21W6Guf8FI8IrMpLafNqGsLbaJMC',
+             'https://colab.research.google.com/drive/1fxr6UMEyxQo385z16dAaBL7L6sGCjTPP',
+             'https://colab.research.google.com/drive/17Rry68LzytptHbGJfDZht68Z29FuiloS',
             'https://colab.research.google.com/drive/16cdVhp5ICCnplLEjD_x7DV6ba1O0r9hl',
             'https://colab.research.google.com/drive/10xAQ4mxzhKQU2RjiOHKbjIyO1l70etYL',
             'https://colab.research.google.com/drive/1O1yoFxw3yt3ryaVSfrkVxk41zbR1Ronj',

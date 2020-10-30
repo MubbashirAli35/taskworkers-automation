@@ -18,7 +18,12 @@ options.add_argument(
 notebooks = ['https://colab.research.google.com/drive/1nrpN9xOjNFfMvcZ_cmERBj_GDcT3okDg',
              'https://colab.research.google.com/drive/1xFsHay6QyRmHyf-OifHrAmDTZkrk7EO6',
              'https://colab.research.google.com/drive/1xfampxie_Fd6_eUKd5dndbwCBQwI-JyI',
-             'https://colab.research.google.com/drive/1DuH2WbFViR5ASykLkVZZ4odmiZVYr0dg']
+             'https://colab.research.google.com/drive/1DuH2WbFViR5ASykLkVZZ4odmiZVYr0dg',
+             'https://colab.research.google.com/drive/1LtB_Bp_ULOduq2BQ44IBMMNCJMansndy',
+             'https://colab.research.google.com/drive/1I53ohAR2z2DqPLBjSjCAbdSQXttEgbIW',
+             'https://colab.research.google.com/drive/1nds81KEzcYOmCHoS0HFxni4pPTUfb3Zb',
+             'https://colab.research.google.com/drive/15vZizqRHJiW7wmDb_s1uymIUMfEhH783',
+             'https://colab.research.google.com/drive/1IARUAtFfoe9-xEI8ZV4iTIrAvIQ6oMnA']
 
 cookies_path = '../cookies/cookies_gctw03.pkl'
 

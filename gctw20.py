@@ -15,10 +15,10 @@ options.add_argument('headless')
 options.add_argument('--start-maximized')
 options.add_argument('user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36')
 
-notebooks = ['',
-             '',
-             '',
-             '',
+notebooks = ['https://colab.research.google.com/drive/1SfyowjMRZ1sT-GroK4nj5DY0LaZRSvzq?usp=sharing',
+             'https://colab.research.google.com/drive/1F3b-8BthOvt9JfebkpBxM6Xt6ErzM1QF?usp=sharing',
+             'https://colab.research.google.com/drive/1PuxTpIkaV3Cvc9pavd-MpF_KET2j2wEs?usp=sharing',
+             'https://colab.research.google.com/drive/1mMN4XYzmFOMFH49ijd66WOnT4pyA1B2v?usp=sharing',
             'https://colab.research.google.com/drive/1yfv8uhmQZBZK0oFTGqHOq_sJTuKqOxRG',
             'https://colab.research.google.com/drive/1MZwp2upKkaEs4K0iGIf_FYmYAm9SKLvx',
             'https://colab.research.google.com/drive/1-iqqqLsKH4g2SyqrZ847gbicJqltkgCC',
