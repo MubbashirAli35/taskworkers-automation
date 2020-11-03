@@ -1,6 +1,5 @@
 from selenium.webdriver import Chrome
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 import time
@@ -8,13 +7,19 @@ import pickle
 import pandas as pd
 import sys
 
+# Reads configuration from the CSV about which notebooks to run for a particular worker
 notebooks_config = pd.read_csv(sys.argv[1])
 
+# Adds configuration to the chromedriver
 options = Options()
-options.add_argument('headless')
-options.add_argument('--start-maximized')
-options.add_argument('user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36')
+options.add_argument('headless')    # Configures to start chrome in headless mode
+options.add_argument('--start-maximized')   # Configures to start it with maximum window size
 
+# Adds a specific User Agent
+options.add_argument(
+    'user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36')
+
+# List of Notebooks' URLs for this particular task worker
 notebooks = ['https://colab.research.google.com/drive/1DHev3HMoYrWmciakdgj7GD8k9OqPVVZz',
              'https://colab.research.google.com/drive/1kDCJEVzt_Fi3vwgEYUFKkrQRDXzFgKsS',
              'https://colab.research.google.com/drive/1ll3WvPVLDetvTg37DTY16P3dVq_5gwn_',
