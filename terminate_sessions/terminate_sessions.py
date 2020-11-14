@@ -1,65 +1,66 @@
 import os
 from multiprocessing import Process
+import sys
 
 def gctw01():
-    os.system('python gctw01.py')
+    os.system('python gctw01.py' + ' ' + sys.argv[1])
 
 def gctw02():
-    os.system('python gctw02.py')
+    os.system('python gctw02.py' + ' ' + sys.argv[1])
 
 def gctw03():
-    os.system('python gctw03.py')
+    os.system('python gctw03.py' + ' ' + sys.argv[1])
 
 def gctw04():
-    os.system('python gctw04.py')
+    os.system('python gctw04.py' + ' ' + sys.argv[1])
 
 def gctw05():
-    os.system('python gctw05.py')
+    os.system('python gctw05.py' + ' ' + sys.argv[1])
 
 def gctw06():
-    os.system('python gctw06.py')
+    os.system('python gctw06.py' + ' ' + sys.argv[1])
 
 def gctw07():
-    os.system('python gctw07.py')
+    os.system('python gctw07.py' + ' ' + sys.argv[1])
 
 def gctw08():
-    os.system('python gctw08.py')
+    os.system('python gctw08.py' + ' ' + sys.argv[1])
 
 def gctw09():
-    os.system('python gctw09.py')
+    os.system('python gctw09.py' + ' ' + sys.argv[1])
 
 def gctw10():
-    os.system('python gctw10.py')
+    os.system('python gctw10.py' + ' ' + sys.argv[1])
 
 def gctw11():
-    os.system('python gctw11.py')
+    os.system('python gctw11.py' + ' ' + sys.argv[1])
 
 def gctw12():
-    os.system('python gctw12.py')
+    os.system('python gctw12.py' + ' ' + sys.argv[1])
 
 def gctw13():
-    os.system('python gctw13.py')
+    os.system('python gctw13.py' + ' ' + sys.argv[1])
 
 def gctw14():
-    os.system('python gctw14.py')
+    os.system('python gctw14.py' + ' ' + sys.argv[1])
 
 def gctw15():
-    os.system('python gctw15.py')
+    os.system('python gctw15.py' + ' ' + sys.argv[1])
 
 def gctw16():
-    os.system('python gctw16.py')
+    os.system('python gctw16.py' + ' ' + sys.argv[1])
 
 def gctw17():
-    os.system('python gctw17.py')
+    os.system('python gctw17.py' + ' ' + sys.argv[1])
 
 def gctw18():
-    os.system('python gctw18.py')
+    os.system('python gctw18.py' + ' ' + sys.argv[1])
 
 def gctw19():
-    os.system('python gctw19.py')
+    os.system('python gctw19.py' + ' ' + sys.argv[1])
 
 def gctw20():
-    os.system('python gctw20.py')
+    os.system('python gctw20.py' + ' ' + sys.argv[1])
 
 if __name__=='__main__':
     worker1 = Process(target=gctw01)

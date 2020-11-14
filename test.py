@@ -8,7 +8,6 @@ import time
 import pickle
 import pandas as pd
 import sys
-
 options = Options()
 options.add_argument('headless')
 options.add_argument('--start-maximized')

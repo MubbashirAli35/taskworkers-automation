@@ -6,8 +6,11 @@ from selenium.common.exceptions import WebDriverException
 import time
 import pickle
 import pandas as pd
+import sys
 
-notebooks_data = pd.read_csv('../config_mixed.csv')
+config_path = '../' + sys.argv[1]
+
+notebooks_data = pd.read_csv(config_path)
 
 options = Options()
 options.add_argument('headless')
