@@ -95,19 +95,4 @@ with Chrome(executable_path='./chromedriver', options=options) as driver:
 
         i += 1
 
-    interaction_cycles = 0
-
-    # This loop just interacts with the Notebooks so they are not disconnected being considered idle
-    for interaction_cycles in range(6):
-        time.sleep(7200)    # Throws an interaction on every running notebook after every 2 hours
-        tabs = 0
-
-        # Iterates over all the opened tabs and interacts with them
-        for window_handle in driver.window_handles:
-            driver.switch_to.window(window_handle)
-
-            # Doesn't interact if it is the tab with Sign In form
-            if tabs != 0:
-                WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
-
-            tabs += 1
+    time.sleep(20)

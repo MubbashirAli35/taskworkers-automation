@@ -80,18 +80,4 @@ with Chrome(executable_path='./chromedriver', options=options) as driver:
 
         i += 1
 
-    interaction_cycles = 0
-
-    for interaction_cycles in range(6):
-        time.sleep(7200)
-        tabs = 0
-
-        for window_handle in driver.window_handles:
-            driver.switch_to.window(window_handle)
-
-            if tabs != 0:
-                WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
-
-            tabs += 1
-
-        interaction_cycles += 1
+    time.sleep(20)

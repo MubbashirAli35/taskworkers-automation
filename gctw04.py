@@ -32,7 +32,7 @@ notebooks = ['https://colab.research.google.com/drive/1rPG1tnGhjmywg12xKvRp5gpLx
 
 i = 0
 
-with Chrome(executable_path='./chromedriver', options=options) as driver:
+with Chrome(executable_path='chromedriver_win32 (1)/chromedriver.exe', options=options) as driver:
     driver.get(notebooks[0])    # Gets first notebook
 
     # Adds Cookies for this particular task worker's gmail account
@@ -95,19 +95,20 @@ with Chrome(executable_path='./chromedriver', options=options) as driver:
 
         i += 1
 
-    interaction_cycles = 0
-
-    # This loop just interacts with the Notebooks so they are not disconnected being considered idle
-    for interaction_cycles in range(6):
-        time.sleep(7200)    # Throws an interaction on every running notebook after every 2 hours
-        tabs = 0
-
-        # Iterates over all the opened tabs and interacts with them
-        for window_handle in driver.window_handles:
-            driver.switch_to.window(window_handle)
-
-            # Doesn't interact if it is the tab with Sign In form
-            if tabs != 0:
-                WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
-
-            tabs += 1
+    time.sleep(20)
+    # interaction_cycles = 0
+    #
+    # # This loop just interacts with the Notebooks so they are not disconnected being considered idle
+    # for interaction_cycles in range(6):
+    #     time.sleep(7200)    # Throws an interaction on every running notebook after every 2 hours
+    #     tabs = 0
+    #
+    #     # Iterates over all the opened tabs and interacts with them
+    #     for window_handle in driver.window_handles:
+    #         driver.switch_to.window(window_handle)
+    #
+    #         # Doesn't interact if it is the tab with Sign In form
+    #         if tabs != 0:
+    #             WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
+    #
+    #         tabs += 1

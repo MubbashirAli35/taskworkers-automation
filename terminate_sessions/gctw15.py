@@ -85,3 +85,5 @@ with Chrome(executable_path='../chromedriver', options=options) as driver:
             print(notebooks_data.at[i + 126, 'Notebooks'] + ' terminated')
 
         i += 1
+
+    time.sleep(20)
