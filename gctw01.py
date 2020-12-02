@@ -12,7 +12,7 @@ notebooks_config = pd.read_csv(sys.argv[1])
 
 # Adds configuration to the chromedriver
 options = Options()
-options.add_argument('headless')    # Configures to start chrome in headless mode
+# options.add_argument('headless')    # Configures to start chrome in headless mode
 options.add_argument('--start-maximized')   # Configures to start it with maximum window size
 
 # Adds a specific User Agent
@@ -32,7 +32,7 @@ notebooks = ['https://colab.research.google.com/drive/1CvwSNCrZNP-zNM6i4SnEAfZTc
 
 i = 0
 
-with Chrome(executable_path='chromedriver_win32 (1)/chromedriver.exe', options=options) as driver:
+with Chrome(executable_path='./chromedriver', options=options) as driver:
     driver.get(notebooks[0])    # Gets first notebook
 
     # Adds Cookies for this particular task worker's gmail account
@@ -92,6 +92,10 @@ with Chrome(executable_path='chromedriver_win32 (1)/chromedriver.exe', options=o
             run_all.click()
 
             print(notebooks_config.at[i, 'Notebooks'] + ' Running')     # Logs on terminal that the Notebook is running
+
+            time.sleep(5)
+            driver.save_screenshot('./screenshots/gctw01/' + notebooks_config.at[i, 'Notebooks'] + '.png')
+            time.sleep(2)
 
         i += 1
 

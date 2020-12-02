@@ -93,6 +93,9 @@ with Chrome(executable_path='./chromedriver', options=options) as driver:
 
             print(notebooks_config.at[i + 108, 'Notebooks'] + ' Running')     # Logs on terminal that the Notebook is running
 
+            time.sleep(5)
+            driver.save_screenshot('./screenshots/gctw13/' + notebooks_config.at[i + 108, 'Notebooks'] + '.png')
+            time.sleep(2)
         i += 1
 
     time.sleep(20)

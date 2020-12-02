@@ -32,7 +32,7 @@ notebooks = ['https://colab.research.google.com/drive/1iTq0t3uExNpOI7ii7vNpfs1xo
 
 i = 0
 
-with Chrome(executable_path='chromedriver_win32 (1)/chromedriver.exe', options=options) as driver:
+with Chrome(executable_path='./chromedriver', options=options) as driver:
     driver.get(notebooks[0])    # Gets first notebook
 
     # Adds Cookies for this particular task worker's gmail account
@@ -93,6 +93,9 @@ with Chrome(executable_path='chromedriver_win32 (1)/chromedriver.exe', options=o
 
             print(notebooks_config.at[i + 9, 'Notebooks'] + ' Running')     # Logs on terminal that the Notebook is running
 
+            time.sleep(10)
+            driver.save_screenshot('./screenshots/gctw02/' + notebooks_config.at[i + 9, 'Notebooks'] + '.png')
+            time.sleep(2)
         i += 1
 
     time.sleep(20)
