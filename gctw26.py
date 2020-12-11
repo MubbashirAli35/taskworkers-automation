@@ -20,15 +20,15 @@ options.add_argument(
     'user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36')
 
 # List of Notebooks' URLs for this particular task worker
-notebooks = ['https://colab.research.google.com/drive/1ItfZWr8u2qjwXn6srkee6-Eo0cEYIBep',
-             'https://colab.research.google.com/drive/19pHXnkNeHwSUg6je2GmB04ROu4wAObuZ',
-             'https://colab.research.google.com/drive/1roVDTuZq_UTnbGmobFqF6Hh-YmsmVSK0',
-             'https://colab.research.google.com/drive/1q2sAj5XVR4ggIROAaaRlSb0yVqsBsrNa',
-            'https://colab.research.google.com/drive/1sZmKfU1JGUeVCsfgeKEJbCMTT_0urhCX',
-            'https://colab.research.google.com/drive/1Vb6fkGMWwJLghoXqTNueDnkEWZGbd_2i',
-            'https://colab.research.google.com/drive/1ZY1dQcVZjAtJR7xH6GMX47MxumrjQz0j',
-            'https://colab.research.google.com/drive/1polX7Mrg2HgrIbLImZWR0ShpjJri9axk',
-            'https://colab.research.google.com/drive/1vcZoohRQoHq9siUOqGnclR1xUAGvo_FM'] 
+notebooks = ['https://colab.research.google.com/drive/1LjOTJNCyWh-FS0tq8hYch3iT1W3_bOLn',
+             'https://colab.research.google.com/drive/1nGgTWVj1883MZgrvkGVsigMzIVlGsRSQ',
+             'https://colab.research.google.com/drive/1TfssgyHGO8fRyS6L7XXFzJp3vcn4Dakl',
+             'https://colab.research.google.com/drive/12ahIzZ_zrxpS_ria8wDnosnRjJvxuuct',
+             'https://colab.research.google.com/drive/1WBOq5KzqDYFSMSEJhpZ91LK0AnLi9qtq',
+             'https://colab.research.google.com/drive/1p5qeJF1U-LcR5LTOQLN-l-6wllqJYKDd',
+             'https://colab.research.google.com/drive/1k205oemSR299Sw8yXt3a9iiDm3m9PhJY',
+             'https://colab.research.google.com/drive/1nz9YkZpPW57vPddPIrzN4Vt1ufPSXCox',
+             'https://colab.research.google.com/drive/1NqR3Vq1M9MVTafqNguadRpVMHw27uvlu']
 
 i = 0
 
@@ -36,21 +36,21 @@ with Chrome(executable_path='./chromedriver', options=options) as driver:
 
     driver.get(notebooks[4])
 
-    for cookie in pickle.load(open('./cookies/cookies_gctw17.pkl', 'rb')):
+    for cookie in pickle.load(open('./cookies/cookies_gctw26.pkl', 'rb')):
         if 'sameSite' in cookie:
             if cookie['sameSite'] == 'None':
                 cookie['sameSite'] = 'Strict'
         driver.add_cookie(cookie)
 
     # time.sleep(20)
-    # pickle.dump(driver.get_cookies(), open('./cookies/cookies_gctw17.pkl', 'wb'), protocol=2)
+    # pickle.dump(driver.get_cookies(), open('./cookies/cookies_gctw26.pkl', 'wb'), protocol=2)
 
     for i in range(9):
-        if notebooks_config.at[i + 144, 'Status'] == 'Yes':
+        if notebooks_config.at[i + 225, 'Status'] == 'Yes':
             driver.switch_to.new_window('tab')
             driver.get(notebooks[i])
 
-            print(notebooks_config.at[i + 144, 'Notebooks'], 'Loaded')
+            print(notebooks_config.at[i + 225, 'Notebooks'] + ' Loaded')
 
             runtime_menu = WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button'))
             time.sleep(2)
@@ -76,10 +76,10 @@ with Chrome(executable_path='./chromedriver', options=options) as driver:
             time.sleep(2)
             run_all.click()
 
-            print(notebooks_config.at[i + 144, 'Notebooks'], 'Running')
+            print(notebooks_config.at[i + 225, 'Notebooks'] + ' Running')
 
             time.sleep(180)
-            driver.save_screenshot('./screenshots/gctw17/' + notebooks_config.at[i + 144, 'Notebooks'] + '.png')
+            driver.save_screenshot('./screenshots/gctw26/' + notebooks_config.at[i + 225, 'Notebooks'] + '.png')
             time.sleep(2)
         i += 1
 

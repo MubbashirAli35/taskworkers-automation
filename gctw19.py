@@ -71,14 +71,14 @@ with Chrome(executable_path='./chromedriver', options=options) as driver:
             time.sleep(2)
             runtime_menu.click()
 
-            WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':1r'))
-            run_all = driver.find_element(By.ID, ':1r')
+            WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':1w'))
+            run_all = driver.find_element(By.ID, ':1w')
             time.sleep(2)
             run_all.click()
 
             print(notebooks_config.at[i + 162, 'Notebooks'], 'Running')
 
-            time.sleep(5)
+            time.sleep(180)
             driver.save_screenshot('./screenshots/gctw19/' + notebooks_config.at[i + 162, 'Notebooks'] + '.png')
             time.sleep(2)
         i += 1
