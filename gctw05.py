@@ -23,11 +23,18 @@ options.add_argument(
 notebooks = ['https://colab.research.google.com/drive/1eAiucTxDYPYAFf5tUWnNOJtICIdlRN0a',
              'https://colab.research.google.com/drive/1lzNejK0oj-qhqurheDPkG14Nv9G_zunP',
              'https://colab.research.google.com/drive/15YoE84PAo8ylnhNBzm6SscisK0w1a2i3',
-             'https://colab.research.google.com/drive/16O8tJF2wd9FeiHV0elthaYpuXzNJR5Gq']
+             'https://colab.research.google.com/drive/16O8tJF2wd9FeiHV0elthaYpuXzNJR5Gq',
+             'https://colab.research.google.com/drive/1-ct-Ls52o1GtGu2My6oQV3NjX1NJRGvm',
+             'https://colab.research.google.com/drive/1AZEEA1w4khNK0HbShe69KdYUddfZN24F',
+             'https://colab.research.google.com/drive/1Q6RaS_7rwAUbDXe8TMHu31V3UEWaV1Zu',
+             'https://colab.research.google.com/drive/16evqMjotTJZcBoEy5i6YN5KbkkBTrEOo',
+             'https://colab.research.google.com/drive/177D8_Ooxsbon2kbfSI24gjdWI0xLPcAv']
 
 i = 0
 
 with Chrome(executable_path='./chromedriver', options=options) as driver:
+    # driver.get('https://accounts.google.com/o/oauth2/auth/identifier?client_id=717762328687-iludtf96g1hinl76e4lc1b9a82g457nn.apps.googleusercontent.com&scope=profile%20email&redirect_uri=https%3A%2F%2Fstackauth.com%2Fauth%2Foauth2%2Fgoogle&state=%7B%22sid%22%3A1%2C%22st%22%3A%2259%3A3%3Abbc%2C16%3Aaa5bbfcd04987df9%2C10%3A1609186223%2C16%3Ae0f9e400ff758b8a%2Cc93369a30a25c98422fa6bbedbcd77dca39193057a5efe32ea8b0bb0c24a2d50%22%2C%22cdl%22%3Anull%2C%22cid%22%3A%22717762328687-iludtf96g1hinl76e4lc1b9a82g457nn.apps.googleusercontent.com%22%2C%22k%22%3A%22Google%22%2C%22ses%22%3A%2200c68903dfa345e59f106379ca35fdb8%22%7D&response_type=code&flowName=GeneralOAuthFlow')
+
     driver.get(notebooks[0])    # Gets first notebook
 
     # Adds Cookies for this particular task worker's gmail account
@@ -41,8 +48,7 @@ with Chrome(executable_path='./chromedriver', options=options) as driver:
 
     # The line below reads cookies from the site, since cookie expiration period is long enough,
     # You won't need to uncomment it
-
-    # pickle.dump(driver.get_cookies(), open('./cookies/cookies_gctw05.pkl', 'wb'), protocol=2)
+    # time.sleep(20)
 
     # Iterates over the Notebooks' list
     for i in range(9):
@@ -51,6 +57,7 @@ with Chrome(executable_path='./chromedriver', options=options) as driver:
         if notebooks_config.at[i + 36, 'Status'] == 'Yes':
             driver.switch_to.new_window('tab')  # Opens and switches to a new tab
             driver.get(notebooks[i])    # Gets a Notebook
+            # pickle.dump(driver.get_cookies(), open('./cookies/cookies_gctw05.pkl', 'wb'), protocol=2)
 
             print(notebooks_config.at[i + 36, 'Notebooks'] + ' Loaded')  # Logs on terminal that the Notebook is loaded
 
@@ -88,9 +95,6 @@ with Chrome(executable_path='./chromedriver', options=options) as driver:
 
             print(notebooks_config.at[i + 36, 'Notebooks'] + ' Running')     # Logs on terminal that the Notebook is running
 
-            time.sleep(180)
-            driver.save_screenshot('./screenshots/gctw05/' + notebooks_config.at[i + 36, 'Notebooks'] + '.png')
-            time.sleep(2)
         i += 1
 
     time.sleep(20)

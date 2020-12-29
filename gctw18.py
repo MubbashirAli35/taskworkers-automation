@@ -78,9 +78,6 @@ with Chrome(executable_path='./chromedriver', options=options) as driver:
 
             print(notebooks_config.at[i + 153, 'Notebooks'], 'Running')
 
-            time.sleep(180)
-            driver.save_screenshot('./screenshots/gctw18/' + notebooks_config.at[i + 153, 'Notebooks'] + '.png')
-            time.sleep(2)
         i += 1
 
     time.sleep(20)

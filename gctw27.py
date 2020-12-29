@@ -80,9 +80,6 @@ with Chrome(executable_path='./chromedriver_win32 (1)/chromedriver.exe', options
 
             print(notebooks_config.at[i + 234, 'Notebooks'] + ' Running')
 
-            time.sleep(180)
-            driver.save_screenshot('./screenshots/gctw27/' + notebooks_config.at[i + 234, 'Notebooks'] + '.png')
-            time.sleep(2)
         i += 1
 
     time.sleep(20)
