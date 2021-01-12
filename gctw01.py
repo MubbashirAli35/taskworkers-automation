@@ -86,10 +86,10 @@ with Chrome(executable_path='./chromedriver', options=options) as driver:
             time.sleep(2)
             runtime_menu.click()
 
-            WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, '1w'))
+            WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':1w'))
 
             # Clicks on Run all cells
-            run_all = driver.find_element(By.ID, '1w')
+            run_all = driver.find_element(By.ID, ':1w')
             time.sleep(2)
             run_all.click()
 
