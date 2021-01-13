@@ -95,4 +95,4 @@ with Chrome(executable_path='./chromedriver', options=options) as driver:
 
         i += 1
 
-    time.sleep(20)
+    time.sleep(60)
