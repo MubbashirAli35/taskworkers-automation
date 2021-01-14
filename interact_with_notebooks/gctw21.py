@@ -32,11 +32,11 @@ notebooks = ['https://colab.research.google.com/drive/1MXbb0k8B4_bhqFOYD3BQCSsUO
 
 i = 0
 
-with Chrome(executable_path='./chromedriver', options=options) as driver:
+with Chrome(executable_path='../chromedriver', options=options) as driver:
 
     driver.get(notebooks[4])
 
-    for cookie in pickle.load(open('./cookies/cookies_gctw21.pkl', 'rb')):
+    for cookie in pickle.load(open('../cookies/cookies_gctw21.pkl', 'rb')):
         if 'sameSite' in cookie:
             if cookie['sameSite'] == 'None':
                 cookie['sameSite'] = 'Strict'

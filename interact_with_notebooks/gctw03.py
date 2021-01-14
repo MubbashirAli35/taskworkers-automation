@@ -8,7 +8,7 @@ import pandas as pd
 import sys
 
 # Reads configuration from the CSV about which notebooks to run for a particular worker
-notebooks_config = pd.read_csv(sys.argv[1])
+notebooks_config = pd.read_csv('../' + sys.argv[1])
 
 # Adds configuration to the chromedriver
 options = Options()
