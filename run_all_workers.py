@@ -7,6 +7,10 @@ os.system('python run_gctw11_to_gctw15.py' + ' ' + sys.argv[1])
 os.system('python run_gctw16_to_gctw20.py' + ' ' + sys.argv[1])
 os.system('python run_gctw21_to_gctw25.py' + ' ' + sys.argv[1])
 os.system('python run_gctw26_to_gctw30.py' + ' ' + sys.argv[1])
+os.system('python run_gctw31_to_gctw35.py' + ' ' + sys.argv[1])
+os.system('python run_gctw36_to_gctw40.py' + ' ' + sys.argv[1])
+os.system('python run_gctw41_to_gctw45.py' + ' ' + sys.argv[1])
+os.system('python run_gctw46_to_gctw50.py' + ' ' + sys.argv[1])
 
 # if __name__=='__main__':
 #     worker1 = Process(target=gctw01)
