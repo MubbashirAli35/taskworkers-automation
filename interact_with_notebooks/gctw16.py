@@ -64,4 +64,4 @@ with Chrome(executable_path='../chromedriver', options=options) as driver:
             time.sleep(2)
             runtime_menu.click()
 
-    time.sleep(20)
+    # time.sleep(20)
