@@ -12,6 +12,8 @@ notebooks_config = pd.read_csv(sys.argv[1])
 
 # Adds configuration to the chromedriver
 options = Options()
+# options.add_argument('--user-data-dir=C:/Users/mubba/AppData/Local/Google/Chrome/User Data')
+# options.add_argument('--profile-directory=Profile 25')
 options.add_argument('headless')    # Configures to start chrome in headless mode
 options.add_argument('--start-maximized')   # Configures to start it with maximum window size
 
@@ -43,13 +45,13 @@ with Chrome(executable_path='./chromedriver', options=options) as driver:
                 cookie['sameSite'] = 'Strict'
         driver.add_cookie(cookie)
 
-    # time.sleep(20)
+    # time.sleep(5)
+    # pickle.dump(driver.get_cookies(), open('./cookies/cookies_gctw22.pkl', 'wb'), protocol=2)
 
     for i in range(9):
         if notebooks_config.at[i + 189, 'Status'] == 'Yes':
             driver.switch_to.new_window('tab')
             driver.get(notebooks[i])
-            # pickle.dump(driver.get_cookies(), open('./cookies/cookies_gctw22.pkl', 'wb'), protocol=2)
 
             print(notebooks_config.at[i + 189, 'Notebooks'] + ' Loaded')
 
