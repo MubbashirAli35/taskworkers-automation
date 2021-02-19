@@ -100,7 +100,7 @@ with Chrome(executable_path='./chromedriver', options=options) as driver:
 
         i += 1
 
-    time.sleep(60)
+    time.sleep(20)
     # interaction_cycles = 0
     #
     # # This loop just interacts with the Notebooks so they are not disconnected being considered idle

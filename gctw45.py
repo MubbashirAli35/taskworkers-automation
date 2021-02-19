@@ -84,4 +84,4 @@ with Chrome(executable_path='./chromedriver_win32/chromedriver.exe', options=opt
 
         i += 1
 
-    time.sleep(60)
+    time.sleep(20)
