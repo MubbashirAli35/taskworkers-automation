@@ -13,7 +13,7 @@ notebooks_config = pd.read_csv(sys.argv[1])
 # Adds configuration to the chromedriver
 options = Options()
 # options.add_argument('--user-data-dir=C:/Users/mubba/AppData/Local/Google/Chrome/User Data')
-# options.add_argument('--profile-directory=Profile 21')
+# options.add_argument('--profile-directory=Profile 24')
 options.add_argument('headless')    # Configures to start chrome in headless mode
 options.add_argument('--start-maximized')   # Configures to start it with maximum window size
 

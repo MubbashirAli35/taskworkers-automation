@@ -39,14 +39,14 @@ with Chrome(executable_path='./chromedriver', options=options) as driver:
 
     driver.get(notebooks[0])
 
-    for cookie in pickle.load(open('./cookies/cookies_gctw25.pkl', 'rb')):
-        if 'sameSite' in cookie:
-            if cookie['sameSite'] == 'None':
-                cookie['sameSite'] = 'Strict'
-        driver.add_cookie(cookie)
+    # for cookie in pickle.load(open('./cookies/cookies_gctw25.pkl', 'rb')):
+    #     if 'sameSite' in cookie:
+    #         if cookie['sameSite'] == 'None':
+    #             cookie['sameSite'] = 'Strict'
+    #     driver.add_cookie(cookie)
 
-    # time.sleep(5)
-    # pickle.dump(driver.get_cookies(), open('./cookies/cookies_gctw25.pkl', 'wb'), protocol=2)
+    time.sleep(5)
+    pickle.dump(driver.get_cookies(), open('./cookies/cookies_gctw25.pkl', 'wb'), protocol=2)
 
     for i in range(9):
         if notebooks_config.at[i + 216, 'Status'] == 'Yes':
