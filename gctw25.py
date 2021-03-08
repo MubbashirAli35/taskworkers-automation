@@ -10,16 +10,28 @@ import sys
 # Reads configuration from the CSV about which notebooks to run for a particular worker
 notebooks_config = pd.read_csv(sys.argv[1])
 
-# Adds configuration to the chromedriver
+# Adds configuration to the chromedriver# options.add_argument('--user-data-dir=C:/Users/mubba/AppData/Local/Google/Chrome/User Data')
+# # options.add_argument('--profile-directory=Profile 28')
 options = Options()
-# options.add_argument('--user-data-dir=C:/Users/mubba/AppData/Local/Google/Chrome/User Data')
-# options.add_argument('--profile-directory=Profile 28')
+
 options.add_argument('headless')    # Configures to start chrome in headless mode
 options.add_argument('--start-maximized')   # Configures to start it with maximum window size
 
 # Adds a specific User Agent
 options.add_argument(
     'user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36')
+
+notebooks_dict = {
+    'gctw25a': 'https://colab.research.google.com/drive/11-mJwtKRyuV8ShalFp8p8qvP2UrGK8xg',
+    'gctw25b': 'https://colab.research.google.com/drive/1gJMuJtS0QRneUw4Nw_vQFD4prZg3IeGO',
+    'gctw25c': 'https://colab.research.google.com/drive/1PEudxF--op3nIeRvPUEgfkUgX5IFHwR1',
+    'gctw25d': 'https://colab.research.google.com/drive/1OGQQBHA92lJIZmpSJ3fqwlw5BDriJsWt',
+    'gctw25e': 'https://colab.research.google.com/drive/1nV4RGdI_xsBINpUHGyGfs-UCpqdOhSPz',
+    'gctw25f': 'https://colab.research.google.com/drive/1ZojMOKnVAA3VtV_32ASvqGddkxKGKMvf',
+    'gctw25g': 'https://colab.research.google.com/drive/1wcv-zN22eYK-DmSjY28-WAf1wMk6EZ0b',
+    'gctw25h': 'https://colab.research.google.com/drive/1rS2IlSoBhId82VM5YfImTcU_NYnYYWhe',
+    'gctw25i': 'https://colab.research.google.com/drive/1UjmokqbRQhXIs1YTrfItIbqNV7ZpuGK0'
+}
 
 # List of Notebooks' URLs for this particular task worker
 notebooks = ['https://colab.research.google.com/drive/11-mJwtKRyuV8ShalFp8p8qvP2UrGK8xg',

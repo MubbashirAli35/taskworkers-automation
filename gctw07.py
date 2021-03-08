@@ -7,7 +7,7 @@ import pickle
 import pandas as pd
 import sys
 
-# Reads configuration from the CSV about which notebooks to run for a particular worker
+# Reads configuration from the CSV about whichA notebooks to run for a particular worker
 notebooks_config = pd.read_csv(sys.argv[1])
 
 # Adds configuration to the chromedriver
@@ -21,6 +21,18 @@ options.add_argument('--start-maximized')   # Configures to start it with maximu
 options.add_argument(
     'user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36')
 
+notebooks_dict = {
+    'gctw07a': 'https://colab.research.google.com/drive/1Ai5GLCw4adNX3gEbDOnw21F0Id-yYqRw',
+    'gctw07b': 'https://colab.research.google.com/drive/1Q_Kvcdl0S5yqyTSjyjm5-tLeQUXg2vnw',
+    'gctw07c': 'https://colab.research.google.com/drive/1NH4lXceVGq2MNbsLQPh_jyWi_XzNL5wK',
+    'gctw07d': 'https://colab.research.google.com/drive/1phFAZeaQ3OHjtzjqCvWR3_n-4a8Su-Bs',
+    'gctw07e': 'https://colab.research.google.com/drive/1ri9aXj2huB_GaPtgp5xote_aBDZbIKi6',
+    'gctw07f': 'https://colab.research.google.com/drive/1m-bnyK_sFIV7bGEjqidtvV-w1zzrS3r4',
+    'gctw07g': 'https://colab.research.google.com/drive/1SBnmng_eMe2PgFUHnlnpLCpJpjU8QiZH',
+    'gctw07h': 'https://colab.research.google.com/drive/1ZncEiiMyilNVgILBMR8O-VegX7Q13G4M',
+    'gctw07i': 'https://colab.research.google.com/drive/1D3n1A-lXKvBTQ7xPMdajlwz8byPYu8vN'
+}
+
 # List of Notebooks' URLs for this particular task worker
 notebooks = ['https://colab.research.google.com/drive/1Ai5GLCw4adNX3gEbDOnw21F0Id-yYqRw',
             'https://colab.research.google.com/drive/1Q_Kvcdl0S5yqyTSjyjm5-tLeQUXg2vnw',
@@ -30,7 +42,7 @@ notebooks = ['https://colab.research.google.com/drive/1Ai5GLCw4adNX3gEbDOnw21F0I
             'https://colab.research.google.com/drive/1m-bnyK_sFIV7bGEjqidtvV-w1zzrS3r4',
             'https://colab.research.google.com/drive/1SBnmng_eMe2PgFUHnlnpLCpJpjU8QiZH',
             'https://colab.research.google.com/drive/1ZncEiiMyilNVgILBMR8O-VegX7Q13G4M',
-            'https://colab.research.google.com/drive/1D3n1A-lXKvBTQ7xPMdajlwz8byPYu8vN'] 
+            'https://colab.research.google.com/drive/1D3n1A-lXKvBTQ7xPMdajlwz8byPYu8vN']
 
 i = 0
 

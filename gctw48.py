@@ -21,6 +21,18 @@ options.add_argument('--start-maximized')   # Configures to start it with maximu
 options.add_argument(
     'user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36')
 
+notebooks_dict = {
+    'gctw48a': 'https://colab.research.google.com/drive/1imaf1KNk7lfucKjVVLymxBtJRfsK9f-N',
+    'gctw48b': 'https://colab.research.google.com/drive/10mASzp07Yk4LFNNfqEwRFuujwORcxy8m',
+    'gctw48c': 'https://colab.research.google.com/drive/1D8HmObRZdOJ5_FrIwHaH4_36pFr-CUWe',
+    'gctw48d': 'https://colab.research.google.com/drive/1rCKhaoMgZK6LKwjV-nYdB12Gj3WmjSlA',
+    'gctw48e': 'https://colab.research.google.com/drive/1kEljyTFniQkSm9GaSVlcE4rxEK6wTNwP',
+    'gctw48f': 'https://colab.research.google.com/drive/1A2xmKDTY3n5a9Ki5i0qSGsqky8uVgWNK',
+    'gctw48g': 'https://colab.research.google.com/drive/1Bpkzjw1ck2APiQ0QTIARXuY_VZt-lVku',
+    'gctw48h': 'https://colab.research.google.com/drive/1Ojy-JUuFvVKpVzMUQL4ALVqnJi_uWX-n',
+    'gctw48i': 'https://colab.research.google.com/drive/1eG_xWR2rTng8cTEBphZBiaX_zxv-qNGX'
+}
+
 # List of Notebooks' URLs for this particular task worker
 notebooks = ['https://colab.research.google.com/drive/1imaf1KNk7lfucKjVVLymxBtJRfsK9f-N',
              'https://colab.research.google.com/drive/10mASzp07Yk4LFNNfqEwRFuujwORcxy8m',
