@@ -51,24 +51,38 @@ training_notebooks['Alive Status'] = dt.datetime.now() - training_notebooks['Max
 backtests_notebooks_sorted_on_last_beat_time = backtests_notebooks.sort_values(by='Max Last Beat Time', ignore_index=True)
 training_notebooks_sorted_on_last_beat_time = training_notebooks.sort_values(by='Max Last Beat Time', ignore_index=True)
 
-# print(backtests_notebooks)
-
 # Only keep notebooks that ran not more than two hours ago
-backtests_notebooks_sorted_on_last_beat_time = backtests_notebooks_sorted_on_last_beat_time.loc[
-    (dt.datetime.now() - backtests_notebooks_sorted_on_last_beat_time['Max Last Beat Time'] < dt.timedelta(hours=17))
+# backtests_notebooks_sorted_on_last_beat_time = backtests_notebooks_sorted_on_last_beat_time.loc[
+#     (dt.datetime.now() - backtests_notebooks_sorted_on_last_beat_time['Max Last Beat Time'] < dt.timedelta(hours=17))
+# ]
+#
+# training_notebooks_sorted_on_last_beat_time = training_notebooks_sorted_on_last_beat_time.loc[
+#     (dt.datetime.now() - training_notebooks_sorted_on_last_beat_time['Max Last Beat Time'] < dt.timedelta(hours=17))
+# ]
+
+backtests_notebooks_to_run = backtests_notebooks_sorted_on_last_beat_time.loc[
+    backtests_notebooks_sorted_on_last_beat_time['Alive Status'] == False
 ]
 
-training_notebooks_sorted_on_last_beat_time = training_notebooks_sorted_on_last_beat_time.loc[
-    (dt.datetime.now() - training_notebooks_sorted_on_last_beat_time['Max Last Beat Time'] < dt.timedelta(hours=17))
+training_notebooks_to_run = training_notebooks_sorted_on_last_beat_time.loc[
+    training_notebooks_sorted_on_last_beat_time['Alive Status'] == False
 ]
 
-backtest_workers = backtests_notebooks_sorted_on_last_beat_time['Notebook']
-training_workers = training_notebooks_sorted_on_last_beat_time['Notebook']
-
-
+backtests_notebooks_to_run = backtests_notebooks_to_run['Notebook']
+training_notebooks_to_run = training_notebooks_to_run['Notebook']
 
 num_of_pending_backtests = tasks_queue.loc[(tasks_queue['Status'] == 'New') & (tasks_queue['Task Type'] == 'BackTestTask')]['Number']
 num_of_pending_training_tasks = tasks_queue.loc[(tasks_queue['Status'] == 'New') & (tasks_queue['Task Type'] == 'Training')]['Number']
 
 num_of_backtests_running = tasks_queue.loc[(tasks_queue['Status'] == 'Running') & (tasks_queue['Task Type'] == 'BackTestTask')]['Number']
 num_of_training_tasks_running = tasks_queue.loc[(tasks_queue['Status'] == 'Running') & (tasks_queue['Task Type'] == 'Training')]['Number']
+
+if num_of_pending_backtests.count() > 0 and num_of_pending_backtests > 0:
+    if num_of_backtests_running.count() > 0 and num_of_backtests_running < 75:
+        for notebook in backtests_notebooks_to_run:
+            run_notebook(notebook)
+
+if num_of_pending_training_tasks.count() > 0 and num_of_pending_training_tasks > 0:
+    if num_of_training_tasks_running.count() > num_of_training_tasks_running < 60:
+        for notebook in training_notebooks_to_run:
+            run_notebook(notebook)

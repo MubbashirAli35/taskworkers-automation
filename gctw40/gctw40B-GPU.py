@@ -23,18 +23,18 @@ options.add_argument(
     'user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36')
 
 notebooks_dict = {
-    'gctw04a': 'https://colab.research.google.com/drive/1rPG1tnGhjmywg12xKvRp5gpLxiEEfp3k',
-    'gctw04b': 'https://colab.research.google.com/drive/1XUAf1bjfILN5mIRx1pkCb6JJCL7IliiM',
-    'gctw04c': 'https://colab.research.google.com/drive/10HlXmXQ-QqTTyvSbDDfUc_jT1414orun',
-    'gctw04d': 'https://colab.research.google.com/drive/1L-mZdIYp68rO5DVy-pEXzkUMQeuRFe34',
-    'gctw04e': 'https://colab.research.google.com/drive/1MI5B-BLPoMn0WIs7T50pILBy4RQWIs-N',
-    'gctw04f': 'https://colab.research.google.com/drive/1EUpphEExKYje759b-u0Sp7q4PsM__aT6',
-    'gctw04g': 'https://colab.research.google.com/drive/1CdziYeFf0LU2JCCm-CKgPofUcbvv6CQZ',
-    'gctw04h': 'https://colab.research.google.com/drive/1zCjJWW-wX8FhHDxYM-QrL9glhZf6tIis',
-    'gctw04i': 'https://colab.research.google.com/drive/1dHAVjA53KVHL0Mn6670OUfCAE9VAWTjv'
+    'gctw40a': 'https://colab.research.google.com/drive/101xZtnrc95DAW9j36EMIsujxkybAHAWF',
+    'gctw40b': 'https://colab.research.google.com/drive/1DaA7UFlj_Jiigfag1gIxxo575kV_mOHm',
+    'gctw40c': 'https://colab.research.google.com/drive/1ivepJQtVn0FV3ySWkjI8MYNUC8RXStsI',
+    'gctw40d': 'https://colab.research.google.com/drive/1ofHavz8lv6qp9l9L1i07281aQqeoczvW',
+    'gctw40e': 'https://colab.research.google.com/drive/1lgDbk8Ffw-dQPQOifVvJrLe_OHIsJtJG',
+    'gctw40f': 'https://colab.research.google.com/drive/1yVFkBxwxWTOCg6KDT5ljYMAsagLS1QLd',
+    'gctw40g': 'https://colab.research.google.com/drive/1H0yRZQPHYiavxYiDAJHZejMsMASN2dt3',
+    'gctw40h': 'https://colab.research.google.com/drive/1zrBkBiGRP35ZYOpdtqoF5prWAd1E0-yn',
+    'gctw40i': 'https://colab.research.google.com/drive/13BuFYlt-0kxsjnA898rRD1Bb_-iebNiO'
 }
 
-notebook_link = 'https://colab.research.google.com/drive/1XUAf1bjfILN5mIRx1pkCb6JJCL7IliiM'
+notebook_link = 'https://colab.research.google.com/drive/1DaA7UFlj_Jiigfag1gIxxo575kV_mOHm'
 
 i = 0
 
@@ -44,7 +44,7 @@ with Chrome(executable_path='./chromedriver', options=options) as driver:
     driver.get(notebook_link)    # Gets first notebook
 
     # Adds Cookies for this particular task worker's gmail account
-    for cookie in pickle.load(open('./cookies/cookies_gctw04.pkl', 'rb')):
+    for cookie in pickle.load(open('./cookies/cookies_gctw40.pkl', 'rb')):
 
         # Sets the 'sameSite' cookie to 'Strict' since Google doesn't allow requests from Cross Origin
         if 'sameSite' in cookie:
