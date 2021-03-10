@@ -15,7 +15,7 @@ import sys
 options = Options()
 # options.add_argument('--user-data-dir=C:/Users/mubba/AppData/Local/Google/Chrome/User Data')
 # options.add_argument('--profile-directory=Profile 1')
-# options.add_argument('headless')    # Configures to start chrome in headless mode
+options.add_argument('headless')    # Configures to start chrome in headless mode
 options.add_argument('--start-maximized')   # Configures to start it with maximum window size
 
 # Adds a specific User Agent
@@ -49,7 +49,7 @@ notebooks = ['https://colab.research.google.com/drive/1CvwSNCrZNP-zNM6i4SnEAfZTc
 
 i = 0
 
-with Chrome(executable_path='./chromedriver_win32/chromedriver.exe', options=options) as driver:
+with Chrome(executable_path='./chromedriver', options=options) as driver:
     # driver.get('https://accounts.google.com/o/oauth2/auth/identifier?client_id=717762328687-iludtf96g1hinl76e4lc1b9a82g457nn.apps.googleusercontent.com&scope=profile%20email&redirect_uri=https%3A%2F%2Fstackauth.com%2Fauth%2Foauth2%2Fgoogle&state=%7B%22sid%22%3A1%2C%22st%22%3A%2259%3A3%3Abbc%2C16%3Aaa5bbfcd04987df9%2C10%3A1609186223%2C16%3Ae0f9e400ff758b8a%2Cc93369a30a25c98422fa6bbedbcd77dca39193057a5efe32ea8b0bb0c24a2d50%22%2C%22cdl%22%3Anull%2C%22cid%22%3A%22717762328687-iludtf96g1hinl76e4lc1b9a82g457nn.apps.googleusercontent.com%22%2C%22k%22%3A%22Google%22%2C%22ses%22%3A%2200c68903dfa345e59f106379ca35fdb8%22%7D&response_type=code&flowName=GeneralOAuthFlow')
 
     driver.get(notebook_link)    # Gets first notebook
@@ -71,80 +71,16 @@ with Chrome(executable_path='./chromedriver_win32/chromedriver.exe', options=opt
     driver.find_element_by_tag_name('body').send_keys(Keys.CONTROL + 't')
     driver.get(notebook_link)  # Gets a Notebook
 
-    print('gctw1A-GPU' + ' Loaded')  # Logs on terminal that the Notebook is loaded
+    print(sys.argv[1] + ' Loaded')  # Logs on terminal that the Notebook is loaded
 
-    WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
-    WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':20'))
-    WebDriverWait(driver, 20).until(lambda d: d.find_element(By.XPATH, "//*[contains(text(), 'Factory reset runtime')]")).click()
-    WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'ok')).click()
-    WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
-    WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':1w')).click()
+    if sys.argv[2].lower() == 'interact':
+        WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
+    else:
+        WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
+        WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':20'))
+        WebDriverWait(driver, 20).until(lambda d: d.find_element(By.XPATH, "//*[contains(text(), 'Factory reset runtime')]")).click()
+        WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'ok')).click()
+        WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
+        WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':1w')).click()
 
-    print('gctw1A-GPU' + ' Running')  # Logs on terminal that the Notebook is running
-
-    # Iterates over the Notebooks' list
-    # for i in range(9):
-    #
-    #     # Runs a notebook if its status is Yes in the CSV file
-    #     if notebooks_config.at[i, 'Status'] == 'Yes':
-    #         driver.switch_to.new_window('tab')  # Opens and switches to a new tab
-    #         driver.get(notebooks[i])    # Gets a Notebook
-    #
-    #
-    #         print(notebooks_config.at[i, 'Notebooks'] + ' Loaded')  # Logs on terminal that the Notebook is loaded
-    #
-    #         # Gets the Runtime menu button and clicks it
-    #         runtime_menu = WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button'))
-    #         time.sleep(2)
-    #         runtime_menu.click()
-    #
-    #         # Waits until list is opened
-    #         WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':20'))
-    #
-    #         # Factory resets the Notebook
-    #         reset_runtime = driver.find_element(By.XPATH, "//*[contains(text(), 'Factory reset runtime')]")
-    #         time.sleep(2)
-    #         reset_runtime.click()
-    #
-    #         WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'ok'))
-    #
-    #         # Confirms to Reset the Notebook
-    #         reset_confirmation = driver.find_element(By.ID, 'ok')
-    #         time.sleep(2)
-    #         reset_confirmation.click()
-    #
-    #         # Clicks again on the Runtime Menu tab
-    #         runtime_menu = driver.find_element(By.ID, 'runtime-menu-button')
-    #         time.sleep(2)
-    #         runtime_menu.click()
-    #
-    #         WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':1w'))
-    #
-    #         # Clicks on Run all cells
-    #         run_all = driver.find_element(By.ID, ':1w')
-    #         time.sleep(2)
-    #         run_all.click()
-    #
-    #         print(notebooks_config.at[i, 'Notebooks'] + ' Running')     # Logs on terminal that the Notebook is running
-    #
-    #     i += 1
-    #
-    # time.sleep(20)
-    # # interaction_cycles = 0
-    # #
-    # # # This loop just interacts with the Notebooks so they are not disconnected being considered idle
-    # # for interaction_cycles in range(6):
-    # #     time.sleep(7200)    # Throws an interaction on every running notebook after every 2 hours
-    # #     tabs = 0
-    # #
-    # #     # Iterates over all the opened tabs and interacts with them
-    # #     for window_handle in driver.window_handles:
-    # #         driver.switch_to.window(window_handle)
-    # #
-    # #         # Doesn't interact if it is the tab with Sign In form
-    # #         if tabs != 0:
-    # #             WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
-    # #
-    # #         tabs += 1
-    # #
-    # #     interaction_cycles += 1
+        print(sys.argv[1] + ' Running')  # Logs on terminal that the Notebook is running

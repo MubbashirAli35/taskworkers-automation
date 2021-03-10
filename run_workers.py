@@ -3,12 +3,15 @@ import pandas as pd
 import datetime as dt
 import os
 import re
+from multiprocessing import Process
+import sys
 
-def run_notebook(notebook_name):
+
+def run_notebook(notebook_name, action):
     if re.match('[0-9]', notebook_name[5:6]) == None:
-        print('python ' + notebook_name[0:5] + '/' + notebook_name + '.py' + ' ' + notebook_name)
+        print('python ' + notebook_name[0:5] + '/' + notebook_name + '.py' + ' ' + notebook_name + ' ' + action)
     else:
-        print('python ' + notebook_name[0:6] + '/' + notebook_name + '.py' + ' ' + notebook_name)
+        print('python ' + notebook_name[0:6] + '/' + notebook_name + '.py' + ' ' + notebook_name + ' ' + action)
 
 conn = psycopg2.connect(dbname='greencanvas',
                         user='gcp_read_only',
@@ -64,12 +67,26 @@ backtests_notebooks_to_run = backtests_notebooks_sorted_on_last_beat_time.loc[
     backtests_notebooks_sorted_on_last_beat_time['Alive Status'] == False
 ]
 
+backtests_notebooks_to_interact = backtests_notebooks_sorted_on_last_beat_time.loc[
+    backtests_notebooks_sorted_on_last_beat_time['Alive Status'] == True
+]
+
 training_notebooks_to_run = training_notebooks_sorted_on_last_beat_time.loc[
     training_notebooks_sorted_on_last_beat_time['Alive Status'] == False
 ]
 
+training_notebooks_to_interact = training_notebooks_sorted_on_last_beat_time.loc[
+    training_notebooks_sorted_on_last_beat_time['Alive Status'] == True
+]
+
 backtests_notebooks_to_run = backtests_notebooks_to_run['Notebook']
 training_notebooks_to_run = training_notebooks_to_run['Notebook']
+
+# print(backtests_notebooks_to_run[0])
+# print(training_notebooks_to_run[1])
+
+# run_notebook(backtests_notebooks_to_run[0])
+# run_notebook(backtests_notebooks_to_run[1])
 
 num_of_pending_backtests = tasks_queue.loc[(tasks_queue['Status'] == 'New') & (tasks_queue['Task Type'] == 'BackTestTask')]['Number']
 num_of_pending_training_tasks = tasks_queue.loc[(tasks_queue['Status'] == 'New') & (tasks_queue['Task Type'] == 'Training')]['Number']
@@ -77,12 +94,281 @@ num_of_pending_training_tasks = tasks_queue.loc[(tasks_queue['Status'] == 'New')
 num_of_backtests_running = tasks_queue.loc[(tasks_queue['Status'] == 'Running') & (tasks_queue['Task Type'] == 'BackTestTask')]['Number']
 num_of_training_tasks_running = tasks_queue.loc[(tasks_queue['Status'] == 'Running') & (tasks_queue['Task Type'] == 'Training')]['Number']
 
-if num_of_pending_backtests.count() > 0 and num_of_pending_backtests > 0:
-    if num_of_backtests_running.count() > 0 and num_of_backtests_running < 75:
-        for notebook in backtests_notebooks_to_run:
-            run_notebook(notebook)
+if __name__ == '__main__':
+    print(dt.datetime.now())
+    print('\n\n')
 
-if num_of_pending_training_tasks.count() > 0 and num_of_pending_training_tasks > 0:
-    if num_of_training_tasks_running.count() > num_of_training_tasks_running < 60:
-        for notebook in training_notebooks_to_run:
-            run_notebook(notebook)
+    if num_of_pending_backtests.count() > 0 and num_of_pending_backtests.iloc[0] > 0:
+        if num_of_backtests_running.count() > 0:
+            if num_of_backtests_running.iloc[0] < 50:
+                if sys.argv[1].lower() == 'run':
+                    for i in range(num_of_backtests_running.iloc[0], 50, 5):
+                        if i < backtests_notebooks_to_run.count():
+                            notebook_1 = Process(target=run_notebook, args=(backtests_notebooks_to_run[i], sys.argv[1],))
+                            notebook_1.start()
+                        if i + 1 < backtests_notebooks_to_run.count():
+                            notebook_2 = Process(target=run_notebook,
+                                                 args=(backtests_notebooks_to_run[i + 1], sys.argv[1],))
+                            notebook_2.start()
+                        if i + 2 < backtests_notebooks_to_run.count():
+                            notebook_3 = Process(target=run_notebook,
+                                                 args=(backtests_notebooks_to_run[i + 2], sys.argv[1],))
+                            notebook_3.start()
+                        if i + 3 < backtests_notebooks_to_run.count():
+                            notebook_4 = Process(target=run_notebook,
+                                                 args=(backtests_notebooks_to_run[i + 3], sys.argv[1],))
+                            notebook_4.start()
+                        if i + 4 < backtests_notebooks_to_run.count():
+                            notebook_5 = Process(target=run_notebook,
+                                                 args=(backtests_notebooks_to_run[i + 4], sys.argv[1],))
+                            notebook_5.start()
+
+                        if i < backtests_notebooks_to_run.count():
+                            notebook_1.join()
+                        if i + 1 < backtests_notebooks_to_run.count():
+                            notebook_2.join()
+                        if i + 2 < backtests_notebooks_to_run.count():
+                            notebook_3.join()
+                        if i + 3 < backtests_notebooks_to_run.count():
+                            notebook_4.join()
+                        if i + 4 < backtests_notebooks_to_run.count():
+                            notebook_5.join()
+
+                elif sys.argv[1].lower() == 'interact':
+                    for i in range(0, backtests_notebooks_to_interact.count(), 5):
+                        if i < backtests_notebooks_to_interact.count():
+                            notebook_1 = Process(target=run_notebook, args=(backtests_notebooks_to_interact[i], sys.argv[1],))
+                            notebook_1.start()
+                        if i + 1 < backtests_notebooks_to_interact.count():
+                            notebook_2 = Process(target=run_notebook,
+                                                 args=(backtests_notebooks_to_interact[i + 1], sys.argv[1],))
+                            notebook_2.start()
+                        if i + 2 < backtests_notebooks_to_interact.count():
+                            notebook_3 = Process(target=run_notebook,
+                                                 args=(backtests_notebooks_to_interact[i + 2], sys.argv[1],))
+                            notebook_3.start()
+                        if i + 3 < backtests_notebooks_to_interact.count():
+                            notebook_4 = Process(target=run_notebook,
+                                                 args=(backtests_notebooks_to_interact[i + 3], sys.argv[1],))
+                            notebook_4.start()
+                        if i + 4 < backtests_notebooks_to_interact.count():
+                            notebook_5 = Process(target=run_notebook,
+                                                 args=(backtests_notebooks_to_interact[i + 4], sys.argv[1],))
+                            notebook_5.start()
+
+                        if i < backtests_notebooks_to_interact.count():
+                            notebook_1.join()
+                        if i + 1 < backtests_notebooks_to_interact.count():
+                            notebook_2.join()
+                        if i + 2 < backtests_notebooks_to_interact.count():
+                            notebook_3.join()
+                        if i + 3 < backtests_notebooks_to_interact.count():
+                            notebook_4.join()
+                        if i + 4 < backtests_notebooks_to_interact.count():
+                            notebook_5.join()
+        else:
+            if sys.argv[1].lower() == 'run':
+                for i in range(0, 50, 5):
+                    if i < backtests_notebooks_to_run.count():
+                        notebook_1 = Process(target=run_notebook, args=(backtests_notebooks_to_run[i], sys.argv[1],))
+                        notebook_1.start()
+                    if i + 1 < backtests_notebooks_to_run.count():
+                        notebook_2 = Process(target=run_notebook,
+                                             args=(backtests_notebooks_to_run[i + 1], sys.argv[1],))
+                        notebook_2.start()
+                    if i + 2 < backtests_notebooks_to_run.count():
+                        notebook_3 = Process(target=run_notebook,
+                                             args=(backtests_notebooks_to_run[i + 2], sys.argv[1],))
+                        notebook_3.start()
+                    if i + 3 < backtests_notebooks_to_run.count():
+                        notebook_4 = Process(target=run_notebook,
+                                             args=(backtests_notebooks_to_run[i + 3], sys.argv[1],))
+                        notebook_4.start()
+                    if i + 4 < backtests_notebooks_to_run.count():
+                        notebook_5 = Process(target=run_notebook,
+                                             args=(backtests_notebooks_to_run[i + 4], sys.argv[1],))
+                        notebook_5.start()
+
+                    if i < backtests_notebooks_to_run.count():
+                        notebook_1.join()
+                    if i + 1 < backtests_notebooks_to_run.count():
+                        notebook_2.join()
+                    if i + 2 < backtests_notebooks_to_run.count():
+                        notebook_3.join()
+                    if i + 3 < backtests_notebooks_to_run.count():
+                        notebook_4.join()
+                    if i + 4 < backtests_notebooks_to_run.count():
+                        notebook_5.join()
+
+            elif sys.argv[1].lower() == 'interact':
+                for i in range(0, backtests_notebooks_to_interact.count(), 5):
+                    if i < backtests_notebooks_to_interact.count():
+                        notebook_1 = Process(target=run_notebook,
+                                             args=(backtests_notebooks_to_interact[i], sys.argv[1],))
+                        notebook_1.start()
+                    if i + 1 < backtests_notebooks_to_interact.count():
+                        notebook_2 = Process(target=run_notebook,
+                                             args=(backtests_notebooks_to_interact[i + 1], sys.argv[1],))
+                        notebook_2.start()
+                    if i + 2 < backtests_notebooks_to_interact.count():
+                        notebook_3 = Process(target=run_notebook,
+                                             args=(backtests_notebooks_to_interact[i + 2], sys.argv[1],))
+                        notebook_3.start()
+                    if i + 3 < backtests_notebooks_to_interact.count():
+                        notebook_4 = Process(target=run_notebook,
+                                             args=(backtests_notebooks_to_interact[i + 3], sys.argv[1],))
+                        notebook_4.start()
+                    if i + 4 < backtests_notebooks_to_interact.count():
+                        notebook_5 = Process(target=run_notebook,
+                                             args=(backtests_notebooks_to_interact[i + 4], sys.argv[1],))
+                        notebook_5.start()
+
+                    if i < backtests_notebooks_to_interact.count():
+                        notebook_1.join()
+                    if i + 1 < backtests_notebooks_to_interact.count():
+                        notebook_2.join()
+                    if i + 2 < backtests_notebooks_to_interact.count():
+                        notebook_3.join()
+                    if i + 3 < backtests_notebooks_to_interact.count():
+                        notebook_4.join()
+                    if i + 4 < backtests_notebooks_to_interact.count():
+                        notebook_5.join()
+
+    if num_of_pending_training_tasks.count() > 0 and num_of_pending_training_tasks.iloc[0] > 0:
+        if num_of_training_tasks_running.count() > 0:
+            if num_of_training_tasks_running.iloc[0] < 1:
+                if sys.argv[1].lower() == 'run':
+                    for i in range(num_of_training_tasks_running.iloc[0], 50, 5):
+                        if i < training_notebooks_to_run.count():
+                            notebook_1 = Process(target=run_notebook,
+                                                 args=(training_notebooks_to_run[i], sys.argv[1],))
+                            notebook_1.start()
+                        if i + 1 < training_notebooks_to_run.count():
+                            notebook_2 = Process(target=run_notebook,
+                                                 args=(training_notebooks_to_run[i + 1], sys.argv[1],))
+                            notebook_2.start()
+                        if i + 2 < training_notebooks_to_run.count():
+                            notebook_3 = Process(target=run_notebook,
+                                                 args=(training_notebooks_to_run[i + 2], sys.argv[1],))
+                            notebook_3.start()
+                        if i + 3 < training_notebooks_to_run.count():
+                            notebook_4 = Process(target=run_notebook,
+                                                 args=(training_notebooks_to_run[i + 3], sys.argv[1],))
+                            notebook_4.start()
+                        if i + 4 < training_notebooks_to_run.count():
+                            notebook_5 = Process(target=run_notebook,
+                                                 args=(training_notebooks_to_run[i + 4], sys.argv[1],))
+                            notebook_5.start()
+
+                        if i < training_notebooks_to_run.count():
+                            notebook_1.join()
+                        if i + 1 < training_notebooks_to_run.count():
+                            notebook_2.join()
+                        if i + 2 < training_notebooks_to_run.count():
+                            notebook_3.join()
+                        if i + 3 < training_notebooks_to_run.count():
+                            notebook_4.join()
+                        if i + 4 < training_notebooks_to_run.count():
+                            notebook_5.join()
+
+                elif sys.argv[1].lower() == 'interact':
+                    for i in range(0, training_notebooks_to_interact.count(), 5):
+                        if i < training_notebooks_to_interact.count():
+                            notebook_1 = Process(target=run_notebook,
+                                                 args=(training_notebooks_to_interact[i], sys.argv[1],))
+                            notebook_1.start()
+                        if i + 1 < training_notebooks_to_interact.count():
+                            notebook_2 = Process(target=run_notebook,
+                                                 args=(training_notebooks_to_interact[i + 1], sys.argv[1],))
+                            notebook_2.start()
+                        if i + 2 < training_notebooks_to_interact.count():
+                            notebook_3 = Process(target=run_notebook,
+                                                 args=(training_notebooks_to_interact[i + 2], sys.argv[1],))
+                            notebook_3.start()
+                        if i + 3 < training_notebooks_to_interact.count():
+                            notebook_4 = Process(target=run_notebook,
+                                                 args=(training_notebooks_to_interact[i + 3], sys.argv[1],))
+                            notebook_4.start()
+                        if i + 4 < training_notebooks_to_interact.count():
+                            notebook_5 = Process(target=run_notebook,
+                                                 args=(training_notebooks_to_interact[i + 4], sys.argv[1],))
+                            notebook_5.start()
+
+                        if i < training_notebooks_to_interact.count():
+                            notebook_1.join()
+                        if i + 1 < training_notebooks_to_interact.count():
+                            notebook_2.join()
+                        if i + 2 < training_notebooks_to_interact.count():
+                            notebook_3.join()
+                        if i + 3 < training_notebooks_to_interact.count():
+                            notebook_4.join()
+                        if i + 4 < training_notebooks_to_interact.count():
+                            notebook_5.join()
+            else:
+                if sys.argv[1].lower() == 'run':
+                    for i in range(0, 20, 5):
+                        if i < backtests_notebooks_to_run.count():
+                            notebook_1 = Process(target=run_notebook,
+                                                 args=(training_notebooks_to_run[i], sys.argv[1],))
+                            notebook_1.start()
+                        if i + 1 < training_notebooks_to_run.count():
+                            notebook_2 = Process(target=run_notebook,
+                                                 args=(training_notebooks_to_run[i + 1], sys.argv[1],))
+                            notebook_2.start()
+                        if i + 2 < training_notebooks_to_run.count():
+                            notebook_3 = Process(target=run_notebook,
+                                                 args=(training_notebooks_to_run[i + 2], sys.argv[1],))
+                            notebook_3.start()
+                        if i + 3 < training_notebooks_to_run.count():
+                            notebook_4 = Process(target=run_notebook,
+                                                 args=(training_notebooks_to_run[i + 3], sys.argv[1],))
+                            notebook_4.start()
+                        if i + 4 < training_notebooks_to_run.count():
+                            notebook_5 = Process(target=run_notebook,
+                                                 args=(training_notebooks_to_run[i + 4], sys.argv[1],))
+                            notebook_5.start()
+
+                        if i < training_notebooks_to_run.count():
+                            notebook_1.join()
+                        if i + 1 < training_notebooks_to_run.count():
+                            notebook_2.join()
+                        if i + 2 < training_notebooks_to_run.count():
+                            notebook_3.join()
+                        if i + 3 < training_notebooks_to_run.count():
+                            notebook_4.join()
+                        if i + 4 < training_notebooks_to_run.count():
+                            notebook_5.join()
+
+                elif sys.argv[1].lower() == 'interact':
+                    for i in range(0, training_notebooks_to_interact.count(), 5):
+                        if i < training_notebooks_to_interact.count():
+                            notebook_1 = Process(target=run_notebook,
+                                                 args=(training_notebooks_to_interact[i], sys.argv[1],))
+                            notebook_1.start()
+                        if i + 1 < training_notebooks_to_interact.count():
+                            notebook_2 = Process(target=run_notebook,
+                                                 args=(training_notebooks_to_interact[i + 1], sys.argv[1],))
+                            notebook_2.start()
+                        if i + 2 < training_notebooks_to_interact.count():
+                            notebook_3 = Process(target=run_notebook,
+                                                 args=(training_notebooks_to_interact[i + 2], sys.argv[1],))
+                            notebook_3.start()
+                        if i + 3 < training_notebooks_to_interact.count():
+                            notebook_4 = Process(target=run_notebook,
+                                                 args=(training_notebooks_to_interact[i + 3], sys.argv[1],))
+                            notebook_4.start()
+                        if i + 4 < training_notebooks_to_interact.count():
+                            notebook_5 = Process(target=run_notebook,
+                                                 args=(training_notebooks_to_interact[i + 4], sys.argv[1],))
+                            notebook_5.start()
+
+                        if i < training_notebooks_to_interact.count():
+                            notebook_1.join()
+                        if i + 1 < training_notebooks_to_interact.count():
+                            notebook_2.join()
+                        if i + 2 < training_notebooks_to_interact.count():
+                            notebook_3.join()
+                        if i + 3 < training_notebooks_to_interact.count():
+                            notebook_4.join()
+                        if i + 4 < training_notebooks_to_interact.count():
+                            notebook_5.join()

@@ -61,11 +61,21 @@ with Chrome(executable_path='./chromedriver', options=options) as driver:
 
     print(sys.argv[1] + ' Loaded')  # Logs on terminal that the Notebook is loaded
 
-    WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
-    WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':20'))
-    WebDriverWait(driver, 20).until(lambda d: d.find_element(By.XPATH, "//*[contains(text(), 'Factory reset runtime')]")).click()
-    WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'ok')).click()
-    WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
-    WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':1w')).click()
+    if sys.argv[2].lower() == 'interact':
+        WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
+    elif sys.argv[2].lower() == 'terminate':
+        WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
+        WebDriverWait(driver, 20).until(
+            lambda d: d.find_element(By.XPATH, "//*[contains(text(), 'Factory reset runtime')]")
+        ).click()
+        WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'ok')).click()
+    else:
+        WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
+        WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':20'))
+        WebDriverWait(driver, 20).until(
+            lambda d: d.find_element(By.XPATH, "//*[contains(text(), 'Factory reset runtime')]")).click()
+        WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'ok')).click()
+        WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
+        WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':1w')).click()
 
-    print(sys.argv[1] + ' Running')  # Logs on terminal that the Notebook is running
+        print(sys.argv[1] + ' Running')  # Logs on terminal that the Notebook is running
