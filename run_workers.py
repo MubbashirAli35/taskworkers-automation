@@ -99,8 +99,10 @@ if __name__ == '__main__':
     print('\n\n')
 
     if num_of_pending_backtests.count() > 0 and num_of_pending_backtests.iloc[0] > 0:
+        print('Pending backtests: ', num_of_pending_backtests.iloc[0])
         if num_of_backtests_running.count() > 0:
-            if num_of_backtests_running.iloc[0] < 50:
+            print('Num of Backtests running: ', num_of_backtests_running.iloc[0])
+            if num_of_backtests_running.iloc[0] < 50 and num_of_backtests_running.iloc[0] < num_of_pending_backtests.iloc[0]:
                 if sys.argv[1].lower() == 'run':
                     for i in range(num_of_backtests_running.iloc[0], 50, 5):
                         if i < backtests_notebooks_to_run.count():
@@ -235,8 +237,10 @@ if __name__ == '__main__':
                         notebook_5.join()
 
     if num_of_pending_training_tasks.count() > 0 and num_of_pending_training_tasks.iloc[0] > 0:
+        print('Number of Training Tasks pending ', num_of_pending_training_tasks.iloc[0])
         if num_of_training_tasks_running.count() > 0:
-            if num_of_training_tasks_running.iloc[0] < 1:
+            print('Number of Running Training Tasks ', num_of_training_tasks_running.iloc[0])
+            if num_of_training_tasks_running.iloc[0] < 20:
                 if sys.argv[1].lower() == 'run':
                     for i in range(num_of_training_tasks_running.iloc[0], 50, 5):
                         if i < training_notebooks_to_run.count():
