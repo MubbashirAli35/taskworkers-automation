@@ -103,29 +103,29 @@ num_of_training_tasks_running = tasks_queue.loc[(tasks_queue['Status'] == 'Runni
 if __name__ == '__main__':
     print(dt.datetime.now())
     print('\n\n')
-    # print(num_of_backtests_running.iloc[0])
-    # print(num_of_pending_backtests.iloc[0])
+    print(num_of_backtests_running.iloc[0])
+    print(num_of_pending_backtests.iloc[0])
 
     if sys.argv[1].lower() == 'interact':
         for i in range(0, backtests_notebooks_to_interact.count(), 5):
             if i < backtests_notebooks_to_interact.count():
-                notebook_1 = Process(target=run_notebook, args=(backtests_notebooks_to_interact[i], sys.argv[1],))
+                notebook_1 = Process(target=run_notebook, args=(backtests_notebooks_to_interact.iloc[i], sys.argv[1],))
                 notebook_1.start()
             if i + 1 < backtests_notebooks_to_interact.count():
                 notebook_2 = Process(target=run_notebook,
-                                     args=(backtests_notebooks_to_interact[i + 1], sys.argv[1],))
+                                     args=(backtests_notebooks_to_interact.iloc[i + 1], sys.argv[1],))
                 notebook_2.start()
             if i + 2 < backtests_notebooks_to_interact.count():
                 notebook_3 = Process(target=run_notebook,
-                                     args=(backtests_notebooks_to_interact[i + 2], sys.argv[1],))
+                                     args=(backtests_notebooks_to_interact.iloc[i + 2], sys.argv[1],))
                 notebook_3.start()
             if i + 3 < backtests_notebooks_to_interact.count():
                 notebook_4 = Process(target=run_notebook,
-                                     args=(backtests_notebooks_to_interact[i + 3], sys.argv[1],))
+                                     args=(backtests_notebooks_to_interact.iloc[i + 3], sys.argv[1],))
                 notebook_4.start()
             if i + 4 < backtests_notebooks_to_interact.count():
                 notebook_5 = Process(target=run_notebook,
-                                     args=(backtests_notebooks_to_interact[i + 4], sys.argv[1],))
+                                     args=(backtests_notebooks_to_interact.iloc[i + 4], sys.argv[1],))
                 notebook_5.start()
 
             if i < backtests_notebooks_to_interact.count():
@@ -177,9 +177,9 @@ if __name__ == '__main__':
             print('Pending backtests: ', num_of_pending_backtests.iloc[0])
             if num_of_backtests_running.count() > 0:
                 print('Num of Backtests running: ', num_of_backtests_running.iloc[0])
-                if num_of_backtests_running.iloc[0] < 50 and num_of_backtests_running.iloc[0] < num_of_pending_backtests.iloc[0]:
+                if num_of_backtests_running.iloc[0] < 100 and num_of_backtests_running.iloc[0] < num_of_pending_backtests.iloc[0]:
                     if sys.argv[1].lower() == 'run':
-                        for i in range(num_of_backtests_running.iloc[0], 50, 5):
+                        for i in range(num_of_backtests_running.iloc[0], 100, 5):
                             if i < backtests_notebooks_to_run.count():
                                 notebook_1 = Process(target=run_notebook, args=(backtests_notebooks_to_run[i], sys.argv[1],))
                                 notebook_1.start()
