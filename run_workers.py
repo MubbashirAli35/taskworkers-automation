@@ -238,6 +238,8 @@ if __name__ == '__main__':
                             notebook_4.join()
                         if i + 4 < backtests_notebooks_to_run.count():
                             notebook_5.join()
+        else:
+            print('No backtest tasks pending')
 
         if num_of_pending_training_tasks.count() > 0 and num_of_pending_training_tasks.iloc[0] > 0:
             print('Number of Training Tasks pending ', num_of_pending_training_tasks.iloc[0])
@@ -311,3 +313,5 @@ if __name__ == '__main__':
                             notebook_4.join()
                         if i + 4 < training_notebooks_to_run.count():
                             notebook_5.join()
+        else:
+            print('No training tasks pending')
