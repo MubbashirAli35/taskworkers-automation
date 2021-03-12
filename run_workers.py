@@ -100,6 +100,7 @@ num_of_training_tasks_running = tasks_queue.loc[(tasks_queue['Status'] == 'Runni
 if __name__ == '__main__':
     print(dt.datetime.now())
     print('\n\n')
+    # print(num_of_backtests_running[])
 
     if sys.argv[1].lower() == 'interact':
         for i in range(0, backtests_notebooks_to_interact.count(), 5):
