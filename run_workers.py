@@ -9,9 +9,9 @@ import sys
 
 def run_notebook(notebook_name, action):
     if re.match('[0-9]', notebook_name[5:6]) == None:
-        print('python ' + notebook_name[0:5] + '/' + notebook_name + '.py' + ' ' + notebook_name + ' ' + action)
+        os.system('python ' + notebook_name[0:5] + '/' + notebook_name + '.py' + ' ' + notebook_name + ' ' + action)
     else:
-        print('python ' + notebook_name[0:6] + '/' + notebook_name + '.py' + ' ' + notebook_name + ' ' + action)
+        os.system('python ' + notebook_name[0:6] + '/' + notebook_name + '.py' + ' ' + notebook_name + ' ' + action)
 
 conn = psycopg2.connect(dbname='greencanvas',
                         user='gcp_read_only',
@@ -207,36 +207,36 @@ if __name__ == '__main__':
                                 notebook_5.join()
             else:
                 if sys.argv[1].lower() == 'run':
-                    for i in range(0, 50, 5):
-                        if i < backtests_notebooks_to_run.count():
+                    for i in range(0, num_of_pending_backtests.iloc[0], 5):
+                        if i < num_of_pending_backtests.iloc[0]:
                             notebook_1 = Process(target=run_notebook, args=(backtests_notebooks_to_run[i], sys.argv[1],))
                             notebook_1.start()
-                        if i + 1 < backtests_notebooks_to_run.count():
+                        if i + 1 < num_of_pending_backtests.iloc[0]:
                             notebook_2 = Process(target=run_notebook,
                                                  args=(backtests_notebooks_to_run[i + 1], sys.argv[1],))
                             notebook_2.start()
-                        if i + 2 < backtests_notebooks_to_run.count():
+                        if i + 2 < num_of_pending_backtests.iloc[0]:
                             notebook_3 = Process(target=run_notebook,
                                                  args=(backtests_notebooks_to_run[i + 2], sys.argv[1],))
                             notebook_3.start()
-                        if i + 3 < backtests_notebooks_to_run.count():
+                        if i + 3 < num_of_pending_backtests.iloc[0]:
                             notebook_4 = Process(target=run_notebook,
                                                  args=(backtests_notebooks_to_run[i + 3], sys.argv[1],))
                             notebook_4.start()
-                        if i + 4 < backtests_notebooks_to_run.count():
+                        if i + 4 < num_of_pending_backtests.iloc[0]:
                             notebook_5 = Process(target=run_notebook,
                                                  args=(backtests_notebooks_to_run[i + 4], sys.argv[1],))
                             notebook_5.start()
 
-                        if i < backtests_notebooks_to_run.count():
+                        if i < num_of_pending_backtests.iloc[0]:
                             notebook_1.join()
-                        if i + 1 < backtests_notebooks_to_run.count():
+                        if i + 1 < num_of_pending_backtests.iloc[0]:
                             notebook_2.join()
-                        if i + 2 < backtests_notebooks_to_run.count():
+                        if i + 2 < num_of_pending_backtests.iloc[0]:
                             notebook_3.join()
-                        if i + 3 < backtests_notebooks_to_run.count():
+                        if i + 3 < num_of_pending_backtests.iloc[0]:
                             notebook_4.join()
-                        if i + 4 < backtests_notebooks_to_run.count():
+                        if i + 4 < num_of_pending_backtests.iloc[0]:
                             notebook_5.join()
         else:
             print('No backtest tasks pending')
