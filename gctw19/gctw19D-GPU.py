@@ -57,4 +57,26 @@ with Chrome(executable_path='./chromedriver', options=options) as driver:
     # time.sleep(5)
     # pickle.dump(driver.get_cookies(), open('./cookies/cookies_gctw01.pkl', 'wb'), protocol=2)
 
-    v
+    driver.find_element_by_tag_name('body').send_keys(Keys.CONTROL + 't')
+    driver.get(notebook_link)  # Gets a Notebook
+
+    print(sys.argv[1] + ' Loaded')  # Logs on terminal that the Notebook is loaded
+
+    if sys.argv[2].lower() == 'interact':
+        WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
+    elif sys.argv[2].lower() == 'terminate':
+        WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
+        WebDriverWait(driver, 20).until(
+            lambda d: d.find_element(By.XPATH, "//*[contains(text(), 'Factory reset runtime')]")
+        ).click()
+        WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'ok')).click()
+    else:
+        WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
+        WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':20'))
+        WebDriverWait(driver, 20).until(
+            lambda d: d.find_element(By.XPATH, "//*[contains(text(), 'Factory reset runtime')]")).click()
+        WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'ok')).click()
+        WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
+        WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':1x')).click()
+
+        print(sys.argv[1] + ' Running')  # Logs on terminal that the Notebook is running

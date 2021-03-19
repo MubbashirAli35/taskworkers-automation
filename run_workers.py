@@ -82,8 +82,8 @@ training_notebooks_to_interact = training_notebooks_sorted_on_last_beat_time.loc
 backtests_notebooks_to_run = backtests_notebooks_to_run['Notebook']
 training_notebooks_to_run = training_notebooks_to_run['Notebook']
 
-# for notebook in training_notebooks_to_run:
-#     print(notebook)
+for notebook in backtests_notebooks_to_run:
+    print(notebook)
 
 backtests_notebooks_to_interact = backtests_notebooks_to_interact['Notebook']
 training_notebooks_to_interact = training_notebooks_to_interact['Notebook']
