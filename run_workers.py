@@ -105,8 +105,8 @@ if __name__ == '__main__':
     print('\n\n')
     # print('Backtests Running: ', num_of_backtests_running.iloc[0])
     # print('Backtests Pending: ', num_of_pending_backtests.iloc[0])
-    print('Training Pending: ', num_of_pending_training_tasks.iloc[0])
-    print('Training Running: ', num_of_training_tasks_running.iloc[0])
+    # print('Training Pending: ', num_of_pending_training_tasks.iloc[0])
+    # print('Training Running: ', num_of_training_tasks_running.iloc[0])
 
     if sys.argv[1].lower() == 'interact':
         for i in range(0, backtests_notebooks_to_interact.count(), 5):
