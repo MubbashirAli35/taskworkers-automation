@@ -15,7 +15,7 @@ import sys
 options = Options()
 # options.add_argument('--user-data-dir=C:/Users/mubba/AppData/Local/Google/Chrome/User Data')
 # options.add_argument('--profile-directory=Profile 1')
-options.add_argument('headless')    # Configures to start chrome in headless mode
+# options.add_argument('headless')    # Configures to start chrome in headless mode
 options.add_argument('--start-maximized')   # Configures to start it with maximum window size
 
 # Adds a specific User Agent
@@ -38,7 +38,7 @@ notebook_link = 'https://colab.research.google.com/drive/1gjOOF1jHY4X-PiXusVtUu2
 
 i = 0
 
-with Chrome(executable_path='./chromedriver', options=options) as driver:
+with Chrome(executable_path='./chromedriver_win32/chromedriver.exe', options=options) as driver:
     # driver.get('https://accounts.google.com/o/oauth2/auth/identifier?client_id=717762328687-iludtf96g1hinl76e4lc1b9a82g457nn.apps.googleusercontent.com&scope=profile%20email&redirect_uri=https%3A%2F%2Fstackauth.com%2Fauth%2Foauth2%2Fgoogle&state=%7B%22sid%22%3A1%2C%22st%22%3A%2259%3A3%3Abbc%2C16%3Aaa5bbfcd04987df9%2C10%3A1609186223%2C16%3Ae0f9e400ff758b8a%2Cc93369a30a25c98422fa6bbedbcd77dca39193057a5efe32ea8b0bb0c24a2d50%22%2C%22cdl%22%3Anull%2C%22cid%22%3A%22717762328687-iludtf96g1hinl76e4lc1b9a82g457nn.apps.googleusercontent.com%22%2C%22k%22%3A%22Google%22%2C%22ses%22%3A%2200c68903dfa345e59f106379ca35fdb8%22%7D&response_type=code&flowName=GeneralOAuthFlow')
 
     driver.get(notebook_link)    # Gets first notebook
@@ -63,6 +63,7 @@ with Chrome(executable_path='./chromedriver', options=options) as driver:
     print(sys.argv[1] + ' Loaded')  # Logs on terminal that the Notebook is loaded
 
     if sys.argv[2].lower() == 'interact':
+        time.sleep(10)
         WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
     elif sys.argv[2].lower() == 'terminate':
         WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
@@ -80,3 +81,4 @@ with Chrome(executable_path='./chromedriver', options=options) as driver:
         WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':1x')).click()
 
         print(sys.argv[1] + ' Running')  # Logs on terminal that the Notebook is running
+        time.sleep(10)

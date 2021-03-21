@@ -55,7 +55,7 @@ with Chrome(executable_path='./chromedriver', options=options) as driver:
     driver.get(notebook_link)    # Gets first notebook
 
     # Adds Cookies for this particular task worker's gmail account
-    for cookie in pickle.load(open('../cookies/cookies_gctw01.pkl', 'rb')):
+    for cookie in pickle.load(open('./cookies/cookies_gctw01.pkl', 'rb')):
 
         # Sets the 'sameSite' cookie to 'Strict' since Google doesn't allow requests from Cross Origin
         if 'sameSite' in cookie:

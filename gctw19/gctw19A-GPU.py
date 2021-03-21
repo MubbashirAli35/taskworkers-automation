@@ -63,6 +63,7 @@ with Chrome(executable_path='./chromedriver', options=options) as driver:
     print(sys.argv[1] + ' Loaded')  # Logs on terminal that the Notebook is loaded
 
     if sys.argv[2].lower() == 'interact':
+        time.sleep(10)
         WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
     elif sys.argv[2].lower() == 'terminate':
         WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
@@ -75,8 +76,10 @@ with Chrome(executable_path='./chromedriver', options=options) as driver:
         WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':20'))
         WebDriverWait(driver, 20).until(
             lambda d: d.find_element(By.XPATH, "//*[contains(text(), 'Factory reset runtime')]")).click()
+        # time.sleep(20)
         WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'ok')).click()
         WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
         WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':1x')).click()
 
         print(sys.argv[1] + ' Running')  # Logs on terminal that the Notebook is running
+        time.sleep(10)
