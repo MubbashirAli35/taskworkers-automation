@@ -81,4 +81,4 @@ with Chrome(executable_path='./chromedriver', options=options) as driver:
         WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':1x')).click()
 
         print(sys.argv[1] + ' Running')  # Logs on terminal that the Notebook is running
-        time.sleep(10)
+        time.sleep(30)
