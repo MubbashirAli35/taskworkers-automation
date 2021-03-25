@@ -15,7 +15,7 @@ import sys
 options = Options()
 # options.add_argument('--user-data-dir=C:/Users/mubba/AppData/Local/Google/Chrome/User Data')
 # options.add_argument('--profile-directory=Profile 1')
-options.add_argument('headless')    # Configures to start chrome in headless mode
+# options.add_argument('headless')    # Configures to start chrome in headless mode
 options.add_argument('--start-maximized')   # Configures to start it with maximum window size
 
 # Adds a specific User Agent
@@ -78,7 +78,7 @@ with Chrome(executable_path='./chromedriver', options=options) as driver:
             lambda d: d.find_element(By.XPATH, "//*[contains(text(), 'Factory reset runtime')]")).click()
         WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'ok')).click()
         WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
-        WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':1x')).click()
+        WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':1v')).click()
 
         print(sys.argv[1] + ' Running')  # Logs on terminal that the Notebook is running
         time.sleep(30)
