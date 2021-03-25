@@ -78,7 +78,7 @@ with Chrome(executable_path='./chromedriver', options=options) as driver:
             lambda d: d.find_element(By.XPATH, "//*[contains(text(), 'Factory reset runtime')]")).click()
         WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'ok')).click()
         WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
-        WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':1x')).click()
+        WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':1v')).click()
 
         print(sys.argv[1] + ' Running')  # Logs on terminal that the Notebook is running
-        time.sleep(10)
+        time.sleep(30)
