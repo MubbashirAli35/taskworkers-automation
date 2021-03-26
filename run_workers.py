@@ -104,7 +104,7 @@ if __name__ == '__main__':
     print(dt.datetime.now())
     print('\n\n')
     # print('Backtests Pending: ', num_of_pending_backtests.iloc[0])
-    # print('Backtests Running: ', num_of_backtests_running.iloc[0])
+    print('Backtests Running: ', num_of_backtests_running.iloc[0])
     # print('Training Pending: ', num_of_pending_training_tasks.iloc[0])
     # print('Training Running: ', num_of_training_tasks_running.iloc[0])
 
