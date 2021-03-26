@@ -256,7 +256,7 @@ if __name__ == '__main__':
                 print('Num of Backtests running: ', num_of_backtests_running.iloc[0])
                 if num_of_backtests_running.iloc[0] < 100 and num_of_backtests_running.iloc[0] < num_of_pending_backtests.iloc[0]:
                     if sys.argv[1].lower() == 'run':
-                        for i in range(num_of_backtests_running.iloc[0], 100, 5):
+                        for i in range(num_of_backtests_running.iloc[0], 200, 5):
                             if i < backtests_notebooks_to_run.count():
                                 notebook_1 = Process(target=run_notebook, args=(backtests_notebooks_to_run[i],))
                                 notebook_1.start()
