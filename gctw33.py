@@ -22,15 +22,15 @@ options.add_argument(
     'user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36')
 
 notebooks_dict = {
-    'gctw33a': 'https://colab.research.google.com/drive/1xfKSaqCy8vk7zOCVD2dLE8R7ESO2XFQx',
-    'gctw33b': 'https://colab.research.google.com/drive/1yPHw1islmzRM54AC5GyiHdsIU4wQuhY-',
-    'gctw33c': 'https://colab.research.google.com/drive/1dObnyEZYAmgNg1a4YYO4618v8fWGje6X',
-    'gctw33d': 'https://colab.research.google.com/drive/1S0s7utIGqbImc7thWYuZt7G7vnpNqj85',
-    'gctw33e': 'https://colab.research.google.com/drive/1SnTevTzC-7ntn5iNHcJUQ7pJ8peYjFaa',
-    'gctw33f': 'https://colab.research.google.com/drive/1V19k8GLfF4BtiPKusV9-faSOl5eCxEx4',
-    'gctw33g': 'https://colab.research.google.com/drive/1f8QrZKDQvcA5jMoQp4Y6rYfQCKu4uCJQ',
-    'gctw33h': 'https://colab.research.google.com/drive/1dH8vRkCIQIn3mED1V_JqF9h0SS-l_kV1',
-    'gctw33i': 'https://colab.research.google.com/drive/14X4nPRtaPxlLMCkCVAb9odmG8rNeF38l'
+    'gctw33a': "https://colab.research.google.com/drive/1xfKSaqCy8vk7zOCVD2dLE8R7ESO2XFQx",
+    'gctw33b': "https://colab.research.google.com/drive/1yPHw1islmzRM54AC5GyiHdsIU4wQuhY-",
+    'gctw33c': "https://colab.research.google.com/drive/1dObnyEZYAmgNg1a4YYO4618v8fWGje6X",
+    'gctw33d': "https://colab.research.google.com/drive/1S0s7utIGqbImc7thWYuZt7G7vnpNqj85",
+    'gctw33e': "https://colab.research.google.com/drive/1SnTevTzC-7ntn5iNHcJUQ7pJ8peYjFaa",
+    'gctw33f': "https://colab.research.google.com/drive/1V19k8GLfF4BtiPKusV9-faSOl5eCxEx4",
+    'gctw33g': "https://colab.research.google.com/drive/1f8QrZKDQvcA5jMoQp4Y6rYfQCKu4uCJQ",
+    'gctw33h': "https://colab.research.google.com/drive/1dH8vRkCIQIn3mED1V_JqF9h0SS-l_kV1",
+    'gctw33i': "https://colab.research.google.com/drive/14X4nPRtaPxlLMCkCVAb9odmG8rNeF38l"
 }
 
 # List of Notebooks' URLs for this particular task worker
