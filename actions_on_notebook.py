@@ -7,6 +7,7 @@ import time
 import pickle
 import json
 import re
+import sys
 
 notebooks_links = open('./notebooks_links.json')
 notebooks_links_dict = json.load(notebooks_links)
@@ -43,11 +44,22 @@ def run_notebook(notebook_name):
 
         print(notebook_name + ' Loaded')
 
-        WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
+        try:
+            WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
+        except:
+            print('Cookies has been expired for ' + notebook_name)
+            sys.exit()
+
         WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':20'))
         WebDriverWait(driver, 20).until(
             lambda d: d.find_element(By.XPATH, "//*[contains(text(), 'Factory reset runtime')]")).click()
-        WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'ok')).click()
+
+        try:
+            WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'ok')).click()
+        except:
+            print("Couldn't ablt to click because of some card overlay for " + notebook_name)
+            sys.exit()
+
         WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
         WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':1v')).click()
 
