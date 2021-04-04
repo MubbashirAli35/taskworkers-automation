@@ -82,8 +82,8 @@ training_notebooks_to_interact = training_notebooks_sorted_on_last_beat_time.loc
 backtests_notebooks_to_run = backtests_notebooks_to_run['Notebook']
 training_notebooks_to_run = training_notebooks_to_run['Notebook']
 
-# for notebook in backtests_notebooks_to_run:
-#     print(notebook)
+for notebook in backtests_notebooks_to_run:
+    print(notebook)
 
 backtests_notebooks_to_interact = backtests_notebooks_to_interact['Notebook']
 training_notebooks_to_interact = training_notebooks_to_interact['Notebook']
@@ -104,7 +104,7 @@ if __name__ == '__main__':
     print(dt.datetime.now())
     print('\n\n')
     # print('Backtests Pending: ', num_of_pending_backtests.iloc[0])
-    print('Backtests Running: ', num_of_backtests_running.iloc[0])
+    # print('Backtests Running: ', num_of_backtests_running.iloc[0])
     # print('Training Pending: ', num_of_pending_training_tasks.iloc[0])
     # print('Training Running: ', num_of_training_tasks_running.iloc[0])
 

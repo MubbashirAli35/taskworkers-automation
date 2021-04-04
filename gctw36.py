@@ -12,9 +12,9 @@ notebooks_config = pd.read_csv(sys.argv[1])
 
 # Adds configuration to the chromedriver
 options = Options()
-# options.add_argument('--user-data-dir=C:/Users/mubba/AppData/Local/Google/Chrome/User Data')
-# options.add_argument('--profile-directory=Profile 40')
-options.add_argument('headless')    # Configures to start chrome in headless mode
+options.add_argument('--user-data-dir=/home/mubbashir/.config/google-chrome')
+options.add_argument('--profile-directory=Profile 6')
+# options.add_argument('headless')    # Configures to start chrome in headless mode
 options.add_argument('--start-maximized')   # Configures to start it with maximum window size
 
 # Adds a specific User Agent
@@ -51,14 +51,14 @@ with Chrome(executable_path='./chromedriver', options=options) as driver:
 
     driver.get(notebooks[0])
 
-    for cookie in pickle.load(open('./cookies/cookies_gctw36.pkl', 'rb')):
-        if 'sameSite' in cookie:
-            if cookie['sameSite'] == 'None':
-                cookie['sameSite'] = 'Strict'
-        driver.add_cookie(cookie)
+    # for cookie in pickle.load(open('./cookies/cookies_gctw36.pkl', 'rb')):
+    #     if 'sameSite' in cookie:
+    #         if cookie['sameSite'] == 'None':
+    #             cookie['sameSite'] = 'Strict'
+    #     driver.add_cookie(cookie)
 
-    # time.sleep(5)
-    # pickle.dump(driver.get_cookies(), open('./cookies/cookies_gctw36.pkl', 'wb'), protocol=2)
+    time.sleep(5)
+    pickle.dump(driver.get_cookies(), open('./cookies/cookies_gctw36.pkl', 'wb'), protocol=2)
 
     for i in range(9):
         if notebooks_config.at[i + 315, 'Status'] == 'Yes':
