@@ -1,2 +1,5 @@
 venv
 chromedriver_win32
+chromedriver
+temp.py
+test.py
