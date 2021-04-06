@@ -30,14 +30,17 @@ def run_notebook(notebook_name):
             worker_cookies_path = notebooks_links_dict['cookies_paths'][str(notebook_name[0:6]).lower()]
 
         driver.get(notebook_link)
+        try:
+            for cookie in pickle.load(open(worker_cookies_path, 'rb')):
 
-        for cookie in pickle.load(open(worker_cookies_path, 'rb')):
-
-            # Sets the 'sameSite' cookie to 'Strict' since Google doesn't allow requests from Cross Origin
-            if 'sameSite' in cookie:
-                if cookie['sameSite'] == 'None':
-                    cookie['sameSite'] = 'Strict'
-            driver.add_cookie(cookie)
+                # Sets the 'sameSite' cookie to 'Strict' since Google doesn't allow requests from Cross Origin
+                if 'sameSite' in cookie:
+                    if cookie['sameSite'] == 'None':
+                        cookie['sameSite'] = 'Strict'
+                driver.add_cookie(cookie)
+        except:
+            print('Can not add cookies for ' + notebook_name)
+            sys.exit()
 
         driver.find_element_by_tag_name('body').send_keys(Keys.CONTROL + 't')
         driver.get(notebook_link)  # Gets a Notebook
