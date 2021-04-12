@@ -452,7 +452,7 @@
     "gctw50i":"https://colab.research.google.com/drive/1RxSmoCSRdvXfBYL2lHG7BjvEMLkxElv1"
   },
   "cookies_paths": {
-    "gctw1": "./cookies/cookies_gctw01.pkl",
+    "gctw1": "Default",
     "gctw2": "./cookies/cookies_gctw02.pkl",
     "gctw3": "./cookies/cookies_gctw03.pkl",
     "gctw4": "./cookies/cookies_gctw04.pkl",

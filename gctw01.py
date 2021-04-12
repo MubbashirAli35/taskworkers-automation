@@ -14,7 +14,7 @@ notebooks_config = pd.read_csv(sys.argv[1])
 options = Options()
 options.add_argument('--user-data-dir=/home/mubbashir/.config/google-chrome')
 options.add_argument('--profile-directory=Default')
-options.add_argument('headless')    # Configures to start chrome in headless mode
+# options.add_argument('headless')    # Configures to start chrome in headless mode
 options.add_argument('--start-maximized')   # Configures to start it with maximum window size
 
 # Adds a specific User Agent
