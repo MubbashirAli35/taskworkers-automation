@@ -179,37 +179,37 @@ if __name__ == '__main__':
                 print('Number of Running Training Tasks ', num_of_training_tasks_running.iloc[0])
                 if num_of_training_tasks_running.iloc[0] < 200:
                     if sys.argv[1].lower() == 'run':
-                        for i in range(num_of_training_tasks_running.iloc[0], 50, 5):
-                            if i < training_notebooks_to_run.count():
+                        for i in range(0, 200, 5):
+                            if i < 200:
                                 notebook_1 = Process(target=run_notebook,
                                                      args=(training_notebooks_to_run[i],))
                                 notebook_1.start()
-                            if i + 1 < training_notebooks_to_run.count():
+                            if i + 1 < 200:
                                 notebook_2 = Process(target=run_notebook,
                                                      args=(training_notebooks_to_run[i + 1],))
                                 notebook_2.start()
-                            if i + 2 < training_notebooks_to_run.count():
+                            if i + 2 < 200:
                                 notebook_3 = Process(target=run_notebook,
                                                      args=(training_notebooks_to_run[i + 2],))
                                 notebook_3.start()
-                            if i + 3 < training_notebooks_to_run.count():
+                            if i + 3 < 200:
                                 notebook_4 = Process(target=run_notebook,
                                                      args=(training_notebooks_to_run[i + 3],))
                                 notebook_4.start()
-                            if i + 4 < training_notebooks_to_run.count():
+                            if i + 4 < 200:
                                 notebook_5 = Process(target=run_notebook,
                                                      args=(training_notebooks_to_run[i + 4],))
                                 notebook_5.start()
 
-                            if i < training_notebooks_to_run.count():
+                            if i < 200:
                                 notebook_1.join()
-                            if i + 1 < training_notebooks_to_run.count():
+                            if i + 1 < 200:
                                 notebook_2.join()
-                            if i + 2 < training_notebooks_to_run.count():
+                            if i + 2 < 200:
                                 notebook_3.join()
-                            if i + 3 < training_notebooks_to_run.count():
+                            if i + 3 < 200:
                                 notebook_4.join()
-                            if i + 4 < training_notebooks_to_run.count():
+                            if i + 4 < 200:
                                 notebook_5.join()
             else:
                 if sys.argv[1].lower() == 'run':
@@ -248,7 +248,8 @@ if __name__ == '__main__':
         else:
             print('No training tasks pending')
 
-        if num_of_pending_backtests.count() > 0 and num_of_pending_backtests.iloc[0] > 0:
+        if num_of_pending_backtests.count() > 0 and num_of_pending_backtests.iloc[0] > 0 and \
+                num_of_pending_training_tasks.count() == 0:
             print('Pending backtests: ', num_of_pending_backtests.iloc[0])
             if num_of_backtests_running.count() > 0:
                 print('Num of Backtests running: ', num_of_backtests_running.iloc[0])

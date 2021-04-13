@@ -26,47 +26,51 @@ def run_notebook(notebook_name):
     options.add_argument('--start-maximized')  # Configures to start it with maximum window size
     options.add_argument('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36')
 
-    with Chrome(executable_path='./chromedriver', options=options) as driver:
-        driver.get(notebook_link)
-        try:
-            with open(worker_cookies_path) as f:
-                cookies = json.load(f)
+    try:
+        with Chrome(executable_path='./chromedriver', options=options) as driver:
+            driver.get(notebook_link)
+            try:
+                with open(worker_cookies_path) as f:
+                    cookies = json.load(f)
 
-            for cookie in cookies:
-                if cookie['sameSite'] != 'Strict':
-                    cookie['sameSite'] = 'Strict'
+                for cookie in cookies:
+                    if cookie['sameSite'] != 'Strict':
+                        cookie['sameSite'] = 'Strict'
 
-                driver.add_cookie(cookie)
-        except:
-            print('Cannot add cookies for ' + notebook_name)
-            sys.exit()
+                    driver.add_cookie(cookie)
+            except:
+                print('Cannot add cookies for ' + notebook_name)
+                sys.exit()
 
-        driver.find_element_by_tag_name('body').send_keys(Keys.CONTROL + 't')
-        driver.get(notebook_link)  # Gets a Notebook
+            driver.find_element_by_tag_name('body').send_keys(Keys.CONTROL + 't')
+            driver.get(notebook_link)  # Gets a Notebook
 
-        print(notebook_name + ' Loaded')
+            print(notebook_name + ' Loaded')
 
-        try:
+            try:
+                WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
+            except:
+                print('Cookies has been expired for ' + notebook_name)
+                sys.exit()
+
+            WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':20'))
+            WebDriverWait(driver, 20).until(
+                lambda d: d.find_element(By.XPATH, "//*[contains(text(), 'Factory reset runtime')]")).click()
+
+            try:
+                WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'ok')).click()
+            except:
+                print("Couldn't ablt to click because of some card overlay for " + notebook_name)
+                sys.exit()
+
             WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
-        except:
-            print('Cookies has been expired for ' + notebook_name)
-            sys.exit()
+            WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':1v')).click()
 
-        WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':20'))
-        WebDriverWait(driver, 20).until(
-            lambda d: d.find_element(By.XPATH, "//*[contains(text(), 'Factory reset runtime')]")).click()
-
-        try:
-            WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'ok')).click()
-        except:
-            print("Couldn't ablt to click because of some card overlay for " + notebook_name)
-            sys.exit()
-
-        WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
-        WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':1v')).click()
-
-        print(notebook_name + ' Running')  # Logs on terminal that the Notebook is running
-        time.sleep(30)
+            print(notebook_name + ' Running')  # Logs on terminal that the Notebook is running
+            time.sleep(30)
+    except:
+        print('Unexpected error occured in running ' + notebook_name)
+        sys.exit()
 
 
 def ping_notebook(notebook_name):
