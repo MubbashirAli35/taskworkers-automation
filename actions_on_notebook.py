@@ -22,7 +22,7 @@ def run_notebook(notebook_name):
         worker_cookies_path = notebooks_links_dict['cookies_paths'][str(notebook_name[0:6]).lower()]
 
     options = Options()
-    # options.add_argument('headless')  # Configures to start chrome in headless mode
+    options.add_argument('headless')  # Configures to start chrome in headless mode
     options.add_argument('--start-maximized')  # Configures to start it with maximum window size
     options.add_argument('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36')
 
@@ -87,13 +87,18 @@ def ping_notebook(notebook_name):
 
         driver.get(notebook_link)
 
-        for cookie in pickle.load(open(worker_cookies_path, 'rb')):
+        try:
+            with open(worker_cookies_path) as f:
+                cookies = json.load(f)
 
-            # Sets the 'sameSite' cookie to 'Strict' since Google doesn't allow requests from Cross Origin
-            if 'sameSite' in cookie:
-                if cookie['sameSite'] == 'None':
+            for cookie in cookies:
+                if cookie['sameSite'] != 'Strict':
                     cookie['sameSite'] = 'Strict'
-            driver.add_cookie(cookie)
+
+                driver.add_cookie(cookie)
+        except:
+            print('Cannot add cookies for ' + notebook_name)
+            sys.exit()
 
         driver.find_element_by_tag_name('body').send_keys(Keys.CONTROL + 't')
         driver.get(notebook_link)  # Gets a Notebook
