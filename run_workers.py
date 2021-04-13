@@ -1,8 +1,6 @@
 import psycopg2
 import pandas as pd
 import datetime as dt
-import os
-import re
 from multiprocessing import Process
 import sys
 from actions_on_notebook import run_notebook, ping_notebook
@@ -82,7 +80,7 @@ training_notebooks_to_interact = training_notebooks_sorted_on_last_beat_time.loc
 backtests_notebooks_to_run = backtests_notebooks_to_run['Notebook']
 training_notebooks_to_run = training_notebooks_to_run['Notebook']
 
-for notebook in backtests_notebooks_to_run:
+for notebook in training_notebooks_to_run:
     print(notebook)
 
 backtests_notebooks_to_interact = backtests_notebooks_to_interact['Notebook']
@@ -179,9 +177,9 @@ if __name__ == '__main__':
             print('Number of Training Tasks pending ', num_of_pending_training_tasks.iloc[0])
             if num_of_training_tasks_running.count() > 0:
                 print('Number of Running Training Tasks ', num_of_training_tasks_running.iloc[0])
-                if num_of_training_tasks_running.iloc[0] < 100:
+                if num_of_training_tasks_running.iloc[0] < 200:
                     if sys.argv[1].lower() == 'run':
-                        for i in range(num_of_training_tasks_running.iloc[0], 200, 5):
+                        for i in range(num_of_training_tasks_running.iloc[0], 50, 5):
                             if i < training_notebooks_to_run.count():
                                 notebook_1 = Process(target=run_notebook,
                                                      args=(training_notebooks_to_run[i],))
