@@ -45,9 +45,18 @@ notebooks.dropna(inplace=True)
 
 backtests_notebooks = notebooks[~notebooks['Notebook'].str.contains('GPU')]
 training_notebooks = notebooks[notebooks['Notebook'].str.contains('GPU')]
+#
+# for notebook in training_notebooks:
+#     if dt.datetime.now() - notebook['Max Last Beat Time'] < dt.timedelta(days=1):
+#         print(dt.datetime.now() - backtests_notebooks['Max Last Beat Time'])
 
-backtests_notebooks['Alive Status'] = dt.datetime.now() - backtests_notebooks['Max Last Beat Time'] < dt.timedelta(minutes=20)
-training_notebooks['Alive Status'] = dt.datetime.now() - training_notebooks['Max Last Beat Time'] < dt.timedelta(minutes=20)
+backtests_notebooks['Alive Status'] = dt.datetime.now() - backtests_notebooks['Max Last Beat Time'] < dt.timedelta(hours=5, minutes=20)
+training_notebooks['Alive Status'] = dt.datetime.now() - training_notebooks['Max Last Beat Time'] < dt.timedelta(hours=5, minutes=60)
+
+# print(training_notebooks.head(100))
+
+# for time in training_notebooks['Max Last Beat Time']:
+#     print((dt.datetime.now() - time) < dt.timedelta(hours=5, minutes=20))
 
 backtests_notebooks_sorted_on_last_beat_time = backtests_notebooks.sort_values(by='Max Last Beat Time', ignore_index=True)
 training_notebooks_sorted_on_last_beat_time = training_notebooks.sort_values(by='Max Last Beat Time', ignore_index=True)
@@ -77,6 +86,8 @@ training_notebooks_to_interact = training_notebooks_sorted_on_last_beat_time.loc
     training_notebooks_sorted_on_last_beat_time['Alive Status'] == True
 ]
 
+# print(training_notebooks_to_interact.head())
+
 backtests_notebooks_to_run = backtests_notebooks_to_run['Notebook']
 training_notebooks_to_run = training_notebooks_to_run['Notebook']
 
@@ -85,6 +96,9 @@ training_notebooks_to_run = training_notebooks_to_run['Notebook']
 
 backtests_notebooks_to_interact = backtests_notebooks_to_interact['Notebook']
 training_notebooks_to_interact = training_notebooks_to_interact['Notebook']
+
+for notebook in training_notebooks_to_interact:
+    print(notebook)
 
 # print(backtests_notebooks_to_run[0])
 # print(training_notebooks_to_run[1])
