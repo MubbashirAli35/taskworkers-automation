@@ -113,7 +113,7 @@ def ping_notebook(notebook_name):
 
 def terminate_notebook_session(notebook_name):
     options = Options()
-    # options.add_argument('headless')  # Configures to start chrome in headless mode
+    options.add_argument('headless')  # Configures to start chrome in headless mode
     options.add_argument('--start-maximized')  # Configures to start it with maximum window size
     options.add_argument(
         'user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
