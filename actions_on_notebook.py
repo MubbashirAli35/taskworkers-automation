@@ -35,13 +35,6 @@ def run_notebook(notebook_name):
                     print(notebook_name + ' not subscribed to Colab Pro. '
                           + 'ignoring it for Training')
                     sys.exit()
-                else:
-                    print('Run')
-                    sys.exit()
-
-            else:
-                print('Run')
-                sys.exit()
 
             driver.get(notebook_link)
             try:
