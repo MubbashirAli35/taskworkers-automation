@@ -50,8 +50,8 @@ training_notebooks = notebooks[notebooks['Notebook'].str.contains('GPU')]
 #     if dt.datetime.now() - notebook['Max Last Beat Time'] < dt.timedelta(days=1):
 #         print(dt.datetime.now() - backtests_notebooks['Max Last Beat Time'])
 
-backtests_notebooks['Alive Status'] = dt.datetime.now() - backtests_notebooks['Max Last Beat Time'] < dt.timedelta(hours=5, minutes=20)
-training_notebooks['Alive Status'] = dt.datetime.now() - training_notebooks['Max Last Beat Time'] < dt.timedelta(hours=5, minutes=60)
+backtests_notebooks['Alive Status'] = dt.datetime.now() - backtests_notebooks['Max Last Beat Time'] < dt.timedelta(minutes=20)
+training_notebooks['Alive Status'] = dt.datetime.now() - training_notebooks['Max Last Beat Time'] < dt.timedelta(minutes=20)
 
 # print(training_notebooks.head(100))
 
@@ -97,8 +97,10 @@ training_notebooks_to_run = training_notebooks_to_run['Notebook']
 backtests_notebooks_to_interact = backtests_notebooks_to_interact['Notebook']
 training_notebooks_to_interact = training_notebooks_to_interact['Notebook']
 
-for notebook in training_notebooks_to_interact:
-    print(notebook)
+print(training_notebooks_to_interact[0])
+
+# for notebook in training_notebooks_to_interact:
+#     print(notebook)
 
 # print(backtests_notebooks_to_run[0])
 # print(training_notebooks_to_run[1])
@@ -115,6 +117,7 @@ num_of_training_tasks_running = tasks_queue.loc[(tasks_queue['Status'] == 'Runni
 if __name__ == '__main__':
     print(dt.datetime.now())
     print('\n\n')
+    print(training_notebooks_to_interact.count())
     # print('Backtests Pending: ', num_of_pending_backtests.iloc[0])
     # print('Backtests Running: ', num_of_backtests_running.iloc[0])
     # print('Training Pending: ', num_of_pending_training_tasks.iloc[0])
@@ -187,41 +190,38 @@ if __name__ == '__main__':
                 notebook_5.join()
 
     elif sys.argv[1].lower() == 'interact':
-        try:
-            for i in range(0, training_notebooks_to_interact.count(), 5):
-                if i < training_notebooks_to_interact.count():
-                    notebook_1 = Process(target=ping_notebook,
-                                         args=(training_notebooks_to_interact[i],))
-                    notebook_1.start()
-                if i + 1 < training_notebooks_to_interact.count():
-                    notebook_2 = Process(target=ping_notebook,
-                                         args=(training_notebooks_to_interact[i + 1],))
-                    notebook_2.start()
-                if i + 2 < training_notebooks_to_interact.count():
-                    notebook_3 = Process(target=ping_notebook,
-                                         args=(training_notebooks_to_interact[i + 2],))
-                    notebook_3.start()
-                if i + 3 < training_notebooks_to_interact.count():
-                    notebook_4 = Process(target=ping_notebook,
-                                         args=(training_notebooks_to_interact[i + 3],))
-                    notebook_4.start()
-                if i + 4 < training_notebooks_to_interact.count():
-                    notebook_5 = Process(target=ping_notebook,
-                                         args=(training_notebooks_to_interact[i + 4],))
-                    notebook_5.start()
+        for i in range(0, training_notebooks_to_interact.count(), 5):
+            if i < training_notebooks_to_interact.count():
+                notebook_1 = Process(target=ping_notebook,
+                                     args=(training_notebooks_to_interact.iloc[i],))
+                notebook_1.start()
+            if i + 1 < training_notebooks_to_interact.count():
+                notebook_2 = Process(target=ping_notebook,
+                                     args=(training_notebooks_to_interact.iloc[i + 1],))
+                notebook_2.start()
+            if i + 2 < training_notebooks_to_interact.count():
+                notebook_3 = Process(target=ping_notebook,
+                                     args=(training_notebooks_to_interact.iloc[i + 2],))
+                notebook_3.start()
+            if i + 3 < training_notebooks_to_interact.count():
+                notebook_4 = Process(target=ping_notebook,
+                                     args=(training_notebooks_to_interact.iloc[i + 3],))
+                notebook_4.start()
+            if i + 4 < training_notebooks_to_interact.count():
+                notebook_5 = Process(target=ping_notebook,
+                                     args=(training_notebooks_to_interact.iloc[i + 4],))
+                notebook_5.start()
 
-                if i < training_notebooks_to_interact.count():
-                    notebook_1.join()
-                if i + 1 < training_notebooks_to_interact.count():
-                    notebook_2.join()
-                if i + 2 < training_notebooks_to_interact.count():
-                    notebook_3.join()
-                if i + 3 < training_notebooks_to_interact.count():
-                    notebook_4.join()
-                if i + 4 < training_notebooks_to_interact.count():
-                    notebook_5.join()
-        except:
-            print('All running Training notebooks have been pinged')
+            if i < training_notebooks_to_interact.count():
+                notebook_1.join()
+            if i + 1 < training_notebooks_to_interact.count():
+                notebook_2.join()
+            if i + 2 < training_notebooks_to_interact.count():
+                notebook_3.join()
+            if i + 3 < training_notebooks_to_interact.count():
+                notebook_4.join()
+            if i + 4 < training_notebooks_to_interact.count():
+                notebook_5.join()
 
         try:
             for i in range(0, backtests_notebooks_to_interact.count(), 5):
