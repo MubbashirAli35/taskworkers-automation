@@ -17,9 +17,11 @@ def run_notebook(notebook_name):
     if re.match('[0-9]', notebook_name[5:6]) is None:
         notebook_link = notebooks_links_dict['links'][str(notebook_name[0:6]).lower()]
         worker_cookies_path = notebooks_links_dict['cookies_paths'][str(notebook_name[0:5]).lower()]
+        is_worker_pro = notebooks_links_dict['pro'][str(notebook_name[0:5]).lower()]
     else:
         notebook_link = notebooks_links_dict['links'][str(notebook_name[0:7]).lower()]
         worker_cookies_path = notebooks_links_dict['cookies_paths'][str(notebook_name[0:6]).lower()]
+        is_worker_pro = notebooks_links_dict['pro'][str(notebook_name[0:6]).lower()]
 
     options = Options()
     options.add_argument('headless')  # Configures to start chrome in headless mode
@@ -28,6 +30,19 @@ def run_notebook(notebook_name):
 
     try:
         with Chrome(executable_path='./chromedriver', options=options) as driver:
+            if 'gpu' in notebook_name.lower():
+                if not is_worker_pro:
+                    print(notebook_name + ' not subscribed to Colab Pro. '
+                          + 'ignoring it for Training')
+                    sys.exit()
+                else:
+                    print('Run')
+                    sys.exit()
+
+            else:
+                print('Run')
+                sys.exit()
+
             driver.get(notebook_link)
             try:
                 with open(worker_cookies_path) as f:
