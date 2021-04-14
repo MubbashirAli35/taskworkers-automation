@@ -111,4 +111,60 @@ def ping_notebook(notebook_name):
         print(notebook_name + ' Loaded')
 
 
+def terminate_notebook_session(notebook_name):
+    options = Options()
+    # options.add_argument('headless')  # Configures to start chrome in headless mode
+    options.add_argument('--start-maximized')  # Configures to start it with maximum window size
+    options.add_argument(
+        'user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+        + ' (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36')
+
+    with Chrome(executable_path='./chromedriver', options=options) as driver:
+        if re.match('[0-9]', notebook_name[5:6]) is None:
+            notebook_link = notebooks_links_dict['links'][str(notebook_name[0:6]).lower()]
+            worker_cookies_path = notebooks_links_dict['cookies_paths'][str(notebook_name[0:5]).lower()]
+        else:
+            notebook_link = notebooks_links_dict['links'][str(notebook_name[0:7]).lower()]
+            worker_cookies_path = notebooks_links_dict['cookies_paths'][str(notebook_name[0:6]).lower()]
+
+        driver.get(notebook_link)
+
+        try:
+            with open(worker_cookies_path) as f:
+                cookies = json.load(f)
+
+            for cookie in cookies:
+                if cookie['sameSite'] != 'Strict':
+                    cookie['sameSite'] = 'Strict'
+
+                driver.add_cookie(cookie)
+        except:
+            print('Cannot add cookies for ' + notebook_name)
+            sys.exit()
+
+        driver.find_element_by_tag_name('body').send_keys(Keys.CONTROL + 't')
+        driver.get(notebook_link)  # Gets a Notebook
+
+        print(notebook_name + ' Loaded')
+
+        try:
+            WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
+        except:
+            print('Cookies has been expired for ' + notebook_name)
+            sys.exit()
+
+        WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':20'))
+        WebDriverWait(driver, 20).until(
+            lambda d: d.find_element(By.XPATH, "//*[contains(text(), 'Factory reset runtime')]")).click()
+
+        try:
+            WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'ok')).click()
+        except:
+            print("Couldn't ablt to click because of some card overlay for " + notebook_name)
+            sys.exit()
+
+        print(notebook_name + ' session terminated')
+        time.sleep(5)
+
+
 notebooks_links.close()

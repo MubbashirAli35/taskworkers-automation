@@ -1,3 +1,3 @@
-from actions_on_notebook import run_notebook
+from actions_on_notebook import run_notebook, terminate_notebook_session
 
-run_notebook('gctw15B-GPU')
+terminate_notebook_session('gctw4I')
