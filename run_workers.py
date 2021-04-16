@@ -259,7 +259,8 @@ if __name__ == '__main__':
             print('All running Backtest notebooks pinged')
 
     else:
-        if num_of_pending_training_tasks.count() > 0 and num_of_pending_training_tasks.iloc[0] > 0:
+        if num_of_pending_training_tasks.count() > 0 and num_of_pending_training_tasks.iloc[0] > 0  \
+                and (sys.argv[2] == 'train' or sys.argv[2] == 'both'):
             print('Number of Training Tasks pending ', num_of_pending_training_tasks.iloc[0])
             if num_of_training_tasks_running.count() > 0:
                 print('Number of Running Training Tasks ', num_of_training_tasks_running.iloc[0])
@@ -334,8 +335,8 @@ if __name__ == '__main__':
         else:
             print('No training tasks pending')
 
-        if num_of_pending_backtests.count() > 0 and num_of_pending_backtests.iloc[0] > 0 and \
-                num_of_pending_training_tasks.count() == 0:
+        if num_of_pending_backtests.count() > 0 and num_of_pending_backtests.iloc[0] > 0 \
+                and (sys.argv[2] == 'backtest' or sys.argv[2] == 'both'):
             print('Pending backtests: ', num_of_pending_backtests.iloc[0])
             if num_of_backtests_running.count() > 0:
                 print('Num of Backtests running: ', num_of_backtests_running.iloc[0])
