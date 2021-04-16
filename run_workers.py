@@ -5,12 +5,6 @@ from multiprocessing import Process
 import sys
 from actions_on_notebook import run_notebook, ping_notebook, terminate_notebook_session
 
-# def run_notebook(notebook_name, action):
-#     if re.match('[0-9]', notebook_name[5:6]) == None:
-#         os.system('python ' + notebook_name[0:5] + '/' + notebook_name + '.py' + ' ' + notebook_name + ' ' + action)
-#     else:
-#         os.system('python ' + notebook_name[0:6] + '/' + notebook_name + '.py' + ' ' + notebook_name + ' ' + action)
-
 conn = psycopg2.connect(dbname='greencanvas',
                         user='gcp_read_only',
                         password='gc$$2929%',
@@ -45,30 +39,12 @@ notebooks.dropna(inplace=True)
 
 backtests_notebooks = notebooks[~notebooks['Notebook'].str.contains('GPU')]
 training_notebooks = notebooks[notebooks['Notebook'].str.contains('GPU')]
-#
-# for notebook in training_notebooks:
-#     if dt.datetime.now() - notebook['Max Last Beat Time'] < dt.timedelta(days=1):
-#         print(dt.datetime.now() - backtests_notebooks['Max Last Beat Time'])
 
 backtests_notebooks['Alive Status'] = dt.datetime.now() - backtests_notebooks['Max Last Beat Time'] < dt.timedelta(minutes=20)
 training_notebooks['Alive Status'] = dt.datetime.now() - training_notebooks['Max Last Beat Time'] < dt.timedelta(minutes=20)
 
-# print(training_notebooks.head(100))
-
-# for time in training_notebooks['Max Last Beat Time']:
-#     print((dt.datetime.now() - time) < dt.timedelta(hours=5, minutes=20))
-
 backtests_notebooks_sorted_on_last_beat_time = backtests_notebooks.sort_values(by='Max Last Beat Time', ignore_index=True)
 training_notebooks_sorted_on_last_beat_time = training_notebooks.sort_values(by='Max Last Beat Time', ignore_index=True)
-
-# Only keep notebooks that ran not more than two hours ago
-# backtests_notebooks_sorted_on_last_beat_time = backtests_notebooks_sorted_on_last_beat_time.loc[
-#     (dt.datetime.now() - backtests_notebooks_sorted_on_last_beat_time['Max Last Beat Time'] < dt.timedelta(hours=17))
-# ]
-#
-# training_notebooks_sorted_on_last_beat_time = training_notebooks_sorted_on_last_beat_time.loc[
-#     (dt.datetime.now() - training_notebooks_sorted_on_last_beat_time['Max Last Beat Time'] < dt.timedelta(hours=17))
-# ]
 
 backtests_notebooks_to_run = backtests_notebooks_sorted_on_last_beat_time.loc[
     backtests_notebooks_sorted_on_last_beat_time['Alive Status'] == False
@@ -86,27 +62,11 @@ training_notebooks_to_interact = training_notebooks_sorted_on_last_beat_time.loc
     training_notebooks_sorted_on_last_beat_time['Alive Status'] == True
 ]
 
-# print(training_notebooks_to_interact.head())
-
 backtests_notebooks_to_run = backtests_notebooks_to_run['Notebook']
 training_notebooks_to_run = training_notebooks_to_run['Notebook']
 
-# for notebook in training_notebooks_to_run:
-#     print(notebook)
-
 backtests_notebooks_to_interact = backtests_notebooks_to_interact['Notebook']
 training_notebooks_to_interact = training_notebooks_to_interact['Notebook']
-
-print(training_notebooks_to_interact[0])
-
-# for notebook in training_notebooks_to_interact:
-#     print(notebook)
-
-# print(backtests_notebooks_to_run[0])
-# print(training_notebooks_to_run[1])
-
-# run_notebook(backtests_notebooks_to_run[0])
-# run_notebook(backtests_notebooks_to_run[1])
 
 num_of_pending_backtests = tasks_queue.loc[(tasks_queue['Status'] == 'New') & (tasks_queue['Task Type'] == 'BackTestTask')]['Number']
 num_of_pending_training_tasks = tasks_queue.loc[(tasks_queue['Status'] == 'New') & (tasks_queue['Task Type'] == 'TrainingTask')]['Number']
@@ -117,11 +77,6 @@ num_of_training_tasks_running = tasks_queue.loc[(tasks_queue['Status'] == 'Runni
 if __name__ == '__main__':
     print(dt.datetime.now())
     print('\n\n')
-    print(training_notebooks_to_interact.count())
-    # print('Backtests Pending: ', num_of_pending_backtests.iloc[0])
-    # print('Backtests Running: ', num_of_backtests_running.iloc[0])
-    # print('Training Pending: ', num_of_pending_training_tasks.iloc[0])
-    # print('Training Running: ', num_of_training_tasks_running.iloc[0])
 
     if sys.argv[1].lower() == 'terminate':
         for i in range(0, backtests_notebooks_to_interact.count(), 5):
