@@ -77,6 +77,7 @@ num_of_training_tasks_running = tasks_queue.loc[(tasks_queue['Status'] == 'Runni
 if __name__ == '__main__':
     print(dt.datetime.now())
     print('\n\n')
+    print(training_notebooks_to_run.count())
 
     if sys.argv[1].lower() == 'terminate':
         for i in range(0, backtests_notebooks_to_interact.count(), 5):
@@ -222,70 +223,70 @@ if __name__ == '__main__':
                 if num_of_training_tasks_running.iloc[0] < num_of_pending_training_tasks.iloc[0]:
                     if sys.argv[1].lower() == 'run':
                         for i in range(0, (training_notebooks_to_run.count() * 3), 5):
-                            if i < num_of_pending_training_tasks.iloc[0]:
+                            if i < num_of_pending_training_tasks.iloc[0] * 3:
                                 notebook_1 = Process(target=run_notebook,
                                                      args=(training_notebooks_to_run[i],))
                                 notebook_1.start()
-                            if i + 1 < num_of_pending_training_tasks.iloc[0]:
+                            if i + 1 < num_of_pending_training_tasks.iloc[0] * 3:
                                 notebook_2 = Process(target=run_notebook,
                                                      args=(training_notebooks_to_run[i + 1],))
                                 notebook_2.start()
-                            if i + 2 < num_of_pending_training_tasks.iloc[0]:
+                            if i + 2 < num_of_pending_training_tasks.iloc[0] * 3:
                                 notebook_3 = Process(target=run_notebook,
                                                      args=(training_notebooks_to_run[i + 2],))
                                 notebook_3.start()
-                            if i + 3 < num_of_pending_training_tasks.iloc[0]:
+                            if i + 3 < num_of_pending_training_tasks.iloc[0] * 3:
                                 notebook_4 = Process(target=run_notebook,
                                                      args=(training_notebooks_to_run[i + 3],))
                                 notebook_4.start()
-                            if i + 4 < num_of_pending_training_tasks.iloc[0]:
+                            if i + 4 < num_of_pending_training_tasks.iloc[0] * 3:
                                 notebook_5 = Process(target=run_notebook,
                                                      args=(training_notebooks_to_run[i + 4],))
                                 notebook_5.start()
 
-                            if i < num_of_pending_training_tasks.iloc[0]:
+                            if i < num_of_pending_training_tasks.iloc[0] * 3:
                                 notebook_1.join()
-                            if i + 1 < num_of_pending_training_tasks.iloc[0]:
+                            if i + 1 < num_of_pending_training_tasks.iloc[0] * 3:
                                 notebook_2.join()
-                            if i + 2 < num_of_pending_training_tasks.iloc[0]:
+                            if i + 2 < num_of_pending_training_tasks.iloc[0] * 3:
                                 notebook_3.join()
-                            if i + 3 < num_of_pending_training_tasks.iloc[0]:
+                            if i + 3 < num_of_pending_training_tasks.iloc[0] * 3:
                                 notebook_4.join()
-                            if i + 4 < num_of_pending_training_tasks.iloc[0]:
+                            if i + 4 < num_of_pending_training_tasks.iloc[0] * 3:
                                 notebook_5.join()
             else:
                 if sys.argv[1].lower() == 'run':
                     for i in range(0, (training_notebooks_to_run.count() * 3), 5):
-                        if i < num_of_pending_training_tasks.iloc[0]:
+                        if i < num_of_pending_training_tasks.iloc[0] * 3:
                             notebook_1 = Process(target=run_notebook,
                                                  args=(training_notebooks_to_run[i],))
                             notebook_1.start()
-                        if i + 1 < num_of_pending_training_tasks.iloc[0]:
+                        if i + 1 < num_of_pending_training_tasks.iloc[0] * 3:
                             notebook_2 = Process(target=run_notebook,
                                                  args=(training_notebooks_to_run[i + 1],))
                             notebook_2.start()
-                        if i + 2 < num_of_pending_training_tasks.iloc[0]:
+                        if i + 2 < num_of_pending_training_tasks.iloc[0] * 3:
                             notebook_3 = Process(target=run_notebook,
                                                  args=(training_notebooks_to_run[i + 2],))
                             notebook_3.start()
-                        if i + 3 < num_of_pending_training_tasks.iloc[0]:
+                        if i + 3 < num_of_pending_training_tasks.iloc[0] * 3:
                             notebook_4 = Process(target=run_notebook,
                                                  args=(training_notebooks_to_run[i + 3],))
                             notebook_4.start()
-                        if i + 4 < num_of_pending_training_tasks.iloc[0]:
+                        if i + 4 < num_of_pending_training_tasks.iloc[0] * 3:
                             notebook_5 = Process(target=run_notebook,
                                                  args=(training_notebooks_to_run[i + 4],))
                             notebook_5.start()
 
-                        if i < num_of_pending_training_tasks.iloc[0]:
+                        if i < num_of_pending_training_tasks.iloc[0] * 3:
                             notebook_1.join()
-                        if i + 1 < num_of_pending_training_tasks.iloc[0]:
+                        if i + 1 < num_of_pending_training_tasks.iloc[0] * 3:
                             notebook_2.join()
-                        if i + 2 < num_of_pending_training_tasks.iloc[0]:
+                        if i + 2 < num_of_pending_training_tasks.iloc[0] * 3:
                             notebook_3.join()
-                        if i + 3 < num_of_pending_training_tasks.iloc[0]:
+                        if i + 3 < num_of_pending_training_tasks.iloc[0] * 3:
                             notebook_4.join()
-                        if i + 4 < num_of_pending_training_tasks.iloc[0]:
+                        if i + 4 < num_of_pending_training_tasks.iloc[0] * 3:
                             notebook_5.join()
         else:
             print('No training tasks pending')
@@ -298,68 +299,68 @@ if __name__ == '__main__':
                 if num_of_backtests_running.iloc[0] < num_of_pending_backtests.iloc[0]:
                     if sys.argv[1].lower() == 'run':
                         for i in range(0, (backtests_notebooks_to_run.count() * 3), 5):
-                            if i < num_of_pending_backtests.iloc[0]:
+                            if i < num_of_pending_backtests.iloc[0] * 3:
                                 notebook_1 = Process(target=run_notebook, args=(backtests_notebooks_to_run[i],))
                                 notebook_1.start()
-                            if i + 1 < num_of_pending_backtests.iloc[0]:
+                            if i + 1 < num_of_pending_backtests.iloc[0] * 3:
                                 notebook_2 = Process(target=run_notebook,
                                                      args=(backtests_notebooks_to_run[i + 1],))
                                 notebook_2.start()
-                            if i + 2 < num_of_pending_backtests.iloc[0]:
+                            if i + 2 < num_of_pending_backtests.iloc[0] * 3:
                                 notebook_3 = Process(target=run_notebook,
                                                      args=(backtests_notebooks_to_run[i + 2],))
                                 notebook_3.start()
-                            if i + 3 < num_of_pending_backtests.iloc[0]:
+                            if i + 3 < num_of_pending_backtests.iloc[0] * 3:
                                 notebook_4 = Process(target=run_notebook,
                                                      args=(backtests_notebooks_to_run[i + 3],))
                                 notebook_4.start()
-                            if i + 4 < num_of_pending_backtests.iloc[0]:
+                            if i + 4 < num_of_pending_backtests.iloc[0] * 3:
                                 notebook_5 = Process(target=run_notebook,
                                                      args=(backtests_notebooks_to_run[i + 4],))
                                 notebook_5.start()
 
-                            if i < num_of_pending_backtests.iloc[0]:
+                            if i < num_of_pending_backtests.iloc[0] * 3:
                                 notebook_1.join()
-                            if i + 1 < num_of_pending_backtests.iloc[0]:
+                            if i + 1 < num_of_pending_backtests.iloc[0] * 3:
                                 notebook_2.join()
-                            if i + 2 < num_of_pending_backtests.iloc[0]:
+                            if i + 2 < num_of_pending_backtests.iloc[0] * 3:
                                 notebook_3.join()
-                            if i + 3 < num_of_pending_backtests.iloc[0]:
+                            if i + 3 < num_of_pending_backtests.iloc[0] * 3:
                                 notebook_4.join()
-                            if i + 4 < num_of_pending_backtests.iloc[0]:
+                            if i + 4 < num_of_pending_backtests.iloc[0] * 3:
                                 notebook_5.join()
             else:
                 if sys.argv[1].lower() == 'run':
                     for i in range(0, (backtests_notebooks_to_run.count() * 3), 5):
-                        if i < num_of_pending_backtests.iloc[0]:
+                        if i < num_of_pending_backtests.iloc[0] * 3:
                             notebook_1 = Process(target=run_notebook, args=(backtests_notebooks_to_run[i],))
                             notebook_1.start()
-                        if i + 1 < num_of_pending_backtests.iloc[0]:
+                        if i + 1 < num_of_pending_backtests.iloc[0] * 3:
                             notebook_2 = Process(target=run_notebook,
                                                  args=(backtests_notebooks_to_run[i + 1],))
                             notebook_2.start()
-                        if i + 2 < num_of_pending_backtests.iloc[0]:
+                        if i + 2 < num_of_pending_backtests.iloc[0] * 3:
                             notebook_3 = Process(target=run_notebook,
                                                  args=(backtests_notebooks_to_run[i + 2],))
                             notebook_3.start()
-                        if i + 3 < num_of_pending_backtests.iloc[0]:
+                        if i + 3 < num_of_pending_backtests.iloc[0] * 3:
                             notebook_4 = Process(target=run_notebook,
                                                  args=(backtests_notebooks_to_run[i + 3],))
                             notebook_4.start()
-                        if i + 4 < num_of_pending_backtests.iloc[0]:
+                        if i + 4 < num_of_pending_backtests.iloc[0] * 3:
                             notebook_5 = Process(target=run_notebook,
                                                  args=(backtests_notebooks_to_run[i + 4],))
                             notebook_5.start()
 
-                        if i < num_of_pending_backtests.iloc[0]:
+                        if i < num_of_pending_backtests.iloc[0] * 3:
                             notebook_1.join()
-                        if i + 1 < num_of_pending_backtests.iloc[0]:
+                        if i + 1 < num_of_pending_backtests.iloc[0] * 3:
                             notebook_2.join()
-                        if i + 2 < num_of_pending_backtests.iloc[0]:
+                        if i + 2 < num_of_pending_backtests.iloc[0] * 3:
                             notebook_3.join()
-                        if i + 3 < num_of_pending_backtests.iloc[0]:
+                        if i + 3 < num_of_pending_backtests.iloc[0] * 3:
                             notebook_4.join()
-                        if i + 4 < num_of_pending_backtests.iloc[0]:
+                        if i + 4 < num_of_pending_backtests.iloc[0] * 3:
                             notebook_5.join()
         else:
             print('No backtest tasks pending')
