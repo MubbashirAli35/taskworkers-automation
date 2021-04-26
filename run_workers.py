@@ -115,23 +115,23 @@ if __name__ == '__main__':
         for i in range(0, training_notebooks_to_interact.count(), 5):
             if i < training_notebooks_to_interact.count():
                 notebook_1 = Process(target=terminate_notebook_session,
-                                     args=(training_notebooks_to_interact[i],))
+                                     args=(training_notebooks_to_interact.iloc[i],))
                 notebook_1.start()
             if i + 1 < training_notebooks_to_interact.count():
                 notebook_2 = Process(target=terminate_notebook_session,
-                                     args=(training_notebooks_to_interact[i + 1],))
+                                     args=(training_notebooks_to_interact.iloc[i + 1],))
                 notebook_2.start()
             if i + 2 < training_notebooks_to_interact.count():
                 notebook_3 = Process(target=terminate_notebook_session,
-                                     args=(training_notebooks_to_interact[i + 2],))
+                                     args=(training_notebooks_to_interact.iloc[i + 2],))
                 notebook_3.start()
             if i + 3 < training_notebooks_to_interact.count():
                 notebook_4 = Process(target=terminate_notebook_session,
-                                     args=(training_notebooks_to_interact[i + 3],))
+                                     args=(training_notebooks_to_interact.iloc[i + 3],))
                 notebook_4.start()
             if i + 4 < training_notebooks_to_interact.count():
                 notebook_5 = Process(target=terminate_notebook_session,
-                                     args=(training_notebooks_to_interact[i + 4],))
+                                     args=(training_notebooks_to_interact.iloc[i + 4],))
                 notebook_5.start()
 
             if i < training_notebooks_to_interact.count():
