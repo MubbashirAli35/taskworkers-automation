@@ -65,12 +65,6 @@ def run_notebook(notebook_name):
             WebDriverWait(driver, 20).until(
                 lambda d: d.find_element(By.XPATH, "//*[contains(text(), 'Factory reset runtime')]")).click()
 
-            try:
-                WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'ok')).click()
-            except:
-                print("Couldn't ablt to click because of some card overlay for " + notebook_name)
-                sys.exit()
-
             WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
             WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':1v')).click()
 
