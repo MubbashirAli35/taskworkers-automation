@@ -13,7 +13,7 @@ notebooks_links = open('./notebooks_links.json')
 notebooks_links_dict = json.load(notebooks_links)
 
 
-def run_notebook(notebook_name):
+def run_notebook(notebook_name, ret_val):
     if re.match('[0-9]', notebook_name[5:6]) is None:
         notebook_link = notebooks_links_dict['links'][str(notebook_name[0:6]).lower()]
         worker_cookies_path = notebooks_links_dict['cookies_paths'][str(notebook_name[0:5]).lower()]
@@ -34,9 +34,11 @@ def run_notebook(notebook_name):
                 if not is_worker_pro:
                     print(notebook_name + ' not subscribed to Colab Pro. '
                           + 'ignoring it for Training')
-                    sys.exit()
+                    ret_val.put(1)
+                    return ret_val
 
             driver.get(notebook_link)
+
             try:
                 with open(worker_cookies_path) as f:
                     cookies = json.load(f)
@@ -48,7 +50,9 @@ def run_notebook(notebook_name):
                     driver.add_cookie(cookie)
             except:
                 print('Cannot add cookies for ' + notebook_name)
-                sys.exit()
+
+                ret_val.put(1)
+                return ret_val
 
             driver.find_element_by_tag_name('body').send_keys(Keys.CONTROL + 't')
             driver.get(notebook_link)  # Gets a Notebook
@@ -59,7 +63,9 @@ def run_notebook(notebook_name):
                 WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
             except:
                 print('Cookies has been expired for ' + notebook_name)
-                sys.exit()
+
+                ret_val.put(1)
+                return ret_val
 
             WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':20'))
             WebDriverWait(driver, 20).until(
@@ -68,11 +74,24 @@ def run_notebook(notebook_name):
             WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
             WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':1v')).click()
 
-            print(notebook_name + ' Running')  # Logs on terminal that the Notebook is running
-            time.sleep(30)
+            try:
+                WebDriverWait(driver, 30).until(
+                    lambda d: d.find_element(By.XPATH, "//*[contains(text(), 'available')]")).click()
+                print('No Backend available for ' + notebook_name)
+
+                ret_val.put(1)
+                return ret_val
+            except:
+                print(notebook_name + ' Running')  # Logs on terminal that the Notebook is running
+
+                ret_val.put(0)
+                return ret_val
+
     except:
         print('Unexpected error occured in running ' + notebook_name)
-        sys.exit()
+
+        ret_val.put(1)
+        return ret_val
 
 
 def ping_notebook(notebook_name):

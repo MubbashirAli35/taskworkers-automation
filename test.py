@@ -1,3 +1,6 @@
-from actions_on_notebook import run_notebook, terminate_notebook_session
+from actions_on_notebook import run_notebook
+from multiprocessing import Queue
 
-run_notebook('gctw11A-GPU')
+ret_val = Queue()
+run_notebook('gctw11E', ret_val)
+print('Status returned', ret_val.get())
