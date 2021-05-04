@@ -564,7 +564,7 @@ if __name__ == '__main__':
 
                         notebooks_index += 5
 
-                        if i == 0 and num_of_pending_kmeans_tasks <= 5:
+                        if i == 0 and num_of_pending_kmeans_tasks.iloc[0] <= 5:
                             i = 0
                         else:
                             i += 5
