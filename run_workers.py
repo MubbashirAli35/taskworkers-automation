@@ -470,7 +470,7 @@ if __name__ == '__main__':
                                                        notebook_5_ret_val,))
                             notebook_5.start()
 
-                        if i < num_of_pending_backtests.iloc[0]:
+                        if i < num_of_pending_backtests.iloc[0] or i < 5:
                             if notebook_1_ret_val.get() == 1:
                                 if i - 1 < 0:
                                     i = 0
@@ -478,7 +478,7 @@ if __name__ == '__main__':
                                     i -= 1
 
                             notebook_1.join()
-                        if i + 1 < num_of_pending_backtests.iloc[0]:
+                        if i + 1 < num_of_pending_backtests.iloc[0] or i < 5:
                             if notebook_2_ret_val.get() == 1:
                                 if i - 1 < 0:
                                     i = 0
@@ -486,7 +486,7 @@ if __name__ == '__main__':
                                     i -= 1
 
                             notebook_2.join()
-                        if i + 2 < num_of_pending_backtests.iloc[0]:
+                        if i + 2 < num_of_pending_backtests.iloc[0] or i < 5:
                             if notebook_3_ret_val.get() == 1:
                                 if i - 1 < 0:
                                     i = 0
@@ -494,7 +494,7 @@ if __name__ == '__main__':
                                     i -= 1
 
                             notebook_3.join()
-                        if i + 3 < num_of_pending_backtests.iloc[0]:
+                        if i + 3 < num_of_pending_backtests.iloc[0] or i < 5:
                             if notebook_4_ret_val.get() == 1:
                                 if i - 1 < 0:
                                     i = 0
@@ -502,7 +502,7 @@ if __name__ == '__main__':
                                     i -= 1
 
                             notebook_4.join()
-                        if i + 4 < num_of_pending_backtests.iloc[0]:
+                        if i + 4 < num_of_pending_backtests.iloc[0] or i < 5:
                             if notebook_5_ret_val.get() == 1:
                                 if i - 1 < 0:
                                     i = 0
