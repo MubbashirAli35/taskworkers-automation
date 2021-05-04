@@ -472,8 +472,8 @@ if __name__ == '__main__':
 
                         if i < num_of_pending_backtests.iloc[0] or i < 5:
                             if notebook_1_ret_val.get() == 1:
-                                if i - 1 < 0:
-                                    i = 0
+                                if i - 1 < -5:
+                                    i = -5
                                 else:
                                     i -= 1
 
@@ -488,7 +488,7 @@ if __name__ == '__main__':
                             notebook_2.join()
                         if i + 2 < num_of_pending_backtests.iloc[0] or i < 5:
                             if notebook_3_ret_val.get() == 1:
-                                if i - 1 < 0:
+                                if i - 1 < -5:
                                     i = -5
                                 else:
                                     i -= 1
@@ -496,7 +496,7 @@ if __name__ == '__main__':
                             notebook_3.join()
                         if i + 3 < num_of_pending_backtests.iloc[0] or i < 5:
                             if notebook_4_ret_val.get() == 1:
-                                if i - 1 < 0:
+                                if i - 1 < -5:
                                     i = -5
                                 else:
                                     i -= 1
@@ -504,7 +504,7 @@ if __name__ == '__main__':
                             notebook_4.join()
                         if i + 4 < num_of_pending_backtests.iloc[0] or i < 5:
                             if notebook_5_ret_val.get() == 1:
-                                if i - 1 < 0:
+                                if i - 1 < -5:
                                     i = -5
                                 else:
                                     i -= 1
