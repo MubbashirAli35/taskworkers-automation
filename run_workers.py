@@ -236,84 +236,68 @@ if __name__ == '__main__':
                     if sys.argv[1].lower() == 'run':
                         while i < num_of_pending_training_tasks:
                             if i < num_of_pending_training_tasks.iloc[0] or \
-                            i < num_of_training_tasks_running.iloc[0] + 5:
+                                    i < num_of_training_tasks_running.iloc[0] + 5:
                                 notebook_1 = Process(target=run_notebook,
                                                      args=(training_notebooks_to_run[notebooks_index],
                                                            notebook_1_ret_val,))
                                 notebook_1.start()
                             if i + 1 < num_of_pending_training_tasks.iloc[0] or \
-                            i < num_of_training_tasks_running.iloc[0] + 5:
+                                    i < num_of_training_tasks_running.iloc[0] + 5:
                                 notebook_2 = Process(target=run_notebook,
                                                      args=(training_notebooks_to_run[notebooks_index + 1],
                                                            notebook_2_ret_val,))
                                 notebook_2.start()
                             if i + 2 < num_of_pending_training_tasks.iloc[0] or \
-                            i < num_of_training_tasks_running.iloc[0] + 5:
+                                    i < num_of_training_tasks_running.iloc[0] + 5:
                                 notebook_3 = Process(target=run_notebook,
                                                      args=(training_notebooks_to_run[notebooks_index + 2],
                                                            notebook_3_ret_val,))
                                 notebook_3.start()
                             if i + 3 < num_of_pending_training_tasks.iloc[0] or \
-                            i < num_of_training_tasks_running.iloc[0] + 5:
+                                    i < num_of_training_tasks_running.iloc[0] + 5:
                                 notebook_4 = Process(target=run_notebook,
                                                      args=(training_notebooks_to_run[notebooks_index + 3],
                                                            notebook_4_ret_val,))
                                 notebook_4.start()
                             if i + 4 < num_of_pending_training_tasks.iloc[0] or \
-                            i < num_of_training_tasks_running.iloc[0] + 5:
+                                    i < num_of_training_tasks_running.iloc[0] + 5:
                                 notebook_5 = Process(target=run_notebook,
                                                      args=(training_notebooks_to_run[notebooks_index + 4],
                                                            notebook_5_ret_val,))
                                 notebook_5.start()
 
                             if i < num_of_pending_training_tasks.iloc[0] or \
-                            i < num_of_training_tasks_running.iloc[0] + 5:
-                                if notebook_1_ret_val.get() == 1:
-                                    if i - 1 < num_of_training_tasks_running.iloc[0]:
-                                        i = num_of_training_tasks_running.iloc[0]
-                                    else:
-                                        i -= 1
+                                    i < num_of_training_tasks_running.iloc[0] + 5:
+                                if notebook_1_ret_val.get() == 0:
+                                    i += 1
 
                                 notebook_1.join()
                             if i + 1 < num_of_pending_training_tasks.iloc[0] or \
-                            i < num_of_training_tasks_running.iloc[0] + 5:
-                                if notebook_2_ret_val.get() == 1:
-                                    if i - 1 < num_of_training_tasks_running.iloc[0]:
-                                        i = num_of_training_tasks_running.iloc[0]
-                                    else:
-                                        i -= 1
+                                    i < num_of_training_tasks_running.iloc[0] + 5:
+                                if notebook_2_ret_val.get() == 0:
+                                    i += 1
 
                                 notebook_2.join()
                             if i + 2 < num_of_pending_training_tasks.iloc[0] or \
-                            i < num_of_training_tasks_running.iloc[0] + 5:
-                                if notebook_3_ret_val.get() == 1:
-                                    if i - 1 < num_of_training_tasks_running.iloc[0]:
-                                        i = num_of_training_tasks_running.iloc[0]
-                                    else:
-                                        i -= 1
+                                    i < num_of_training_tasks_running.iloc[0] + 5:
+                                if notebook_3_ret_val.get() == 0:
+                                    i += 1
 
                                 notebook_3.join()
                             if i + 3 < num_of_pending_training_tasks.iloc[0] or \
-                            i < num_of_training_tasks_running.iloc[0] + 5:
-                                if notebook_4_ret_val.get() == 1:
-                                    if i - 1 < num_of_training_tasks_running.iloc[0]:
-                                        i = num_of_training_tasks_running.iloc[0]
-                                    else:
-                                        i -= 1
+                                    i < num_of_training_tasks_running.iloc[0] + 5:
+                                if notebook_4_ret_val.get() == 0:
+                                    i += 1
 
                                 notebook_4.join()
                             if i + 4 < num_of_pending_training_tasks.iloc[0] or \
                             i < num_of_training_tasks_running.iloc[0] + 5:
-                                if notebook_5_ret_val.get() == 1:
-                                    if i - 1 < num_of_training_tasks_running.iloc[0]:
-                                        i = num_of_training_tasks_running.iloc[0]
-                                    else:
-                                        i -= 1
+                                if notebook_5_ret_val.get() == 0:
+                                    i += 1
 
                                 notebook_5.join()
 
                             notebooks_index += 5
-                            i += 5
             else:
                 notebook_1_ret_val = Queue()
                 notebook_2_ret_val = Queue()
@@ -352,48 +336,32 @@ if __name__ == '__main__':
                             notebook_5.start()
 
                         if i < num_of_pending_training_tasks.iloc[0] or i < 5:
-                            if notebook_1_ret_val.get() == 1:
-                                if i - 1 < 0:
-                                    i = 0
-                                else:
-                                    i -= 1
+                            if notebook_1_ret_val.get() == 0:
+                                i += 1
 
                             notebook_1.join()
                         if i + 1 < num_of_pending_training_tasks.iloc[0] or i < 5:
-                            if notebook_2_ret_val.get() == 1:
-                                if i - 1 < 0:
-                                    i = 0
-                                else:
-                                    i -= 1
+                            if notebook_2_ret_val.get() == 0:
+                                i += 1
 
                             notebook_2.join()
                         if i + 2 < num_of_pending_training_tasks.iloc[0] or i < 5:
-                            if notebook_3_ret_val.get() == 1:
-                                if i - 1 < 0:
-                                    i = 0
-                                else:
-                                    i -= 1
+                            if notebook_3_ret_val.get() == 0:
+                                i += 1
 
                             notebook_3.join()
                         if i + 3 < num_of_pending_training_tasks.iloc[0] or i < 5:
-                            if notebook_4_ret_val.get() == 1:
-                                if i - 1 < 0:
-                                    i = 0
-                                else:
-                                    i -= 1
+                            if notebook_4_ret_val.get() == 0:
+                                i += 1
 
                             notebook_4.join()
                         if i + 4 < num_of_pending_training_tasks.iloc[0] or i < 5:
-                            if notebook_5_ret_val.get() == 1:
-                                if i - 1 < 0:
-                                    i = 0
-                                else:
-                                    i -= 1
+                            if notebook_5_ret_val.get() == 0:
+                                i += 1
 
                             notebook_5.join()
 
                         notebooks_index += 5
-                        i += 5
         else:
             print('No training tasks pending')
 
@@ -442,48 +410,32 @@ if __name__ == '__main__':
                                 notebook_5.start()
 
                             if i < num_of_pending_kmeans_tasks.iloc[0]:
-                                if notebook_1_ret_val.get() == 1:
-                                    if i - 1 < num_of_kmeans_tasks_running.iloc[0]:
-                                        i = num_of_kmeans_tasks_running.iloc[0]
-                                    else:
-                                        i -= 1
+                                if notebook_1_ret_val.get() == 0:
+                                    i += 1
 
                                 notebook_1.join()
                             if i + 1 < num_of_pending_kmeans_tasks.iloc[0]:
-                                if notebook_2_ret_val.get() == 1:
-                                    if i - 1 < num_of_kmeans_tasks_running.iloc[0]:
-                                        i = num_of_kmeans_tasks_running.iloc[0]
-                                    else:
-                                        i -= 1
+                                if notebook_2_ret_val.get() == 0:
+                                    i += 1
 
                                 notebook_2.join()
                             if i + 2 < num_of_pending_kmeans_tasks.iloc[0]:
-                                if notebook_3_ret_val.get() == 1:
-                                    if i - 1 < num_of_kmeans_tasks_running.iloc[0]:
-                                        i = num_of_kmeans_tasks_running.iloc[0]
-                                    else:
-                                        i -= 1
+                                if notebook_3_ret_val.get() == 0:
+                                    i += 1
 
                                 notebook_3.join()
                             if i + 3 < num_of_pending_kmeans_tasks.iloc[0]:
-                                if notebook_4_ret_val.get() == 1:
-                                    if i - 1 < num_of_kmeans_tasks_running.iloc[0]:
-                                        i = num_of_kmeans_tasks_running.iloc[0]
-                                    else:
-                                        i -= 1
+                                if notebook_4_ret_val.get() == 0:
+                                    i += 1
 
                                 notebook_4.join()
                             if i + 4 < num_of_pending_kmeans_tasks.iloc[0]:
-                                if notebook_5_ret_val.get() == 1:
-                                    if i - 1 < num_of_kmeans_tasks_running.iloc[0]:
-                                        i = num_of_kmeans_tasks_running.iloc[0]
-                                    else:
-                                        i -= 1
+                                if notebook_5_ret_val.get() == 0:
+                                    i += 1
 
                                 notebook_5.join()
 
                             notebooks_index += 5
-                            i += 5
             else:
                 if sys.argv[1].lower() == 'run':
                     notebook_1_ret_val = Queue()
@@ -522,52 +474,32 @@ if __name__ == '__main__':
                             notebook_5.start()
 
                         if i < num_of_pending_kmeans_tasks.iloc[0] or i < 5:
-                            if notebook_1_ret_val.get() == 1:
-                                if i - 1 < 0:
-                                    i = 0
-                                else:
-                                    i -= 5
+                            if notebook_1_ret_val.get() == 0:
+                                i += 1
 
                             notebook_1.join()
                         if i + 1 < num_of_pending_kmeans_tasks.iloc[0] or i < 5:
-                            if notebook_2_ret_val.get() == 1:
-                                if i - 1 < 0:
-                                    i = 0
-                                else:
-                                    i -= 5
+                            if notebook_2_ret_val.get() == 0:
+                                i += 1
 
                             notebook_2.join()
                         if i + 2 < num_of_pending_kmeans_tasks.iloc[0] or i < 5:
-                            if notebook_3_ret_val.get() == 1:
-                                if i - 1 < 0:
-                                    i = 0
-                                else:
-                                    i -= 5
+                            if notebook_3_ret_val.get() == 0:
+                                i += 1
 
                             notebook_3.join()
                         if i + 3 < num_of_pending_kmeans_tasks.iloc[0] or i < 5:
-                            if notebook_4_ret_val.get() == 1:
-                                if i - 1 < 0:
-                                    i = 0
-                                else:
-                                    i -= 5
+                            if notebook_4_ret_val.get() == 0:
+                                i += 1
 
                             notebook_4.join()
                         if i + 4 < num_of_pending_kmeans_tasks.iloc[0] or i < 5:
-                            if notebook_5_ret_val.get() == 1:
-                                if i - 1 < 0:
-                                    i = 0
-                                else:
-                                    i -= 5
+                            if notebook_5_ret_val.get() == 0:
+                                i += 1
 
                             notebook_5.join()
 
                         notebooks_index += 5
-
-                        if i == 0 and num_of_pending_kmeans_tasks.iloc[0] <= 5:
-                            i = 0
-                        else:
-                            i += 5
         else:
             print('No Kmeans tasks pending')
 
@@ -617,48 +549,32 @@ if __name__ == '__main__':
                                 notebook_5.start()
 
                             if i < num_of_pending_backtests.iloc[0]:
-                                if notebook_1_ret_val.get() == 1:
-                                    if i - 1 < num_of_backtests_running.iloc[0]:
-                                        i = num_of_backtests_running.iloc[0]
-                                    else:
-                                        i -= 1
+                                if notebook_1_ret_val.get() == 0:
+                                    i += 1
 
                                 notebook_1.join()
                             if i + 1 < num_of_pending_backtests.iloc[0]:
-                                if notebook_2_ret_val.get() == 1:
-                                    if i - 1 < num_of_backtests_running.iloc[0]:
-                                        i = num_of_backtests_running.iloc[0]
-                                    else:
-                                        i -= 1
+                                if notebook_2_ret_val.get() == 0:
+                                    i += 1
 
                                 notebook_2.join()
                             if i + 2 < num_of_pending_backtests.iloc[0]:
-                                if notebook_3_ret_val.get() == 1:
-                                    if i - 1 < num_of_backtests_running.iloc[0]:
-                                        i = num_of_backtests_running.iloc[0]
-                                    else:
-                                        i -= 1
+                                if notebook_3_ret_val.get() == 0:
+                                    i += 1
 
                                 notebook_3.join()
                             if i + 3 < num_of_pending_backtests.iloc[0]:
-                                if notebook_4_ret_val.get() == 1:
-                                    if i - 1 < num_of_backtests_running.iloc[0]:
-                                        i = num_of_backtests_running.iloc[0]
-                                    else:
-                                        i -= 1
+                                if notebook_4_ret_val.get() == 0:
+                                    i += 1
 
                                 notebook_4.join()
                             if i + 4 < num_of_pending_backtests.iloc[0]:
-                                if notebook_5_ret_val.get() == 1:
-                                    if i - 1 < num_of_backtests_running.iloc[0]:
-                                        i = num_of_backtests_running.iloc[0]
-                                    else:
-                                        i -= 1
+                                if notebook_5_ret_val.get() == 0:
+                                    i += 1
 
                                 notebook_5.join()
 
                             notebooks_index += 5
-                            i += 5
             else:
                 if sys.argv[1].lower() == 'run':
                     notebook_1_ret_val = Queue()
@@ -700,47 +616,31 @@ if __name__ == '__main__':
                             notebook_5.start()
 
                         if i < num_of_pending_backtests.iloc[0] or i < 5:
-                            if notebook_1_ret_val.get() == 1:
-                                if i - 1 < 0:
-                                    i = 0
-                                else:
-                                    i -= 5
+                            if notebook_1_ret_val.get() == 0:
+                                i += 1
 
                             notebook_1.join()
                         if i + 1 < num_of_pending_backtests.iloc[0] or i < 5:
-                            if notebook_2_ret_val.get() == 1:
-                                if i - 1 < 0:
-                                    i = 0
-                                else:
-                                    i -= 5
+                            if notebook_2_ret_val.get() == 0:
+                                i += 1
 
                             notebook_2.join()
                         if i + 2 < num_of_pending_backtests.iloc[0] or i < 5:
-                            if notebook_3_ret_val.get() == 1:
-                                if i - 1 < 0:
-                                    i = 0
-                                else:
-                                    i -= 5
+                            if notebook_3_ret_val.get() == 0:
+                                i += 1
 
                             notebook_3.join()
                         if i + 3 < num_of_pending_backtests.iloc[0] or i < 5:
-                            if notebook_4_ret_val.get() == 1:
-                                if i - 1 < 0:
-                                    i = 0
-                                else:
-                                    i -= 5
+                            if notebook_4_ret_val.get() == 0:
+                                i += 1
 
                             notebook_4.join()
                         if i + 4 < num_of_pending_backtests.iloc[0] or i < 5:
-                            if notebook_5_ret_val.get() == 1:
-                                if i - 1 < 0:
-                                    i = 0
-                                else:
-                                    i -= 5
+                            if notebook_5_ret_val.get() == 0:
+                                i += 1
 
                             notebook_5.join()
 
                         notebooks_index += 5
-                        i += 5
         else:
             print('No backtest tasks pending')
