@@ -442,8 +442,9 @@ if __name__ == '__main__':
                     notebook_4_ret_val = Queue()
                     notebook_5_ret_val = Queue()
                     notebooks_index = 0
+                    i = 0
 
-                    for i in range(-5, (backtests_notebooks_to_run.count()), 5):
+                    while i < backtests_notebooks_to_run.count():
                         if i < num_of_pending_backtests.iloc[0] or i < 5:
                             notebook_1 = Process(target=run_notebook,
                                                  args=(backtests_notebooks_to_run[notebooks_index],
@@ -472,45 +473,31 @@ if __name__ == '__main__':
 
                         if i < num_of_pending_backtests.iloc[0] or i < 5:
                             if notebook_1_ret_val.get() == 1:
-                                if i - 1 < -5:
-                                    i = -5
-                                else:
-                                    i -= 1
+                                i -= 5
 
                             notebook_1.join()
                         if i + 1 < num_of_pending_backtests.iloc[0] or i < 5:
                             if notebook_2_ret_val.get() == 1:
-                                if i - 1 < -5:
-                                    i = -5
-                                else:
-                                    i -= 1
+                                i -= 5
 
                             notebook_2.join()
                         if i + 2 < num_of_pending_backtests.iloc[0] or i < 5:
                             if notebook_3_ret_val.get() == 1:
-                                if i - 1 < -5:
-                                    i = -5
-                                else:
-                                    i -= 1
+                                i -= 5
 
                             notebook_3.join()
                         if i + 3 < num_of_pending_backtests.iloc[0] or i < 5:
                             if notebook_4_ret_val.get() == 1:
-                                if i - 1 < -5:
-                                    i = -5
-                                else:
-                                    i -= 1
+                                i -= 5
 
                             notebook_4.join()
                         if i + 4 < num_of_pending_backtests.iloc[0] or i < 5:
                             if notebook_5_ret_val.get() == 1:
-                                if i - 1 < -5:
-                                    i = -5
-                                else:
-                                    i -= 1
+                                i -= 5
 
                             notebook_5.join()
 
                         notebooks_index += 5
+                        i += 5
         else:
             print('No backtest tasks pending')
