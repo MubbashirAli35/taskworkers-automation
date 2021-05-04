@@ -443,7 +443,7 @@ if __name__ == '__main__':
                     notebook_5_ret_val = Queue()
                     notebooks_index = 0
 
-                    for i in range(0, (backtests_notebooks_to_run.count()), 5):
+                    for i in range(-5, (backtests_notebooks_to_run.count()), 5):
                         if i < num_of_pending_backtests.iloc[0] or i < 5:
                             notebook_1 = Process(target=run_notebook,
                                                  args=(backtests_notebooks_to_run[notebooks_index],
@@ -480,8 +480,8 @@ if __name__ == '__main__':
                             notebook_1.join()
                         if i + 1 < num_of_pending_backtests.iloc[0] or i < 5:
                             if notebook_2_ret_val.get() == 1:
-                                if i - 1 < 0:
-                                    i = 0
+                                if i - 1 < -5:
+                                    i = -5
                                 else:
                                     i -= 1
 
@@ -489,7 +489,7 @@ if __name__ == '__main__':
                         if i + 2 < num_of_pending_backtests.iloc[0] or i < 5:
                             if notebook_3_ret_val.get() == 1:
                                 if i - 1 < 0:
-                                    i = 0
+                                    i = -5
                                 else:
                                     i -= 1
 
@@ -497,7 +497,7 @@ if __name__ == '__main__':
                         if i + 3 < num_of_pending_backtests.iloc[0] or i < 5:
                             if notebook_4_ret_val.get() == 1:
                                 if i - 1 < 0:
-                                    i = 0
+                                    i = -5
                                 else:
                                     i -= 1
 
@@ -505,7 +505,7 @@ if __name__ == '__main__':
                         if i + 4 < num_of_pending_backtests.iloc[0] or i < 5:
                             if notebook_5_ret_val.get() == 1:
                                 if i - 1 < 0:
-                                    i = 0
+                                    i = -5
                                 else:
                                     i -= 1
 
