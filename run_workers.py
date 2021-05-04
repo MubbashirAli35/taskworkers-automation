@@ -563,7 +563,11 @@ if __name__ == '__main__':
                             notebook_5.join()
 
                         notebooks_index += 5
-                        i += 5
+
+                        if i == 0 and num_of_pending_kmeans_tasks <= 5:
+                            i = 0
+                        else:
+                            i += 5
         else:
             print('No Kmeans tasks pending')
 
@@ -665,7 +669,7 @@ if __name__ == '__main__':
 
                     if not num_of_pending_kmeans_tasks.count() > 0 and num_of_kmeans_tasks_running.count() > 0:
                         notebooks_index = 0
-                        
+
                     i = 0
 
                     while i < num_of_pending_backtests.iloc[0]:
