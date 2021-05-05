@@ -60,13 +60,6 @@ def run_notebook(notebook_name, ret_val):
             print(notebook_name + ' Loaded')
 
             try:
-                WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'connect'))
-            except:
-                print(notebook_name + ' already running')
-                ret_val.put(0)
-                return ret_val
-
-            try:
                 WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
             except:
                 print('Cookies has been expired for ' + notebook_name)
@@ -79,7 +72,12 @@ def run_notebook(notebook_name, ret_val):
                 lambda d: d.find_element(By.XPATH, "//*[contains(text(), 'Factory reset runtime')]")).click()
 
             try:
-                WebDriverWait(driver, 5).until(lambda d: d.find_element(By.ID, 'ok')).click()
+                WebDriverWait(driver, 5).until(lambda d: d.find_element(By.ID, 'ok'))
+                print(notebook_name + ' already running')
+                ret_val.put(0)
+
+                return ret_val
+
             except:
                 print('Notebook Factory resetted')
 
