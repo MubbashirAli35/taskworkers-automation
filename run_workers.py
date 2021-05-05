@@ -382,7 +382,7 @@ if __name__ == '__main__':
 
                 if num_of_kmeans_tasks_running.iloc[0] < num_of_pending_kmeans_tasks.iloc[0]:
                     if sys.argv[1].lower() == 'run':
-                        while i < num_of_pending_kmeans_tasks:
+                        while i < num_of_pending_kmeans_tasks.iloc[0]:
                             if i < num_of_pending_kmeans_tasks.iloc[0] or i < 5:
                                 notebook_1 = Process(target=run_notebook,
                                                      args=(backtests_notebooks_to_run[notebooks_index],
