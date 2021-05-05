@@ -67,11 +67,11 @@ def run_notebook(notebook_name, ret_val):
                 ret_val.put(1)
                 return ret_val
 
-            WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':20'))
-            WebDriverWait(driver, 20).until(
-                lambda d: d.find_element(By.XPATH, "//*[contains(text(), 'Factory reset runtime')]")).click()
-
-            WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
+            # WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':20'))
+            # WebDriverWait(driver, 20).until(
+            #     lambda d: d.find_element(By.XPATH, "//*[contains(text(), 'Factory reset runtime')]")).click()
+            #
+            # WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
             WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':1v')).click()
 
             try:
