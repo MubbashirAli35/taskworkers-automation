@@ -73,10 +73,10 @@ def run_notebook(notebook_name, ret_val):
 
             try:
                 WebDriverWait(driver, 5).until(lambda d: d.find_element(By.ID, 'ok')).click()
-                print(notebook_name + 'Rerunning')
-                ret_val.put(0)
-
-                return ret_val
+                # print(notebook_name + 'Rerunning')
+                # # ret_val.put(0)
+                # #
+                # # return ret_val
 
             except:
                 print('Notebook Factory resetted')
