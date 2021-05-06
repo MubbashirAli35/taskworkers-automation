@@ -45,6 +45,7 @@ def stop_instance():
 
 
 if __name__ == '__main__':
+    print(parent_count[0][0])
     if parent_count[0][0] == 0:
         stop_instance()
     else:
