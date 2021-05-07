@@ -72,14 +72,11 @@ def run_notebook(notebook_name, ret_val):
                 lambda d: d.find_element(By.XPATH, "//*[contains(text(), 'Factory reset runtime')]")).click()
 
             try:
-                WebDriverWait(driver, 5).until(lambda d: d.find_element(By.ID, 'ok'))
-                print(notebook_name + ' already running')
-                ret_val.put(1)
-
-                return ret_val
+                WebDriverWait(driver, 5).until(lambda d: d.find_element(By.ID, 'ok')).click()
+                print('Factory resetting ' + notebook_name)
 
             except:
-                print(notebook_name + ' Factory reset')
+                print('Factory resetting ' + notebook_name)
 
             WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, 'runtime-menu-button')).click()
             WebDriverWait(driver, 20).until(lambda d: d.find_element(By.ID, ':1v')).click()
