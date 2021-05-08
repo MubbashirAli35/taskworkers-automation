@@ -61,7 +61,7 @@ if __name__ == '__main__':
 
     if num_of_pending_backtests.count() > 0 or num_of_pending_training_tasks.count() > 0 \
         or num_of_backtests_running.count() > 0 or num_of_training_tasks_running.count() > 0 \
-    or num_of_pending_kmeans_tasks.count() > 0 or num_of_kmeans_tasks_running.count() > 0:
+            or num_of_pending_kmeans_tasks.count() > 0 or num_of_kmeans_tasks_running.count() > 0:
         start_colab_server(credentials)
     else:
         stop_colab_server(credentials)
