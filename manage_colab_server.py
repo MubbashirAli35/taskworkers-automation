@@ -51,11 +51,17 @@ if __name__ == '__main__':
 
     num_of_pending_backtests = tasks_queue.loc[(tasks_queue['Status'] == 'New') & (tasks_queue['Task Type'] == 'BackTestTask')]['Number']
     num_of_pending_training_tasks = tasks_queue.loc[(tasks_queue['Status'] == 'New') & (tasks_queue['Task Type'] == 'TrainingTask')]['Number']
+    num_of_pending_kmeans_tasks = \
+        tasks_queue.loc[(tasks_queue['Status'] == 'New') & (tasks_queue['Task Type'] == 'KmeansTask')]['Number']
 
     num_of_backtests_running = tasks_queue.loc[(tasks_queue['Status'] == 'Running') & (tasks_queue['Task Type'] == 'BackTestTask')]['Number']
     num_of_training_tasks_running = tasks_queue.loc[(tasks_queue['Status'] == 'Running') & (tasks_queue['Task Type'] == 'TrainingTask')]['Number']
+    num_of_kmeans_tasks_running = \
+        tasks_queue.loc[(tasks_queue['Status'] == 'Running') & (tasks_queue['Task Type'] == 'KmeansTask')]['Number']
 
-    if num_of_pending_backtests.count() > 0 or num_of_pending_training_tasks.count() > 0 or num_of_backtests_running.count() > 0 or num_of_training_tasks_running.count():
+    if num_of_pending_backtests.count() > 0 or num_of_pending_training_tasks.count() > 0 \
+        or num_of_backtests_running.count() > 0 or num_of_training_tasks_running.count() > 0 \
+    or num_of_pending_kmeans_tasks.count() > 0 or num_of_kmeans_tasks_running.count() > 0:
         start_colab_server(credentials)
     else:
         stop_colab_server(credentials)
