@@ -24,7 +24,7 @@ def run_notebook(notebook_name, ret_val):
         is_worker_pro = notebooks_links_dict['pro'][str(notebook_name[0:6]).lower()]
 
     options = Options()
-    # options.add_argument('headless')  # Configures to start chrome in headless mode
+    options.add_argument('headless')  # Configures to start chrome in headless mode
     options.add_argument('--start-maximized')  # Configures to start it with maximum window size
     options.add_argument('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36')
 
