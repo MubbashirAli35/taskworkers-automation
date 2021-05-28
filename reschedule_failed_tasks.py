@@ -11,15 +11,12 @@ def update_error_session_closed(connection):
                              and extract(epoch from (now()- task_heartbeat_time ))/60 > 15
                         and (queue_status = 'Error Session Closed'))"""
     curr = connection.cursor()
-    # psycopg2.extras.register_uuid()
     curr.execute(query_to_use)
-    connection.commit()
     curr.close()
 
 
 def set_backtest_master_done_to_New(connection):
     curr = connection.cursor()
-    # psycopg2.extras.register_uuid()
     curr.execute("""update task_manager_queue
                     set queue_state = 'New' , queue_status='Waiting For Task Manager'
                     where queue_type='BackTestMaster' and queue_state = 'Done' and  parent_exp_id IN 
@@ -27,7 +24,6 @@ def set_backtest_master_done_to_New(connection):
                     where (queue_type = 'BackTestTask' or queue_type = 'TrainingTask') and queue_state='New'
                     and parent_exp_id in (select parent_exp_id from task_manager_queue where
                     queue_type='BackTestMaster' and queue_state = 'Done'))""")
-    connection.commit()
     curr.close()
 
 
