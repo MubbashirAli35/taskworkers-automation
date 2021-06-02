@@ -22,15 +22,16 @@ list_of_queue = cur.fetchall()
 tasks_queue = pd.DataFrame(list_of_queue, columns=['Number', 'Status', 'Task Type'])
 
 cur.execute("select "
-                "distinct notebooks, "
-                "max(last_beat_time) max_last_beat_time, "
-                "nnm.seq_tw seq_no "
+            "distinct notebooks, "
+            "max(last_beat_time) max_last_beat_time, "
+            "nnm.seq_tw seq_no "
             "from "
-                "public.notebook_names nnm "
+            "public.notebook_names nnm "
             "right join "
-                "heartbeat hbt "
+            "heartbeat hbt "
             "on lower "
-                "(replace(substring (hbt.notebook_name from 1 for (position('_' in hbt.notebook_name))),'_','')) = lower (notebooks)group by notebooks, seq_tw order by 3 asc")
+            "(replace(substring (hbt.notebook_name from 1 for (position('_' in hbt.notebook_name))),'_','')) = "
+            "lower (notebooks)group by notebooks, seq_tw order by 3 asc")
 
 list_of_notebooks = cur.fetchall()
 notebooks = pd.DataFrame(list_of_notebooks, columns=['Notebook', 'Max Last Beat Time', 'Seq no'])
@@ -40,26 +41,30 @@ notebooks.dropna(inplace=True)
 backtests_notebooks = notebooks[~notebooks['Notebook'].str.contains('GPU')]
 training_notebooks = notebooks[notebooks['Notebook'].str.contains('GPU')]
 
-backtests_notebooks['Alive Status'] = dt.datetime.now() - backtests_notebooks['Max Last Beat Time'] < dt.timedelta(minutes=20)
-training_notebooks['Alive Status'] = dt.datetime.now() - training_notebooks['Max Last Beat Time'] < dt.timedelta(minutes=20)
+backtests_notebooks['Alive Status'] = dt.datetime.now() - backtests_notebooks['Max Last Beat Time'] \
+                                      < dt.timedelta(minutes=20)
+training_notebooks['Alive Status'] = dt.datetime.now() - training_notebooks['Max Last Beat Time'] \
+                                     < dt.timedelta(minutes=20)
 
-backtests_notebooks_sorted_on_last_beat_time = backtests_notebooks.sort_values(by='Max Last Beat Time', ignore_index=True)
-training_notebooks_sorted_on_last_beat_time = training_notebooks.sort_values(by='Max Last Beat Time', ignore_index=True)
+backtests_notebooks_sorted_on_last_beat_time = backtests_notebooks.sort_values(by='Max Last Beat Time',
+                                                                               ignore_index=True)
+training_notebooks_sorted_on_last_beat_time = training_notebooks.sort_values(by='Max Last Beat Time',
+                                                                             ignore_index=True)
 
 backtests_notebooks_to_run = backtests_notebooks_sorted_on_last_beat_time.loc[
-    backtests_notebooks_sorted_on_last_beat_time['Alive Status'] == False
+    backtests_notebooks_sorted_on_last_beat_time['Alive Status'] is False
 ]
 
 backtests_notebooks_to_interact = backtests_notebooks_sorted_on_last_beat_time.loc[
-    backtests_notebooks_sorted_on_last_beat_time['Alive Status'] == True
+    backtests_notebooks_sorted_on_last_beat_time['Alive Status'] is True
 ]
 
 training_notebooks_to_run = training_notebooks_sorted_on_last_beat_time.loc[
-    training_notebooks_sorted_on_last_beat_time['Alive Status'] == False
+    training_notebooks_sorted_on_last_beat_time['Alive Status'] is False
 ]
 
 training_notebooks_to_interact = training_notebooks_sorted_on_last_beat_time.loc[
-    training_notebooks_sorted_on_last_beat_time['Alive Status'] == True
+    training_notebooks_sorted_on_last_beat_time['Alive Status'] is True
 ]
 
 backtests_notebooks_to_run = backtests_notebooks_to_run['Notebook']
@@ -68,19 +73,27 @@ training_notebooks_to_run = training_notebooks_to_run['Notebook']
 backtests_notebooks_to_interact = backtests_notebooks_to_interact['Notebook']
 training_notebooks_to_interact = training_notebooks_to_interact['Notebook']
 
-num_of_pending_backtests = tasks_queue.loc[(tasks_queue['Status'] == 'New') & (tasks_queue['Task Type'] == 'BackTestTask')]['Number']
-num_of_pending_training_tasks = tasks_queue.loc[(tasks_queue['Status'] == 'New') & (tasks_queue['Task Type'] == 'TrainingTask')]['Number']
-num_of_pending_kmeans_tasks = tasks_queue.loc[(tasks_queue['Status'] == 'New') & (tasks_queue['Task Type'] == 'KmeansTask')]['Number']
+num_of_pending_backtests = tasks_queue.loc[(tasks_queue['Status'] == 'New')
+                                           & (tasks_queue['Task Type'] == 'BackTestTask')]['Number']
+num_of_pending_training_tasks = tasks_queue.loc[(tasks_queue['Status'] == 'New')
+                                                & (tasks_queue['Task Type'] == 'TrainingTask')]['Number']
+num_of_pending_kmeans_tasks = tasks_queue.loc[(tasks_queue['Status'] == 'New')
+                                              & (tasks_queue['Task Type'] == 'KmeansTask')]['Number']
 
-num_of_backtests_running = tasks_queue.loc[(tasks_queue['Status'] == 'Running') & (tasks_queue['Task Type'] == 'BackTestTask')]['Number']
-num_of_training_tasks_running = tasks_queue.loc[(tasks_queue['Status'] == 'Running') & (tasks_queue['Task Type'] == 'TrainingTask')]['Number']
-num_of_kmeans_tasks_running = tasks_queue.loc[(tasks_queue['Status'] == 'Running') & (tasks_queue['Task Type'] == 'KmeansTask')]['Number']
+num_of_backtests_running = tasks_queue.loc[(tasks_queue['Status'] == 'Running')
+                                           & (tasks_queue['Task Type'] == 'BackTestTask')]['Number']
+num_of_training_tasks_running = tasks_queue.loc[(tasks_queue['Status'] == 'Running')
+                                                & (tasks_queue['Task Type'] == 'TrainingTask')]['Number']
+num_of_kmeans_tasks_running = tasks_queue.loc[(tasks_queue['Status'] == 'Running')
+                                              & (tasks_queue['Task Type'] == 'KmeansTask')]['Number']
 
 
 if __name__ == '__main__':
     print(dt.datetime.now())
     print('\n\n')
     print(training_notebooks_to_run.count())
+
+    num_of_max_allowed_notebooks = 120
 
     if sys.argv[1].lower() == 'terminate':
         for i in range(0, backtests_notebooks_to_interact.count(), 5):
@@ -225,6 +238,18 @@ if __name__ == '__main__':
         notebook_5_ret_val = Queue()
         notebooks_index = 0
 
+        if num_of_pending_training_tasks.count() > 0 \
+           and num_of_pending_training_tasks.iloc[0] > num_of_max_allowed_notebooks:
+            num_of_pending_training_tasks.iloc[0] = num_of_max_allowed_notebooks
+
+        if num_of_pending_backtests.count() > 0 \
+           and num_of_pending_backtests.iloc[0] > num_of_max_allowed_notebooks:
+            num_of_pending_backtests.iloc[0] = num_of_max_allowed_notebooks
+
+        if num_of_pending_kmeans_tasks.count() > 0 \
+           and num_of_pending_kmeans_tasks.iloc[0] > num_of_max_allowed_notebooks:
+            num_of_pending_kmeans_tasks.iloc[0] = num_of_max_allowed_notebooks
+
         if num_of_pending_training_tasks.count() > 0 and num_of_pending_training_tasks.iloc[0] > 0  \
                 and (sys.argv[2] == 'train' or sys.argv[2] == 'both'):
             print('Number of Training Tasks pending ', num_of_pending_training_tasks.iloc[0])
@@ -234,7 +259,7 @@ if __name__ == '__main__':
                 print('Number of Running Training Tasks ', num_of_training_tasks_running.iloc[0])
                 if num_of_training_tasks_running.iloc[0] < num_of_pending_training_tasks.iloc[0]:
                     if sys.argv[1].lower() == 'run':
-                        while i < num_of_pending_training_tasks:
+                        while i < num_of_pending_training_tasks.iloc[0]:
                             if i < num_of_pending_training_tasks.iloc[0] or \
                                     i < num_of_training_tasks_running.iloc[0] + 5:
                                 notebook_1 = Process(target=run_notebook,
