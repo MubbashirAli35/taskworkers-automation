@@ -52,19 +52,19 @@ training_notebooks_sorted_on_last_beat_time = training_notebooks.sort_values(by=
                                                                              ignore_index=True)
 
 backtests_notebooks_to_run = backtests_notebooks_sorted_on_last_beat_time.loc[
-    backtests_notebooks_sorted_on_last_beat_time['Alive Status'] is False
+    backtests_notebooks_sorted_on_last_beat_time['Alive Status'] == False
 ]
 
 backtests_notebooks_to_interact = backtests_notebooks_sorted_on_last_beat_time.loc[
-    backtests_notebooks_sorted_on_last_beat_time['Alive Status'] is True
+    backtests_notebooks_sorted_on_last_beat_time['Alive Status'] == True
 ]
 
 training_notebooks_to_run = training_notebooks_sorted_on_last_beat_time.loc[
-    training_notebooks_sorted_on_last_beat_time['Alive Status'] is False
+    training_notebooks_sorted_on_last_beat_time['Alive Status'] == False
 ]
 
 training_notebooks_to_interact = training_notebooks_sorted_on_last_beat_time.loc[
-    training_notebooks_sorted_on_last_beat_time['Alive Status'] is True
+    training_notebooks_sorted_on_last_beat_time['Alive Status'] == True
 ]
 
 backtests_notebooks_to_run = backtests_notebooks_to_run['Notebook']
