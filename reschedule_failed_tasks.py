@@ -21,9 +21,24 @@ def set_backtest_master_done_to_New(connection):
                     set queue_state = 'New' , queue_status='Waiting For Task Manager'
                     where queue_type='BackTestMaster' and queue_state = 'Done' and  parent_exp_id IN 
                     (select distinct parent_exp_id from task_manager_queue
-                    where (queue_type = 'BackTestTask' or queue_type = 'TrainingTask') and queue_state='New'
+                    where (queue_type = 'BackTestTask') and queue_state='New'
                     and parent_exp_id in (select parent_exp_id from task_manager_queue where
                     queue_type='BackTestMaster' and queue_state = 'Done'))""")
+    curr.close()
+
+
+def set_training_master_done_to_new(connection):
+    curr = connection.cursor()
+    curr.execute("""update task_manager_queue set
+                    queue_state = 'New', 
+                    queue_status = 'Waiting For Task Manager' where
+                    queue_type = 'TrainingMaster' and
+                    queue_state = 'Done' and 
+                    parent_exp_id in 
+                    (select distinct
+                    parent_exp_id from task_manager_queue where 
+                    queue_type = 'TrainingTask' and
+                    queue_state = 'New')""")
     curr.close()
 
 
@@ -37,3 +52,4 @@ if __name__ == '__main__':
     update_error_session_closed(conn)
 
     set_backtest_master_done_to_New(conn)
+    set_training_master_done_to_new(conn)
