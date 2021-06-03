@@ -93,7 +93,7 @@ if __name__ == '__main__':
     print('\n\n')
     print(training_notebooks_to_run.count())
 
-    num_of_max_allowed_notebooks = 120
+    num_of_max_allowed_notebooks = 250
 
     if sys.argv[1].lower() == 'terminate':
         for i in range(0, backtests_notebooks_to_interact.count(), 5):
