@@ -6,9 +6,9 @@ import sys
 from actions_on_notebook import run_notebook, ping_notebook, terminate_notebook_session
 
 conn = psycopg2.connect(dbname='greencanvas',
-                        user='gcp_read_only',
-                        password='gc$$2929%',
-                        host='35.223.254.139',
+                        user='gcpv1_colab_server',
+                        password='gc$%#798w',
+                        host='gcp01.dynamic-dns.net',
                         port=5432)
 
 cur = conn.cursor()

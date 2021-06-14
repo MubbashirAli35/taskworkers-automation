@@ -1,19 +1,6 @@
 import psycopg2
 import datetime as dt
 
-# def update_error_session_closed(connection):
-#     query_to_use = """update task_manager_queue
-#                         set queue_state='New' , queue_status = 'Waiting For Task Manager'
-#                         where experiment_id in (
-#                         select experiment_id from task_manager_queue
-#                         where  (queue_type='BackTestTask' or queue_type = 'TrainingTask') and queue_state='Failed' and
-#                         task_start_time::date > (now()-interval '1 day')::date
-#                              and extract(epoch from (now()- task_heartbeat_time ))/60 > 15
-#                         and (queue_status = 'Error Session Closed'))"""
-#     curr = connection.cursor()
-#     curr.execute(query_to_use)
-#     curr.close()
-
 
 def update_error_session_closed(connection):
     query_to_use = """update task_manager_queue 
@@ -67,9 +54,9 @@ def set_training_master_done_to_new(connection):
 
 if __name__ == '__main__':
     conn = psycopg2.connect(dbname='greencanvas',
-                            user='gcp_read_only',
-                            password='gc$$2929%',
-                            host='35.223.254.139',
+                            user='gcpv1_colab_server',
+                            password='gc$%#798w',
+                            host='gcp01.dynamic-dns.net',
                             port=5432)
 
     update_error_session_closed(conn)
